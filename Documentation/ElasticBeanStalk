@@ -1,9 +1,9 @@
 Abbreviation Key:
 -AWS = Amazon Web Services
 -EC2 = Elastic Compute Cloud
-    *Is a raw virtual machine in the cloud to host our site
+    *Is a raw virtual machine in the cloud to host our site, provided by AWS
 -EB = elastic beanstalk
-    *This is the Amazon Web Services service which automates EC2 (elastic cloud compute) management.
+    *This is the AWS service which automates EC2 (elastic cloud compute) management.
     *Auto scales EC2 instances for traffic needs.
 -IAM = Identity and Access Management
     *Defines users and their roles in the AWS environment. I have one account setup for myself with admin access, and the parent account is the AWS account under my email. Anyone can create a user and we can assign it admin permissions if someone else needs to work with AWS stuff. Let tyler know if you need this.
