@@ -4,7 +4,7 @@ application = Flask(__name__)
 
 @application.route('/')
 def index():
-	return "Hello, AWS Elastic Beanstalk! lol"
+	return "Capsoft website coming soon!"
 
 if __name__ == "__main__":
     application.run()

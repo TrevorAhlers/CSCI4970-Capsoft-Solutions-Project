@@ -46,3 +46,19 @@ PUT EVERTYHING BACK ONLINE:
 3. open it in browser
     eb open
 }
+
+BETTER METHOD OF TAKING EVERYTHING OFFLINE WITHOUT TERMINATING THE INSTANCES:
+{
+1. Set the scale of EC2 servers to zero.
+    eb scale 0
+2. Can bring back website by putting scale back and redeploying
+    eb scale 1
+    eb deploy
+}
+
+TO MAKE CHANGES FROM VSCODE TO THE WEBSITE
+{
+1. Commit and push
+2. In Windows Powershell go/cd to proj path/Back-end
+3. eb deploy
+}
