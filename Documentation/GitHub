@@ -1,0 +1,9 @@
+see what branch youre using
+git branch
+
+if you need to switch from main to dev, for example:
+git checkout dev
+
+if you need to update your local project with the latest on github... lets say the dev branch
+git fetch origin
+git pull origin dev
