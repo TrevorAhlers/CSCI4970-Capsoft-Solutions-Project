@@ -1,0 +1,5 @@
+activate the virtual environment
+.\.venv\Scripts\activate
+
+run the program
+python .\Back-end\application.py

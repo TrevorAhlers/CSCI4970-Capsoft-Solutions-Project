@@ -1,0 +1,48 @@
+Abbreviation Key:
+-AWS = Amazon Web Services
+-EC2 = Elastic Compute Cloud
+    *Is a raw virtual machine in the cloud to host our site
+-EB = elastic beanstalk
+    *This is the Amazon Web Services service which automates EC2 (elastic cloud compute) management.
+    *Auto scales EC2 instances for traffic needs.
+-IAM = Identity and Access Management
+    *Defines users and their roles in the AWS environment. I have one account setup for myself with admin access, and the parent account is the AWS account under my email. Anyone can create a user and we can assign it admin permissions if someone else needs to work with AWS stuff. Let tyler know if you need this.
+
+I. EB SETUP:
+{
+command used to init EB setup:
+eb init -p python-3.11 app-name
+
+app-name will be Capstone-4970
+
+IAM user: tyler
+IAM password: Csci4970
+
+aws configure
+AWS Access Key ID [None]: ask tyler for this
+AWS Secret Access Key [None]: ask tyler for this
+Default region name [None]: us-east-1
+Default output format [None]: json
+
+keypair name: aws-eb
+keypair passphrase: [empty]
+}
+
+II. TO TAKE EVERYTHING OFFLINE AND AVOID USAGE CHARGES:
+{
+1. go to project folder and then back-end directory
+    cd "I:\Alternate Desktop\School\CSCI4970\CSCI4970-Capstone\CSCI4970-Capsoft-Solutions-Project\Back-end"
+    cd "<project directory>\CSCI4970-Capsoft-Solutions-Project\Back-end"
+2. terminate instance
+    eb terminate dev-env
+}
+
+PUT EVERTYHING BACK ONLINE:
+{
+1. recreate instance
+    eb create dev-env
+2. deploy instance
+    eb deploy
+3. open it in browser
+    eb open
+}
