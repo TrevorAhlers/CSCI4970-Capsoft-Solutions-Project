@@ -1,0 +1,60 @@
+*Spreadsheet's first rows are empty (except for unimportant info) and that makes the header strings for each column on row 3.
+
+Attribute Analysis
+
+Below is a breakdown of the Fall2022 CSV file recieved from our sponsor. Columns are a "candidate" to be included in the Class object, not necessarily by utility, but if they contain information that isn't redundant. We don't want to eliminate any dimension of scheduled classes that might useful later.
+
+#################
+CANDIDATE COLUMNS:
+#################
+
+. Column . Name                   . Notes                                                          
++--------+------------------------+----------------------
+.   D    . Department Code        .
+.   E    . Subject Code           .
+.   F    . Catalog Number         . can derive Course (G) with Subject Code + Catalog Number
+.   H    . Section                .
+.   I    . Course Title           .
+.   J    . Section Type           .
+.   K    . Title/Topic            . tells what the special topic is... varying usages
+.   L    . Meeting Pattern        .
+.   M    . Meetings               .
+.   N    . Instructor             .
+.   O    . Room                   .
+.   Q    . Session                .
+.   R    . Campus                 .
+.   S    . Inst. Method           .
+.   V    . Consent                .
+.   W    . Credit Hours Min       .
+.   X    . Credit Hours           .
+.   Y    . Grade Mode             .
+.   Z    . Attributes             . pretty random and seems un-useable
+.   AA   . Course Attributes      . not much here... denotes general ed type for certain classes
+.   AC   . Enrollment             . enrolled student count ... int
+.   AD   . Maximum Enrollment     . int
+.   AE   . Wait Cap               . max num of waitlist spots ... int
+.   AH   . Rm. Cap Request        . int
+.   AI   . Cross-listings         . extract regex search: XXXX-1234-00 & XXXX-1234
+.   AJ   . Cross-list Maximum     .
+.   AM   . Cross-list Wait Cap    . seems redundant
+.   AN   . Link To                . requesting specific rooms/any room
+.   AO   . Comments               . requesting specific rooms
+.   AP   . Notes#1                . various useful stuff
+.   AQ   . Notes#2                . nearly empty
+
+
+#################
+UNUSABLE COLUMNS:
+#################
+
+Column   .   Name                  .  Reason
+---------+-------------------------+------------
+.   B    .   Term                  .  Redundant
+.   C    .   Term Code             .  Redundant
+.   P    .   Status                .  Redundant
+.   T    .   Integ Partner         .  Redundant
+.   U    .   Schedule Print        .  All "Yes"
+.   AB   .   Room attributes       .  Empty (Unfortunately)
+.   AE   .   Prior Enrollment      .  Empty
+.   AF   .   Projected Enrollment  .  Empty
+.   AK   .   Cross-list Projected  .  Empty
