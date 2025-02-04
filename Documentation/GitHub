@@ -1,9 +1,27 @@
-see what branch youre using
+*see what branch youre using
 git branch
 
-if you need to switch from main to dev, for example:
+*if you need to switch from main to dev, for example:
 git checkout dev
 
-if you need to update your local project with the latest on github... lets say the dev branch
+*if you need to update your local project with the latest on github... lets say the dev branch (be careful you arent saving over changes you want to keep locally)
 git fetch origin
 git pull origin dev
+
+*if you need to make your own branch (and switch to it)
+git checkout -b new-branch-name
+
+*add and commit some changes to your active branch
+git add .
+git commit -m "Your commit message here"
+
+*push a commit
+git push origin branch-name
+
+*you have a branch that you want to use to update the dev branch... but you dont want to lose your current branch
+git checkout dev
+git pull origin dev
+git merge dev-tyler
+git push origin dev
+git checkout dev-tyler <--- switch back to dev-tyler
+git pull origin dev <--- Sync dev-tyler with the latest dev update (if someone pushed after your merge... which is unlikely but possible)
