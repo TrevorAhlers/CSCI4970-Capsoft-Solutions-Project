@@ -1,5 +1,0 @@
-1. Flask
-    -Interfaces well with Angular
-
-2. gunicorn
-    -Allows concurrent processes... better production readiness.
