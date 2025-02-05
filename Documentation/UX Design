@@ -1,0 +1,47 @@
+
+User Interface Brainstorming:
+
+*Undo/Redo Layers is a critical feature
+
+..............................................................................................................
+1. Card View
+..............................................................................................................
+
+The site has a grid of cards.
+
+A card is a PKI classroom, with the class name and identifer XXXX-1234-00
+
+A card contains bars (think google calendar events) which are the the sections/courses that are scheduled to that room. These bars are color-coded for the most comprehensive user experience, not style. Users might be able to change their color assignments from "different colors based on course seniority" to "different colors based on student enrollment count" and other options like departments, or partially remote versus fully in-person.
+
+*Maybe the bars in a card/classroom scale vertically according to their time slot, and conflicts are raised when course times overlap. This could be difficult to convey visually to the user if the times are the same, and the overlap is perfect... maybe in that case, the course name on that bar would display "Warning Overlap" in red bold text instead of showing overlapping course names.
+
+We can either drag cards/classrooms around (though im not sure what utility that would have... seems like various sorting methods would suffice) and you can also drag bars/courses from one card to another, effectively reassigning the course to a new classroom.
+
+If a conflict exists, or arises, the corresponding course card will be bordered in red. A conflict will be added to the conflict list in another pane. Solutions are suggested for sets of conflicts or individual conflicts.
+
+Of course we will need good search functionality for classes, classrooms, and other criteria.
+
+User Goals:
+-User wants to correct conflicts to get the schedule to a finished state and export their solution csv.
+    *This is supposed to be accelerated with a pane that lists conflicts, cards that visually indicate conflicts, and bars that indicate course time conflicts. The user is able to visualize their reassignment options more intuitively when the conflicts are represented on both the Course level and Classroom level. One example includes a user resolving conflicts one at a time from a list, only to realize several reassignments don't lead to the most optimal schedule, and they are forced to backtrack changes.
+-User wants to understand patterns of courses or classrooms that have the most conflicts and visualize localized severity... and just how the conflicts are distributed.
+-
+
+..............................................................................................................
+2. List View
+..............................................................................................................
+
+We will want a list detail view of courses and classrooms, with classic sort-by functionality for column-header clicks. Very low-key styling... workflow focused with familiar explorer/filesystem interface.
+
+Customizable columns... we wont be able to have enough space to show all excel columns so a popular select few will be displayed, but the user can add/remove columns into their detailed list. Consider having groups of presets based on a goal the user might have. There should probably be a Course view and a Classroom view.
+
+Suggestions are made to the user to resolve conflicts, namely by showing them classrooms with availability at their time slot and meet the requirements of the class. Also by showing courses that can be added to classrooms.
+
+User Goals:
+-Locate classes to see if they have scheduling conflicts
+-Locate all conflicts
+-Query classes simply for specific information about them. This information would need to be in the currently displayed columns. (by search or sorting and scrolling)
+-Find the maximum/minimum of some attribute by sorting by some integer column
+-Sorting by specific columns to identify relationships with other courses/classrooms
+-Sort by comments to try and locate all courses/classroom
+
