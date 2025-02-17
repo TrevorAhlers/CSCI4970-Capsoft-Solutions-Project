@@ -19,3 +19,7 @@ Python:
     -JWT = JSON Web Tokens
     -Manages authentication, session management, user privilege to certain pages/information.
     -docs: https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage.html
+
+4. pandas
+    -Data analysis, data manipulation.
+    -CSV navigation
