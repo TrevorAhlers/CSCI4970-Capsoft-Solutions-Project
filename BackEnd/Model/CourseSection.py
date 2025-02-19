@@ -1,14 +1,19 @@
-#....................................................................
+#....................................................................................
 # CourseSection Datamodel:
+#____________________________________________________________________________________
 #
-# TODO: Write Class Description
+# Enum codes, like DEPARTMENT_CODE, should be uppercase version of class object
+# variables like department_code. Logic in the data formatter relies on this
+# convention in the row_to_string() function.
 #
-#....................................................................
+# TODO: Make methods to clean data
+#
+#....................................................................................
 
 from enum import Enum
 from typing import Dict
 
-class CourseSectionColumn(Enum):
+class CourseSectionEnum(Enum):
     DEPARTMENT_CODE    = 'Department Code'
     SUBJECT_CODE       = 'Subject Code'
     CATALOG_NUMBER     = 'Catalog Number'
@@ -41,41 +46,44 @@ class CourseSectionColumn(Enum):
     NOTES1             = 'Notes#1'
     NOTES2             = 'Notes#2'
 
+    def lower(self):
+        return self.lower
+
 
 class CourseSection:
     def __init__(self, attributes: Dict[str, str]) -> None:
         # Look up each attribute using the enum's value (i.e. header text)
-        self._department_code   = attributes[		CourseSectionColumn.DEPARTMENT_CODE.value]
-        self._subject_code      = attributes[		CourseSectionColumn.SUBJECT_CODE.value]
-        self._catalog_number    = attributes[		CourseSectionColumn.CATALOG_NUMBER.value]
-        self._section           = attributes[		CourseSectionColumn.SECTION.value]
-        self._course_title      = attributes[		CourseSectionColumn.COURSE_TITLE.value]
-        self._section_type      = attributes[		CourseSectionColumn.SECTION_TYPE.value]
-        self._title_topic       = attributes[		CourseSectionColumn.TITLE_TOPIC.value]
-        self._meeting_pattern   = attributes[		CourseSectionColumn.MEETING_PATTERN.value]
-        self._meetings          = attributes[		CourseSectionColumn.MEETINGS.value]
-        self._instructor        = attributes[		CourseSectionColumn.INSTRUCTOR.value]
-        self._room              = attributes[		CourseSectionColumn.ROOM.value]
-        self._session           = attributes[		CourseSectionColumn.SESSION.value]
-        self._campus            = attributes[		CourseSectionColumn.CAMPUS.value]
-        self._inst_method       = attributes[		CourseSectionColumn.INST_METHOD.value]
-        self._consent           = attributes[		CourseSectionColumn.CONSENT.value]
-        self._credit_hours_min  = attributes[	    CourseSectionColumn.CREDIT_HOURS_MIN.value]
-        self._credit_hours      = attributes[   	CourseSectionColumn.CREDIT_HOURS.value]
-        self._grade_mode        = attributes[		CourseSectionColumn.GRADE_MODE.value]
-        self._attributes        = attributes[		CourseSectionColumn.ATTRIBUTES.value]
-        self._course_attributes = attributes[		CourseSectionColumn.COURSE_ATTRIBUTES.value]
-        self._enrollment        = attributes[	    CourseSectionColumn.ENROLLMENT.value]
-        self._max_enrollment    = attributes[	    CourseSectionColumn.MAX_ENROLLMENT.value]
-        self._wait_cap          = attributes[	    CourseSectionColumn.WAIT_CAP.value]
-        self._rm_cap_request    = attributes[	    CourseSectionColumn.RM_CAP_REQUEST.value]
-        self._cross_listings    = attributes[		CourseSectionColumn.CROSS_LISTINGS.value]
-        self._cross_list_max    = attributes[		CourseSectionColumn.CROSS_LIST_MAX.value]
-        self._cross_list_wait_cap = attributes[	    CourseSectionColumn.CROSS_LIST_WAIT_CAP.value]
-        self._link_to           = attributes[		CourseSectionColumn.LINK_TO.value]
-        self._comments          = attributes[		CourseSectionColumn.COMMENTS.value]
-        self._notes1            = attributes[		CourseSectionColumn.NOTES1.value]
-        self._notes2            = attributes[		CourseSectionColumn.NOTES2.value]
+        self._department_code   = attributes[		CourseSectionEnum.DEPARTMENT_CODE.value]
+        self._subject_code      = attributes[		CourseSectionEnum.SUBJECT_CODE.value]
+        self._catalog_number    = attributes[		CourseSectionEnum.CATALOG_NUMBER.value]
+        self._section           = attributes[		CourseSectionEnum.SECTION.value]
+        self._course_title      = attributes[		CourseSectionEnum.COURSE_TITLE.value]
+        self._section_type      = attributes[		CourseSectionEnum.SECTION_TYPE.value]
+        self._title_topic       = attributes[		CourseSectionEnum.TITLE_TOPIC.value]
+        self._meeting_pattern   = attributes[		CourseSectionEnum.MEETING_PATTERN.value]
+        self._meetings          = attributes[		CourseSectionEnum.MEETINGS.value]
+        self._instructor        = attributes[		CourseSectionEnum.INSTRUCTOR.value]
+        self._room              = attributes[		CourseSectionEnum.ROOM.value]
+        self._session           = attributes[		CourseSectionEnum.SESSION.value]
+        self._campus            = attributes[		CourseSectionEnum.CAMPUS.value]
+        self._inst_method       = attributes[		CourseSectionEnum.INST_METHOD.value]
+        self._consent           = attributes[		CourseSectionEnum.CONSENT.value]
+        self._credit_hours_min  = attributes[	    CourseSectionEnum.CREDIT_HOURS_MIN.value]
+        self._credit_hours      = attributes[   	CourseSectionEnum.CREDIT_HOURS.value]
+        self._grade_mode        = attributes[		CourseSectionEnum.GRADE_MODE.value]
+        self._attributes        = attributes[		CourseSectionEnum.ATTRIBUTES.value]
+        self._course_attributes = attributes[		CourseSectionEnum.COURSE_ATTRIBUTES.value]
+        self._enrollment        = attributes[	    CourseSectionEnum.ENROLLMENT.value]
+        self._max_enrollment    = attributes[	    CourseSectionEnum.MAX_ENROLLMENT.value]
+        self._wait_cap          = attributes[	    CourseSectionEnum.WAIT_CAP.value]
+        self._rm_cap_request    = attributes[	    CourseSectionEnum.RM_CAP_REQUEST.value]
+        self._cross_listings    = attributes[		CourseSectionEnum.CROSS_LISTINGS.value]
+        self._cross_list_max    = attributes[		CourseSectionEnum.CROSS_LIST_MAX.value]
+        self._cross_list_wait_cap = attributes[	    CourseSectionEnum.CROSS_LIST_WAIT_CAP.value]
+        self._link_to           = attributes[		CourseSectionEnum.LINK_TO.value]
+        self._comments          = attributes[		CourseSectionEnum.COMMENTS.value]
+        self._notes1            = attributes[		CourseSectionEnum.NOTES1.value]
+        self._notes2            = attributes[		CourseSectionEnum.NOTES2.value]
 
     @property
     def department_code(self) -> str:

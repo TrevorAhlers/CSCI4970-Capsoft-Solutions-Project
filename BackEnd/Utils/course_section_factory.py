@@ -1,45 +1,41 @@
-import csv
-import os
-import pandas as pd
-import re
-from typing import Dict, List, Optional
-from Model.CourseSection import CourseSection, CourseSectionColumn
-
-#....................................................................
-#
-#	CSV Parser
+#####################################################################################
+# 	CourseSection Object Instantiation
+#CourseSectionEnum
 #
 #	Data extraction from input CSV and preparing the data to populate class objects.
 #	All functions skip the first two lines of the file and treat the third line
 #	as the header row (skiprows=2, header=0).
 #
-#	Build a dictionary of CourseSection objects keyed by columns: "Catalog Number" [hyphen] "Section #""
+#	Builds a dictionary of CourseSection objects keyed by columns: "Catalog Number"
+# 	[hyphen] "Section #""
+#
 #	Example: course_sections["1030-1"] = new CourseSection(inputDictionary)
 # 
 # 	We use the course_sections dictionary to look-up a CourseSection Object by
 # 	its course code with its section number.
-#
-#....................................................................
+#....................................................................................
 
-def main():
-	base_dir = os.path.dirname(__file__)
-	csv_file = os.path.join(base_dir, '..', 'Files', 'Spring2023.csv')
+import csv
+import os
+import pandas as pd
+import re
+from typing import Dict, List, Optional
+from Model.CourseSection import CourseSection, CourseSectionEnum
 
-	default_header_names = {0: "Course Name"}
-
-	
+#....................................................................................
+#####################################################################################
+# 	Reads the CSV and creates a dictionary of CourseSection 
+# objects. Each entry is keyed by "Catalog Number-Section #", for example "1030-1".
+#....................................................................................
 def build_course_sections(filename: str) -> Dict[str, CourseSection]:
-	#####################################################################################
-	# Reads the CSV and creates a dictionary of CourseSection 
-	# objects. Each entry is keyed by "Catalog Number-Section #", for example "1030-1".
-	#####################################################################################
+
 	df = pd.read_csv(filename, skiprows=2, header=0)
 	course_sections: Dict[str, CourseSection] = {}
 
 	for _, row in df.iterrows():
 		row_data: Dict[str, str] = {}
 
-		for enum_col in CourseSectionColumn:
+		for enum_col in CourseSectionEnum:
 			if enum_col.value in df.columns:
 				cell_value = row[enum_col.value]
 				row_data[enum_col.value] = str(cell_value) if pd.notna(cell_value) else ""
@@ -59,11 +55,12 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 	print(f"Built {len(course_sections)} CourseSection objects.")
 	return course_sections
 
-
+#....................................................................................
+#####################################################################################
+# 	Reads the CSV to find all attribute strings
+#....................................................................................
 def get_headers(filename: str, defaults: Optional[Dict[int, str]] = None) -> List[str]:
-	#####################################################################################
-	# Reads the CSV to find all attribute strings
-	#####################################################################################
+
 	try:
 		df = pd.read_csv(filename, skiprows=2, header=0)
 		if not defaults:
@@ -76,10 +73,12 @@ def get_headers(filename: str, defaults: Optional[Dict[int, str]] = None) -> Lis
 	except FileNotFoundError as e:
 		raise FileNotFoundError(f"CSV file not found: {filename}") from e
 
+#....................................................................................
+#####################################################################################
+# 	Reads the CSV to find any 'Peter Kiewit Institute ###' pattern in the text data.
+#....................................................................................
 def get_classroom(filename: str) -> None:
-	#####################################################################################
-	# Reads the CSV to find any 'Peter Kiewit Institute ###' pattern in the text data.
-	#####################################################################################
+
 	try:
 		df = pd.read_csv(filename, skiprows=2, header=0)
 		text_data = df.to_string()
@@ -89,11 +88,13 @@ def get_classroom(filename: str) -> None:
 	except KeyError as e:
 		raise KeyError(f"Expected column missing in CSV: {str(e)}") from e
 
+#....................................................................................
+#####################################################################################
+# 	Reads the CSV and extracts meeting patterns from the 'Meeting Pattern' column 
+# using a regex.
+#....................................................................................
 def get_meeting_pattern(filename: str) -> None:
-	#####################################################################################
-	# Reads the CSV and extracts meeting patterns from the 'Meeting Pattern' column 
-	# using a regex.
-	#####################################################################################
+
 	try:
 		df = pd.read_csv(filename, skiprows=2, header=0)
 		regex_times = (
@@ -108,11 +109,13 @@ def get_meeting_pattern(filename: str) -> None:
 	except KeyError as e:
 		raise KeyError(f"Expected column missing in CSV: {str(e)}") from e
 
+#....................................................................................
+#####################################################################################
+# 	Reads the CSV and finds any uppercase letters in 'Course' and 'Course Title'
+# columns.
+#....................................................................................
 def get_course_code_and_title(filename: str) -> None:
-	#####################################################################################
-	# Reads the CSV and finds any uppercase letters in 'Course' and 'Course Title'
-	# columns.
-	#####################################################################################
+
 	try:
 		df = pd.read_csv(filename, skiprows=2, header=0)
 		regex_caps = r'[A-Z]'
@@ -127,5 +130,4 @@ def get_course_code_and_title(filename: str) -> None:
 	except KeyError as e:
 		raise KeyError(f"Expected column missing in CSV: {str(e)}") from e
 
-if __name__ == "__main__":
-	main()
+#....................................................................................
