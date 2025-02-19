@@ -13,6 +13,12 @@ from Model.CourseSection import CourseSection, CourseSectionColumn
 #	All functions skip the first two lines of the file and treat the third line
 #	as the header row (skiprows=2, header=0).
 #
+#	Build a dictionary of CourseSection objects keyed by columns: "Catalog Number" [hyphen] "Section #""
+#	Example: course_sections["1030-1"] = new CourseSection(inputDictionary)
+# 
+# 	We use the course_sections dictionary to look-up a CourseSection Object by
+# 	its course code with its section number.
+#
 #....................................................................
 
 def main():
@@ -21,12 +27,6 @@ def main():
 
 	default_header_names = {0: "Course Name"}
 
-	# Build a dictionary of CourseSection objects keyed by columns: "Catalog Number" [hyphen] "Section #""
-	# Example: course_sections["1030-1"] = new CourseSection(inputDictionary)
-	# 
-	# We use the course_sections dictionary to look-up a CourseSection Object by
-	# its course code with its section number.
-	course_sections = build_course_sections(csv_file)
 	
 def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 	#####################################################################################
