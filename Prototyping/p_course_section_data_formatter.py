@@ -5,8 +5,8 @@
 #  CourseSection Objects + Needed Attributes -> List of Strings to Represent Data
 #....................................................................................
 
-from Model.CourseSection import CourseSection, CourseSectionEnum
-from Utils import course_section_factory as csvp
+from p_CourseSection import CourseSection, CourseSectionEnum
+from p_course_section_factory import build_course_sections as csvp
 
 import csv
 import os

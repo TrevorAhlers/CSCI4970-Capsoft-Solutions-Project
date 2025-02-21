@@ -20,7 +20,7 @@ import os
 import pandas as pd
 import re
 from typing import Dict, List, Optional
-from Model.CourseSection import CourseSection, CourseSectionEnum
+from p_CourseSection import CourseSection, CourseSectionEnum
 
 
 #....................................................................................
