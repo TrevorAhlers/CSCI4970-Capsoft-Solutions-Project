@@ -53,7 +53,7 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 	#print(df.columns.tolist())
 	#print(df.head(10))
 
-	print(f"Built {len(course_sections)} CourseSection objects.")
+	print(f"p_course_section_factory: Built {len(course_sections)} CourseSection objects.")
 	return course_sections
 
 #....................................................................................
