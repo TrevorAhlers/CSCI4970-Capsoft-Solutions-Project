@@ -43,6 +43,7 @@ def generate_strings_section_view(course_section_objects: dict, attributes: list
 # rows".
 #....................................................................................
 def row_to_string(course_section, attributes):
+
 	display_values = []
 	for attr in attributes:
 		value = getattr(course_section, attr.name.lower(), "")
