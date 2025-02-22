@@ -1,0 +1,25 @@
+Python:
+
+1. flask
+    -Routes requests with the following request types:
+        GET: Retrieve information.
+        POST: Send new data to the server.
+        PUT: Update a resource completely.
+        PATCH: Update a resource partially.
+        DELETE: Remove a resource.
+        OPTIONS: Discover what methods are supported.
+        HEAD: Like GET but returns headers only, without the body.
+    -Interfaces well with Angular
+    -Uses HTML templates
+
+2. gunicorn
+    -Allows concurrent processes... better production readiness.
+
+3. flask_jwt_extended
+    -JWT = JSON Web Tokens
+    -Manages authentication, session management, user privilege to certain pages/information.
+    -docs: https://flask-jwt-extended.readthedocs.io/en/stable/basic_usage.html
+
+4. pandas
+    -Data analysis, data manipulation.
+    -CSV navigation

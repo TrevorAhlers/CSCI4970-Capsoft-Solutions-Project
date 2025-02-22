@@ -1,0 +1,62 @@
+
+User Interface Brainstorming:
+
+*Undo/Redo Layers is a critical feature
+
+Questions for development:
+=============================
+
+1. I'm realizing that classrooms (cards) will often have more courses than can be displayed without overflow on the card; I'm wondering if we make those cards longer vertically or horizontally to accommodate the class list better or if we should make the list of courses scrollable.
+
+2. We should try to think of user goals that support why our any of our interface designs are better than a more plain-but-familiar filesystem with search functionality (I believe we should support plan file system view regardless, but the question is why is a user seeking out our design instead of the filesystem)
+
+Filesystem User Goals:
+-Locate classes to see if they have scheduling conflicts
+-Locate all conflicts
+-Query classes simply for specific information about them. This information would need to be in the currently displayed columns. (by search or sorting and scrolling)
+-Find the maximum/minimum of some attribute by sorting by some integer column
+-Sorting by specific columns to identify relationships with other courses/classrooms
+-Sort by comments to try and locate all courses/classroom
+
+Cards Design User Goals:
+-User wants to correct conflicts to get the schedule to a finished state and export their solution csv.
+    *This is supposed to be accelerated with a pane that lists conflicts, cards that visually indicate conflicts, and bars that indicate course time conflicts. The user is able to visualize their reassignment options more intuitively when the conflicts are represented on both the Course level and Classroom level. One example includes a user resolving conflicts one at a time from a list, only to realize several reassignments don't lead to the most optimal schedule, and they are forced to backtrack changes.
+-User wants to understand patterns of courses or classrooms that have the most conflicts and visualize localized severity... and just how the conflicts are distributed.
+
+=============================
+
+..............................................................................................................
+    Card Grid View
+..............................................................................................................
+
+A card is a PKI classroom, with the class name and identifer XXXX-1234-00.
+
+These cards are in a grid on the user view area.
+
+A card contains bars (think google calendar events) which are the the sections/courses that are scheduled to that room. These bars are color-coded for the most comprehensive user experience. Users might be able to change their color of cards/bars coded by "different colors based on course seniority" to "different colors based on student enrollment count" and other options like departments, or partially remote versus fully in-person.
+
+Bars are oriented in chronological order within a card where the courses with the earliest time slot are at the top of the list. (Would this really matter though? The time slots might only apply to Tu/Thurs or something so what day of the weeks, and others M/W/F. How many bars can be in a card before its just too many courses to have a presentable minimalistic design that we can gain insights from?)
+
+We can either drag cards/classrooms around (though im not sure what utility that would have... seems like various sorting methods would suffice) and you can also drag bars/courses from one card to another, effectively reassigning the course to a new classroom.
+
+If a conflict exists, or arises, the corresponding course card will be bordered in red. A conflict will be added to the conflict list in another pane. Solutions are suggested for sets of conflicts or individual conflicts.
+
+Of course we will need good search functionality for classes, classrooms, and other criteria.
+
+..............................................................................................................
+    Card Single View
+..............................................................................................................
+
+Clicking into one classroom card will blow up that card to occupy the viewing pane, which previously held the card grid.
+
+Now we see a timeline view for the scheduled courses. (This could be problematic and too busy since we would be representing every day of the week for many classes)... what user goals would this solve?
+
+..............................................................................................................
+    List View
+..............................................................................................................
+
+We will want a list detail view of courses and classrooms, with classic sort-by functionality for column-header clicks. Very low-key styling... workflow focused with familiar explorer/filesystem interface.
+
+Customizable columns... we wont be able to have enough space to show all excel columns so a popular select few will be displayed, but the user can add/remove columns into their detailed list. Consider having groups of presets based on a goal the user might have. There should probably be a Course view and a Classroom view.
+
+Suggestions are made to the user to resolve conflicts, namely by showing them classrooms with availability at their time slot and meet the requirements of the class. Also by showing courses that can be added to classrooms.
