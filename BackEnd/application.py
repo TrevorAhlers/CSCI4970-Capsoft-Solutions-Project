@@ -98,6 +98,20 @@ def abort():
 		flash("No previous state found.")
 	return redirect(url_for('index'))
 
+
+
+
+@application.route('/api/data', methods=['GET'])
+def get_data():
+    data = {
+        "message": "Hello from Flask!",
+        "content": "This is some data from the backend."
+    }
+    return jsonify(data)
+
+if __name__ == '__main__':
+    application.run(debug=True)
+
 #....................................................................................
 
 if __name__ == "__main__":
