@@ -1,0 +1,39 @@
+// Background styling for the entire page
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #001f3f, #003366); // Navy gradient
+  }
+  
+  // Container for login content
+  .login-container {
+    padding: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  // Login button styling
+  button {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ff7f50; // Coral (complementary to navy)
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  // Hover and active (click) effects
+  button:hover {
+    background-color: #ff5722; // Darker coral for hover effect
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
