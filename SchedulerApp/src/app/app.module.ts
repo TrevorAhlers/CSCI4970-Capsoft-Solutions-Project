@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component'; 
 
+
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent }
@@ -14,11 +15,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent  
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    HttpClientModule
   ],
   bootstrap: [AppComponent]
 })
