@@ -18,11 +18,13 @@ import Utils.course_section_factory as csvp
 # Other
 from flask import Flask, jsonify, session, request, redirect, url_for, flash
 import os
+from flask_cors import CORS
 
 #....................................................................................
 
 application = Flask(__name__)
 application.secret_key = 'your_secret_key'
+CORS(application)
 
 
 #....................................................................................
