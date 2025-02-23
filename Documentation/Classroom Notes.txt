@@ -1,0 +1,78 @@
+Unique to Website: 
+https://www.unomaha.edu/college-of-information-science-and-technology/about/classrooms.php
+
+145, 149, 150, 151, 154A, 154B, 154C, 154D, 154E, 154F, 158, 249, 250, 261, 278, 279, 352, 368, 391A
+
+------------------------------
+* 154A-F are student collaboration rooms (bring your own laptop)... this is why these^ arent assigned out.
+------------------------------
+
+Unique to Spreadsheet:
+127, 130, 311, 313, 340
+
+------------------------------
+*Where are these^ on the site? No info on these??
+------------------------------
+
+Found on both:
+108, 153, 155, 157, 160, 161, 164, 252, 256, 259, 260, 263, 269, 270, 274, 276, 350, 361
+
+------------------------------
+
+room attributes:
+
+room_number
+seats
+displays
+computer_count
+information_and_connectivity
+
+------------------------------
+
+...We need to visit/contact PKI and ask for a higher resolution building map.
+
+Knowing what departments go to what rooms (color coded) can be a good sorting strategy.
+
+room departments:
+
+UNO College of Information Science & Technology: Main Office
+green:
+170-177 (all)
+143
+150
+152
+155
+156
+157
+158
+158D
+
+College of Engineering Offices (Student Services/Recruitment)
+red:
+100A
+102A
+102B
+102C
+102D
+103
+107C
+107D
+107E
+108
+117
+117A
+117C
+117D
+117K
+120
+120A
+120B
+136
+153
+158A
+158B
+159
+160
+161
+162
+164

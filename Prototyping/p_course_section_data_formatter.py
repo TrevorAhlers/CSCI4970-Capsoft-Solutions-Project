@@ -1,5 +1,5 @@
 #####################################################################################
-#   CourseSection Data Formatter
+#   CourseSection Data Formatter Prototype
 #____________________________________________________________________________________
 #
 #  CourseSection Objects + Needed Attributes -> List of Strings to Represent Data
@@ -13,7 +13,7 @@ import os
 import sys
 
 def main():
-      print("course_section_data_formatter hello")
+      print("p_course_section_data_formatter: ran as main. No logic in the main() function.")
 
 #####################################################################################
 # Takes dictionary of CourseSection objects and outputs formatted strings or "data

@@ -1,7 +1,8 @@
 --------------------------------------
 create virtual environment for python when you first clone project:
 --------------------------------------
-    python -m venv .venv
+    1. cd BackEnd
+    2. python -m venv .venv
 
 --------------------------------------
 activate the virtual environment (notice your terminal is now using the venv)
