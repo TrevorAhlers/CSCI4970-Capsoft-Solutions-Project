@@ -13,6 +13,7 @@ activate the virtual environment (notice your terminal is now using the venv)
     then install libraries:
     pip install flask
     pip install pandas
+    pip install flask-cors
 
     (then type deactivate to get out of the venv)
 

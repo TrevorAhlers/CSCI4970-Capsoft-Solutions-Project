@@ -52,10 +52,16 @@ def index():
 	data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
 	
 	html_content = "<html><head><title>Course Info</title></head><body><pre>"
+	# Build a header row from the attribute names
+	header_row = " | ".join([f"{attr.name:<30.30}" for attr in attributes])
+	html_content += header_row + "\n"
+	html_content += "-" * len(header_row) + "\n"
+	
 	for row in data_row_list:
 		html_content += f"{row}\n"
 	html_content += "</pre></body></html>"
 	return html_content
+
 
 
 #....................................................................................

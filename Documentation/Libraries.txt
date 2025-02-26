@@ -23,3 +23,9 @@ Python:
 4. pandas
     -Data analysis, data manipulation.
     -CSV navigation
+
+5. flask-cors
+    -Flask-CORS is a lightweight extension for Flask that automatically adds necessary HTTP headers
+    -Lets our app accept requests from different domains.
+    -This is really useful when your Angular front end and Flask back end run on separate servers or ports,
+    preventing cross-origin errors without extra hassle.
