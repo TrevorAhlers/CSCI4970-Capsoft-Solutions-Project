@@ -48,6 +48,6 @@ dev-tyler   -> Focus on documentation, data models, data model factories, and fl
 dev-Haresh  -> Focus on data extraction, data formatting, and assignment logic\
 dev-trevor  -> Front-end development and design\
 dev-honora  -> Data analysis\
-dev-fara    -> Data analysis\
+dev-fara    -> Data analysis
 
 All experimental code is contained in our Prototyping directory. This directory essentially contains a copy of the back-end project files. Any accepted prototypes are then transitioned into the larger project structure for implementation. Currently, our most experimental prototyping is our logic to make use of our data models. Currently this means displaying information. In the future this will mean assigning rooms to course-sections and the logic to reason the appropriate assignments.
