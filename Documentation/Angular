@@ -1,5 +1,0 @@
-Install npm:
-npm install
-
-Run:
-npx ng serve
