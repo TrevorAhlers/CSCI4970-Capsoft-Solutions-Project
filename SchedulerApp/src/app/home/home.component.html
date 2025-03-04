@@ -1,8 +1,3 @@
-<div *ngIf="data">
-    <h1>{{ data.message }}</h1>
-    <p>{{ data.content }}</p>
-  </div>
-
 
 <div class="Scheduler_app">
   <h1 class="sch">Schedular App</h1>
@@ -29,7 +24,7 @@
       <label for="myfile">Upload File:</label>
       <br>
       <input type="file" ><br><br>
-      <input type="submit">
+      <input type="submit" (click)="navigateToData()">
     </form>
 
   </div>
