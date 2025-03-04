@@ -3,12 +3,12 @@ import { DataService } from './data.service';  // Import the data service
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
+    selector: 'app-data',
+    templateUrl: './data.component.html',
+    styleUrls: ['./data.component.scss'],
     standalone: false
 })
-export class HomeComponent implements OnInit {
+export class DataComponent implements OnInit {
 
   data: any;  // Variable to store the data
   profileImage:string = "Capture.png"
@@ -32,7 +32,5 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  navigateToData() {
-    this.router.navigate(['/data']);
-  }
+
 }

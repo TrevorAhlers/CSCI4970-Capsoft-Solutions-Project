@@ -1,0 +1,92 @@
+
+:host {
+    display: flex;
+   
+    height: 100vh;
+  background: lightcyan;
+    border: 1px solid black;
+    padding: 10px;
+    
+  }
+
+
+
+.Scheduler_app.h1{
+    text-align: center;
+    
+    margin: 0;
+
+}
+
+.sch{
+    position: absolute;
+    left: 660px;
+}
+.profile_box.your_profile{
+   position: relative;
+   bottom: 500px;
+   
+}
+
+.back_home_button{
+    position: relative;
+    bottom: 100px;
+    left:130px;
+    
+}
+.profile_box{
+
+   
+    border: 5px solid lightgrey;
+    padding: 40px;
+    margin: 2px;
+    box-shadow: 10px 5px 5px grey;
+    border-color: black;
+    background-color: lightblue;
+    width:240px;
+    height:130px;
+    position: relative;
+    
+    left: 10px;
+}
+
+.upload_box{
+    position: absolute;
+    
+    border: 5px solid lightgrey;
+    padding: 40px;
+    margin: 2px;
+    box-shadow: 10px 1px 1px lightgrey;
+    border-color: black;
+    background-color: lightblue;
+    width: 750px;
+    height:700px;
+    left:450px;
+    top:150px;
+
+}
+
+.user_pic{
+    width:100px;
+    height:100px;
+    position: relative;
+    bottom: 10px;
+}
+
+.Account{
+    position: relative;
+    left:120px;
+    bottom: 120px;
+
+}
+
+
+.profile_box.h1{
+    text-align: center;
+}
+
+.upload_file{
+    position: relative;
+    left:240px;
+    top:280px;
+}

@@ -1,0 +1,12 @@
+<div class="profile_box">
+  
+    <img class="user_pic" src="/assets/Capture.JPG" alt="profile-pic" >
+    <p class="Account"> Guest User</p>
+    <button class="back_home_button" (click)="navigateToHome()">Sign off</button>
+  
+  </div>
+
+<div *ngIf="data">
+    <h1>{{ data.message }}</h1>
+    <p>{{ data.content }}</p>
+  </div>
