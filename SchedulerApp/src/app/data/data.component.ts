@@ -10,23 +10,17 @@ import { Router } from '@angular/router';
 })
 export class DataComponent implements OnInit {
 
-  data: any;  // Variable to store the data
-  profileImage:string = "Capture.png"
- 
-  
+  courses: any[] = [];
+
   constructor(private dataService: DataService, private router:Router) {}
 
   ngOnInit(): void {
-    // Fetch data from the Flask backend
-    this.dataService.getData().subscribe(
-      (response) => {
-        this.data = response;  // Store the response data in the component
-      },
-      (error) => {
-        console.error('Error fetching data:', error);  // Handle errors
-      }
-    );
+    this.dataService.getCourses().subscribe(data => {
+      this.courses = data.courses;
+    });
   }
+
+
 
   navigateToHome() {
     this.router.navigate(['/home']);

@@ -6,7 +6,19 @@
   
   </div>
 
-<div *ngIf="data">
-    <h1>{{ data.message }}</h1>
-    <p>{{ data.content }}</p>
-  </div>
+
+  <div class="resizable-box">
+    <div *ngIf="courses.length > 0;">
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let key of courses[0] | keyvalue">{{ key.key }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of courses">
+            <td *ngFor="let key of course | keyvalue">{{ key.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
