@@ -111,14 +111,29 @@ def abort():
 
 @application.route('/api/data', methods=['GET'])
 def get_data():
-    data = {
-        "message": "Hello from Flask!",
-        "content": "This is some data from the backend."
-    }
-    return jsonify(data)
+    base_dir = os.path.dirname(__file__)
+    csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
+    
+    attributes = [
+        CourseSectionEnum.CATALOG_NUMBER,
+        CourseSectionEnum.SECTION,
+        CourseSectionEnum.ROOM,
+        CourseSectionEnum.ENROLLMENT,
+        CourseSectionEnum.MAX_ENROLLMENT,
+    ]
+    
+    course_section_instantiation_dict = csvp.build_course_sections(csv_file)
+    data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
 
-if __name__ == '__main__':
-    application.run(debug=True)
+    data = []
+    for row in data_row_list:
+        values = row.split(" | ")  # Assuming data is formatted similarly
+        entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
+        data.append(entry)
+
+    return jsonify({"courses": data})
+
+
 
 #....................................................................................
 
