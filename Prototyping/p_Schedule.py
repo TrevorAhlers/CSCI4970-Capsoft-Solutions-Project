@@ -2,8 +2,35 @@
 # Week class and Day class.
 #____________________________________________________________________________________
 #
-# This is not ready to use... work in progress.
+# DEPRECATED... scheduling is built into Classroom model now.
 #....................................................................................
+
+
+
+# DEPRECATED... scheduling is built into Classroom model now.
+
+
+# DEPRECATED... scheduling is built into Classroom model now.
+
+
+# DEPRECATED... scheduling is built into Classroom model now.
+
+
+# DEPRECATED... scheduling is built into Classroom model now.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 from enum import Enum
 from typing import Dict

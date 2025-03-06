@@ -6,14 +6,14 @@
 #....................................................................................
 
 from Model.CourseSection import CourseSection, CourseSectionEnum
-from Utils import course_section_factory as csvp
+from Utils import course_section_factory as csf
 
 import csv
 import os
 import sys
 
 def main():
-      print("course_section_data_formatter hello")
+      print("course_section_data_formatter: Ran as main() ... No output.")
 
 #####################################################################################
 # Takes dictionary of CourseSection objects and outputs formatted strings or "data

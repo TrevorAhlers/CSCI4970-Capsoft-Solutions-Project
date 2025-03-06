@@ -14,11 +14,20 @@
 from Model.CourseSection import CourseSection, CourseSectionEnum
 from Utils.state_manager import backup_session_data, restore_session_data
 from Controller.course_section_data_formatter import generate_strings_section_view
-import Utils.course_section_factory as csvp
+import Utils.course_section_factory as csf
+import Utils.classroom_factory as cf
+import Controller.assigner as assigner
 # Other
 from flask import Flask, jsonify, session, request, redirect, url_for, flash
 import os
 from flask_cors import CORS
+
+
+#....................................................................................
+
+# FILE NAMES: (note it's currently using a test CSV to show a conflict)
+INPUT_CSV = 'Spring2023 conflict.csv'
+ROOMS_CSV = 'PKIRooms.csv'
 
 #....................................................................................
 
@@ -39,17 +48,30 @@ CORS(application)
 #....................................................................................
 @application.route('/')
 def index():
-	base_dir = os.path.dirname(__file__)
-	csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
-	attributes = [
-		CourseSectionEnum.CATALOG_NUMBER,
-		CourseSectionEnum.SECTION,
-		CourseSectionEnum.ROOM,
-		CourseSectionEnum.ENROLLMENT,
-		CourseSectionEnum.MAX_ENROLLMENT,
-	]
-	course_section_instantiation_dict = csvp.build_course_sections(csv_file)
-	data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
+
+	sections = build_sections()
+	classrooms = build_classrooms()
+
+	assigner.assign_sections_to_rooms(classrooms, sections)
+
+	attributes = []
+
+	for attr in CourseSectionEnum:
+		attributes.append(attr)
+
+	
+	data_row_list = generate_strings_section_view(sections, attributes)
+
+
+	# testing conflicts
+	section1 = sections["3030-1"]
+	section3 = sections["3030-3"]
+
+	print(section1.room, "--", section1.meetings)
+	print(section3.room, "--", section3.meetings)
+
+	print(classrooms["117"].find_conflicts())
+
 	
 	html_content = "<html><head><title>Course Info</title></head><body><pre>"
 	# Build a header row from the attribute names
@@ -73,8 +95,8 @@ def index():
 @application.route('/api/course-info')
 def course_info():
     base_dir = os.path.dirname(__file__)
-    csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
-    instantiation_dict = csvp.build_course_sections(csv_file)
+    section_csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
+    instantiation_dict = csf.build_course_sections(section_csv_file)
     info_list = generate_strings_section_view(instantiation_dict)
     return jsonify(info_list)
 
@@ -117,12 +139,26 @@ def get_data():
     }
     return jsonify(data)
 
-if __name__ == '__main__':
-    application.run(debug=True)
+
+#....................................................................................
+# Helper functions:
+
+def build_classrooms():
+	base_dir = os.path.dirname(__file__)
+	classroom_csv_file = os.path.join(base_dir, 'Files', ROOMS_CSV)
+	classroom_instantiation_dict = cf.build_classrooms(classroom_csv_file)
+	return classroom_instantiation_dict
+
+def build_sections():
+	base_dir = os.path.dirname(__file__)
+	section_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
+	course_section_instantiation_dict = csf.build_course_sections(section_csv_file)
+	return course_section_instantiation_dict
+
 
 #....................................................................................
 
-if __name__ == "__main__":
-	application.run()
+if __name__ == '__main__':
+    application.run(debug=True)
 
 #....................................................................................
