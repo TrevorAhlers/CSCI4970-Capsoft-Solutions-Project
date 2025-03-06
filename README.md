@@ -1,5 +1,4 @@
-# SPR 2024 CSCI4970-Capstone
-# Peter Kiewit Institute Room Assignment and Scheduling Application
+# SPR 2024 CSCI4970-Capstone: Group 3: Peter Kiewit Institute Room Assignment and Scheduling Application
 
 ## ABOUT:
 
@@ -19,13 +18,13 @@ Each semester, the Classroom Coordinator receives a CSV file containing all cour
 1. Classroom Coordinators come and go, so our platform must cater to a diverse set of preferences and workflows to drive engagement and remain relevant to all users.
 2. The input spreadsheet is part of a standardized course-section scheduling system used by many colleges, and our output CSV will conform to this format.
 
-## RELEASE NOTES MILESTONE 1 (v0.1.1) 02/25/2025
+## RELEASE NOTES MILESTONE 1 (v0.1.25)
 
-This first release focuses on our data models and their basic manipulation to display information comprehensively (row/column format). We can populate all course sections into objects and extract the necessary data for display.
+This first release focuses on our data models and their basic manipulation to display information comprehensively (row/column format). We can populate all course sections into objects and extract the necessary data for display. Current implementation displays the following attributes of a course-section: Catalog Number, Section Number, Room, Enrollment Count, and Max Enrollment.
 
-Currently, front-end development is largely decoupled from the back-end. We have demonstrated passing information between the two, but no significant functionality has been completed on the front-end, which is currently in an aesthetic design phase.
+At this early stage, front-end development is largely decoupled from the back-end. We have demonstrated passing information between the two using an API call, but no significant functionality has been completed on the front-end, which is currently in an aesthetic design phase. Follow instructions in `Documentation` > `Angular Setup.txt` to run the login page.
 
-Our web server (deployed on AWS Elastic Beanstalk) scales according to user demand and is implemented for production testing. So far, testing has been limited to the IDE using prototype files or via localhost. To test the web platform, simply run the `application.py` file located in the `BackEnd` directory. (You will need to install the required Python libraries as documented in the Libraries file in the Documentation directory of the project.)
+Our web server (deployed on AWS Elastic Beanstalk) scales according to user demand automatically. So far, testing has been limited to the IDE using prototype files or via localhost, though the production server is implemented and available to test on. To test the web platform, simply run the `application.py` file located in the `BackEnd` directory. (You will need to install the required Python libraries as documented in the Libraries file in the Documentation directory of the project.) Instructions for establishing a python virtual environment (venv) can be found in `Documentation` > `Python Setup.txt`
 
 ### Current Libraries:
 1. flask
