@@ -1,6 +1,6 @@
 #####################################################################################
 # 	CourseSection Object Instantiation
-#CourseSectionEnum
+#
 #
 #	Data extraction from input CSV and preparing the data to populate class objects.
 #	All functions skip the first two lines of the file and treat the third line
@@ -22,6 +22,19 @@ import re
 from typing import Dict, List, Optional
 from p_CourseSection import CourseSection, CourseSectionEnum
 
+float_headers = [
+	"Section #",
+	"Credit Hrs Min",
+	"Credit Hrs",
+	"Enrollment",
+	"Maximum Enrollment",
+	"Wait Cap",
+	"Rm Cap Request",
+	"Cross-list Maximum",
+	"Cross-list Wait Cap",
+	"Cross-list Rm Cap Request",
+]
+
 
 #....................................................................................
 #####################################################################################
@@ -29,32 +42,47 @@ from p_CourseSection import CourseSection, CourseSectionEnum
 # objects. Each entry is keyed by "Catalog Number-Section #", for example "1030-1".
 #....................................................................................
 def build_course_sections(filename: str) -> Dict[str, CourseSection]:
-
 	df = pd.read_csv(filename, skiprows=2, header=0)
 	course_sections: Dict[str, CourseSection] = {}
 
 	for _, row in df.iterrows():
 		row_data: Dict[str, str] = {}
-
 		for enum_col in CourseSectionEnum:
 			if enum_col.value in df.columns:
 				cell_value = row[enum_col.value]
-				row_data[enum_col.value] = str(cell_value) if pd.notna(cell_value) else ""
+				cell_str = str(cell_value) if pd.notna(cell_value) else ""
 
-		# Build the unique key "Course-Section #"
-		catalog_num_str = row_data.get('Catalog Number', '')
-		section_str = row_data.get('Section #', '')
-		if section_str.endswith(".0"): # convert floats to a single integer
-			section_str = section_str[:-2]
+				# We make_int() if it can be a value that ends in ".0", which we
+				# don't want.
+				if enum_col.value in float_headers:
+					row_data[enum_col.value] = make_int(cell_str)
+				else:
+					row_data[enum_col.value] = cell_str
+
+		# This whole block just constructs a unique id that we use as a dict key
+		# for the course_sections dictionary
+		catalog_num_str = row_data.get("Catalog Number", "")
+		section_str = row_data.get("Section #", "")
 		key = f"{catalog_num_str}-{section_str}"
-		course_sections[key] = CourseSection(row_data)
 
-	# DEBUG
-	#print(df.columns.tolist())
-	#print(df.head(10))
+		if len(key) > 1:
+			#print(key)
+			course_sections[key] = CourseSection(row_data)
 
-	print(f"p_course_section_factory: Built {len(course_sections)} CourseSection objects.")
+	print(f"Built {len(course_sections)} CourseSection objects.")
 	return course_sections
+
+
+#....................................................................................
+#####################################################################################
+# 	Removes trailing ".0" if it exists in the attribute 
+#....................................................................................
+def make_int(attribute: str) -> str:
+	if attribute.endswith(".0"):
+		attribute = attribute[:-2]
+		return attribute
+	return attribute
+
 
 #....................................................................................
 #####################################################################################

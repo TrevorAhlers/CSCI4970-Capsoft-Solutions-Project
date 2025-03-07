@@ -1,0 +1,8 @@
+Navigate to the SchedulerApp directory:
+cd SchedulerApp
+
+Install npm:
+npm install
+
+Run:
+npx ng serve

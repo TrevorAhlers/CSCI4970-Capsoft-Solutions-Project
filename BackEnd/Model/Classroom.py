@@ -1,7 +1,7 @@
 from enum import Enum
 import re
 from typing import Dict, List, Tuple
-from p_CourseSection import CourseSection
+from Model.CourseSection import CourseSection
 
 DAY_OFFSETS = {
 	'M': 0 * 1440,

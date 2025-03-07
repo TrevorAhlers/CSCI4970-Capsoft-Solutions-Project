@@ -11,7 +11,7 @@
 #....................................................................................
 
 from enum import Enum
-from typing import Dict
+from typing import Dict, Optional
 
 class CourseSectionEnum(Enum):
     DEPARTMENT_CODE    = 'Department Code'
@@ -84,6 +84,8 @@ class CourseSection:
         self._comments          = attributes[		CourseSectionEnum.COMMENTS.value]
         self._notes1            = attributes[		CourseSectionEnum.NOTES1.value]
         self._notes2            = attributes[		CourseSectionEnum.NOTES2.value]
+
+        self._room_number = self._room.split()[-1]
 
     @property
     def department_code(self) -> str:
@@ -172,6 +174,14 @@ class CourseSection:
     @room.setter
     def room(self, value: str) -> None:
         self._room = value
+
+    @property
+    def room_number(self) -> str:
+        return self._room_number
+
+    @room_number.setter
+    def room_number(self, value: str) -> None:
+        self._room_number = value
 
     @property
     def session(self) -> str:
