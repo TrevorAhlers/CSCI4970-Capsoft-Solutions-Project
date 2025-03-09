@@ -25,3 +25,11 @@ git merge dev-tyler
 git push origin dev
 git checkout dev-tyler <--- switch back to dev-tyler
 git pull origin dev <--- Sync dev-tyler with the latest dev update (if someone pushed after your merge... which is unlikely but possible)
+
+heres also one to merge dev to main:
+git checkout main
+git pull origin main
+git merge dev
+git push origin main
+git checkout dev
+git pull origin main
