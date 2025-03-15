@@ -55,7 +55,7 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 				# We make_int() if it can be a value that ends in ".0", which we
 				# don't want.
 				if enum_col.value in float_headers:
-					row_data[enum_col.value] = make_int(cell_str)
+					row_data[enum_col.value] = make_int_str(cell_str)
 				else:
 					row_data[enum_col.value] = cell_str
 
@@ -69,8 +69,8 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 		if len(key) > 1:
 			cs = CourseSection(row_data)
 			# EXCLUSION LOGIC PROTOTYPE
-			if cs.inst_method != 'Distance Education':
-				if (cs.session != 'UNO 5-6 Weeks') and (cs.session != 'Three Week'):
+			if (cs.session != 'UNO 5-6 Weeks') and (cs.session != 'Three Week'):
+				if (cs.inst_method != "Totally Online") and (cs.inst_method != "Off Campus"):
 					course_sections[key] = cs
 
 	print(f"Built {len(course_sections)} CourseSection objects.")
@@ -81,7 +81,7 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 #####################################################################################
 # 	Removes trailing ".0" if it exists in the attribute 
 #....................................................................................
-def make_int(attribute: str) -> str:
+def make_int_str(attribute: str) -> str:
 	if attribute.endswith(".0"):
 		attribute = attribute[:-2]
 		return attribute

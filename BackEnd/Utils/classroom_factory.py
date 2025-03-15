@@ -28,8 +28,15 @@ def build_classrooms(filename: str) -> Dict[str, Classroom]:
         tokens = room_num_str.split()
         key = tokens[-1] if tokens else room_num_str
 
-        #print(key)
         cl = Classroom(row_data)
+        if not cl.seats:
+            cl.seats = "N/A"
+        if not cl.computer_count:
+            cl.computer_count = "N/A"
+        if not cl.displays:
+            cl.displays = "N/A"
+        if not cl.info_and_connectivity:
+            cl.info_and_connectivity = "N/A"
         classrooms[key] = cl
 
     print(f"Built {len(classrooms)} Classroom objects.")

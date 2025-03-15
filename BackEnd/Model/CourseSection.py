@@ -121,7 +121,10 @@ class CourseSection:
         self._meeting_pattern   = attributes[		CourseSectionEnum.MEETING_PATTERN.value]
         #self._meetings          = attributes[		CourseSectionEnum.MEETINGS.value]
         self._instructor        = attributes[		CourseSectionEnum.INSTRUCTOR.value]
-        self._room              = attributes[		CourseSectionEnum.ROOM.value]
+        self._room = (
+            attributes.get(CourseSectionEnum.ROOM.value)
+            if "Peter Kiewit Institute" in str(attributes.get(CourseSectionEnum.ROOM.value, ""))
+            else "TBD")
         self._session           = attributes[		CourseSectionEnum.SESSION.value]
         self._campus            = attributes[		CourseSectionEnum.CAMPUS.value]
         self._inst_method       = attributes[		CourseSectionEnum.INST_METHOD.value]
@@ -144,13 +147,29 @@ class CourseSection:
         self._notes2            = attributes[		CourseSectionEnum.NOTES2.value]
 
         self._room_numbers = [split_rooms(self._room)[0]] if self._room else ["-1"]
-        self.id = f'{self._subject_code} {self._catalog_number}-{self._section}'
+        self._id = f'{self._subject_code} {self._catalog_number}-{self._section}'
 
         self._parsed_meetings = parse_meetings(self._meeting_pattern)
-        self.start_time = [self._parsed_meetings[0][1]] if parse_meetings(self._meeting_pattern) else -1
-        self.end_time   = [self._parsed_meetings[0][2]] if parse_meetings(self._meeting_pattern) else -1
+        self._start_time = [self._parsed_meetings[0][1]] if parse_meetings(self._meeting_pattern) else -1
+        self._end_time   = [self._parsed_meetings[0][2]] if parse_meetings(self._meeting_pattern) else -1
         self._rooms = split_rooms(self._room)
-        
+        self._room_freq = {}
+
+    @property
+    def room_freq(self) -> List:
+        return self._room_freq
+
+    @room_freq.setter
+    def room_freq(self, value: List) -> None:
+        self._room_freq = value 
+
+    @property
+    def room_numbers(self) -> List:
+        return self._room_numbers
+
+    @room_numbers.setter
+    def room_numbers(self, value: List) -> None:
+        self._room_numbers = value 
 
     @property
     def parsed_meetings(self) -> List:
@@ -263,14 +282,6 @@ class CourseSection:
     @room.setter
     def room(self, value: str) -> None:
         self._room = value
-
-    @property
-    def room_number(self) -> str:
-        return self._room_number
-
-    @room_number.setter
-    def room_number(self, value: str) -> None:
-        self._room_number = value
 
     @property
     def session(self) -> str:

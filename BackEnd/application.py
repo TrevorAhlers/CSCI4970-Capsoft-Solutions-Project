@@ -20,6 +20,7 @@ import Utils.course_section_factory as csf
 import Utils.classroom_factory as cf
 import Utils.conflict_factory as cof
 import Controller.assigner as assigner
+import Utils.room_scorer as room_scorer
 # Other
 from flask import Flask, jsonify, session, request, redirect, url_for, flash
 import os
@@ -29,8 +30,9 @@ from flask_cors import CORS
 #....................................................................................
 
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
-INPUT_CSV = 'Spring2023 conflict.csv'
+INPUT_CSV = 'Fall2025.csv'
 ROOMS_CSV = 'PKIRooms.csv'
+TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 
 #....................................................................................
 
@@ -55,14 +57,30 @@ def index():
 	sections = build_sections()
 	classrooms = build_classrooms()
 
-	# Print all sections and their room(s).
+	# Frequency map populates section object attribute: room_freq
+	# this attribute contains a dictionary of all the rooms this
+	# section has been assigned to, and how many times.
+	#
+	# The idea is to reinforce valid room assignments with as much
+	# input data as possible, and can even continue to do so if the
+	# users add finalized assignment csvs to the training data.
+	sections = build_freq_map(sections)
+
+	
+	# # Print all sections and their room(s).
 	for _,section in sections.items():
 		print(f'-------------------------------')
 		print(f'Section: {section.id}')
-		for room in section.rooms:
-			print(room)
+		#for room in section.room_numbers:
+		#print(section.room_numbers)
 		print(section.parsed_meetings)
+		print(section.room_freq)
 		
+	# for _,class1 in classrooms.items():
+	# 	print(f'===============================')
+	# 	print("Class",class1.room)
+	# 	print("Seats",class1.seats)
+
 
 	assigner.assign_sections_to_rooms(classrooms, sections)
 
@@ -132,6 +150,13 @@ def get_data():
 
 #....................................................................................
 # Helper functions:
+
+def build_freq_map(sections):
+	freq_map = room_scorer.map_assignment_freq(TRAINING_CSVS)
+	for id,freq_section in freq_map.items():
+		if id in sections:
+			sections[id].room_freq = freq_section
+	return sections
 
 def build_classrooms():
 	base_dir = os.path.dirname(__file__)

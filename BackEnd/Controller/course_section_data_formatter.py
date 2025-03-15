@@ -49,11 +49,11 @@ def generate_strings_section_view(course_section_objects: dict, attributes: list
 #....................................................................................
 def row_to_string(course_section, attributes):
 
-	display_values = []
-	for attr in attributes:
-		value = getattr(course_section, attr.name.lower(), "")
-		display_values.append(f"{value:<30.30}")
-	return " | ".join(display_values)
+    display_values = []
+    for attr in attributes:
+        value = getattr(course_section, attr.name.lower(), "")
+        display_values.append(f"{value:<30.30}")
+    return " | ".join(display_values)
 
 #....................................................................................
 

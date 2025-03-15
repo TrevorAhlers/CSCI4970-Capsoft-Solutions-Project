@@ -51,8 +51,14 @@ def parse_meeting_line(line: str) -> List[Tuple[str, int, int]]:
 			meetings.append((d, start_min, end_min))
 	return meetings
 
+def make_int_str(attribute: str) -> str:
+	if attribute.endswith(".0"):
+		attribute = attribute[:-2]
+		return attribute
+	return attribute
+
 class ClassroomEnum(Enum):
-	ROOM_NUMBER             = 'Room Number'
+	ROOM             = 'Room Number'
 	SEATS                   = 'Seats'
 	DISPLAYS                = 'Displays'
 	COMPUTER_COUNT          = 'Computer Count'
@@ -61,9 +67,8 @@ class ClassroomEnum(Enum):
 
 class Classroom:
 	def __init__(self, attributes: Dict[str, str]) -> None:
-		self._room		             = attributes[ClassroomEnum.ROOM_NUMBER.value]
-		#self._room_number 			 = self._room
-		self._seats                  = attributes[ClassroomEnum.SEATS.value]
+		self._room		             = attributes[ClassroomEnum.ROOM.value]
+		self._seats                  = make_int_str(attributes[ClassroomEnum.SEATS.value])
 		self._displays               = attributes[ClassroomEnum.DISPLAYS.value]
 		self._computer_count         = attributes[ClassroomEnum.COMPUTER_COUNT.value]
 		self._info_and_connectivity  = attributes[ClassroomEnum.INFO_AND_CONNECTIVITY.value]
@@ -75,12 +80,12 @@ class Classroom:
 		self._minute_schedule: List[List[str]] = [[] for _ in range(7 * 1440)]
 
 	@property
-	def room_number(self) -> str:
-		return self._room_number
+	def room(self) -> str:
+		return self._room
 
-	@room_number.setter
-	def room_number(self, value: str) -> None:
-		self._room_number = value
+	@room.setter
+	def room(self, value: str) -> None:
+		self._room = value
 
 	@property
 	def seats(self) -> str:
