@@ -61,13 +61,17 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 
 		# This whole block just constructs a unique id that we use as a dict key
 		# for the course_sections dictionary
+		catalog_sub_str = row_data.get("Subject Code", "")
 		catalog_num_str = row_data.get("Catalog Number", "")
 		section_str = row_data.get("Section #", "")
-		key = f"{catalog_num_str}-{section_str}"
+		key = f"{catalog_sub_str} {catalog_num_str}-{section_str}"
 
 		if len(key) > 1:
-			#print(key)
-			course_sections[key] = CourseSection(row_data)
+			cs = CourseSection(row_data)
+			# EXCLUSION LOGIC PROTOTYPE
+			if cs.inst_method != 'Distance Education':
+				if (cs.session != 'UNO 5-6 Weeks') and (cs.session != 'Three Week'):
+					course_sections[key] = cs
 
 	print(f"Built {len(course_sections)} CourseSection objects.")
 	return course_sections
@@ -101,62 +105,3 @@ def get_headers(filename: str, defaults: Optional[Dict[int, str]] = None) -> Lis
 		return columns
 	except FileNotFoundError as e:
 		raise FileNotFoundError(f"CSV file not found: {filename}") from e
-
-#....................................................................................
-#####################################################################################
-# 	Reads the CSV to find any 'Peter Kiewit Institute ###' pattern in the text data.
-#....................................................................................
-def get_classroom(filename: str) -> None:
-
-	try:
-		df = pd.read_csv(filename, skiprows=2, header=0)
-		text_data = df.to_string()
-		pattern = r"Peter Kiewit Institute [0-9]{3}"
-		rooms = re.findall(pattern, text_data)
-		print(rooms)
-	except KeyError as e:
-		raise KeyError(f"Expected column missing in CSV: {str(e)}") from e
-
-#....................................................................................
-#####################################################################################
-# 	Reads the CSV and extracts meeting patterns from the 'Meeting Pattern' column 
-# using a regex.
-#....................................................................................
-def get_meeting_pattern(filename: str) -> None:
-
-	try:
-		df = pd.read_csv(filename, skiprows=2, header=0)
-		regex_times = (
-			r'(M|MW|TR|F|T|W|R|MWF|S|MR)\s'
-			r'([0-9]{1,2}(:[0-9]{2})?[AaPp][Mm])\-([0-9]{1,2}(:[0-9]{2})?[AaPp][Mm])'
-			r'(; (M|MW|TR|F|T|W|R|S)\s([0-9]{1,2}(:[0-9]{2})?[AaPp][Mm])\-([0-9]{1,2}(:[0-9]{2})?[AaPp][Mm]))?'
-		)
-		meeting_data = df['Meeting Pattern'].astype(str)
-		matched = [mp for mp in meeting_data if re.search(regex_times, mp)]
-		print(matched)
-		print(len(matched))
-	except KeyError as e:
-		raise KeyError(f"Expected column missing in CSV: {str(e)}") from e
-
-#....................................................................................
-#####################################################################################
-# 	Reads the CSV and finds any uppercase letters in 'Course' and 'Course Title'
-# columns.
-#....................................................................................
-def get_course_code_and_title(filename: str) -> None:
-
-	try:
-		df = pd.read_csv(filename, skiprows=2, header=0)
-		regex_caps = r'[A-Z]'
-
-		courses = df['Course'].astype(str)
-		courses_with_caps = [c for c in courses if re.search(regex_caps, c)]
-		print(courses_with_caps)
-
-		titles = df['Course Title'].astype(str)
-		titles_with_caps = [t for t in titles if re.search(regex_caps, t)]
-		print(titles_with_caps)
-	except KeyError as e:
-		raise KeyError(f"Expected column missing in CSV: {str(e)}") from e
-
-#....................................................................................

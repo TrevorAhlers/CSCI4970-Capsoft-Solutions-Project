@@ -1,43 +1,21 @@
 from enum import Enum
 import re
 from typing import Dict, List, Tuple
-#from Model.CourseSection import CourseSection, CourseSectionEnum
-#from Model.Classroom import Classroom, ClassroomEnum
+from Model.WorkspaceState import WorkspaceState, WorkspaceStateEnum
+from Model.CourseSection import CourseSection, CourseSectionEnum
+from Model.Classroom import Classroom, ClassroomEnum
+from Model.Conflict import Conflict, ConflictEnum
 
-class StateEnum(Enum):
+class AssignmentFileEnum(Enum):
 	SECTIONS                        = 'Sections'
 	CLASSROOMS                      = 'Classrooms'
-	VIEW                            = 'View'
-	COURSE_VIEW_SORT_BY             = 'Course View Sort By'
-	COURSE_VIEW_SORT_DIRECTION      = 'Course View Sort Direction'
-	CLASSROOM_VIEW_SORT_BY          = 'Room View Sort By'
-	CLASSROOM_VIEW_SORT_DIRECTION   = 'Room View Sort Direction'
-	BUILDING_VIEW_SORT_BY           = 'Building View Sort By'
-	BUILDING_VIEW_SORT_DIRECTION    = 'Building View Sort Direction'
-	SORT_BY                         = 'Sort By'
-	SORT_DIRECTION                  = 'Sort Direction'
-	LEFT_PANE                       = 'Left Pane'
-	RIGHT_PANE                      = 'Right Pane'
-	CONFLICTS                       = 'Conflicts List'
-	IGNORES                         = 'Ignore List'
+	CONFLICTS                       = 'Conflicts'
 
-class State:
-	def __init__(self, attributes: Dict[str, str]) -> None:
-		self._sections                    = attributes[StateEnum.SECTIONS.value]
-		self._classrooms                  = attributes[StateEnum.CLASSROOMS.value]
-		self._view                        = attributes[StateEnum.VIEW.value]
-		self._course_view_sort_by         = attributes[StateEnum.COURSE_VIEW_SORT_BY.value]
-		self._course_view_sort_direction  = attributes[StateEnum.COURSE_VIEW_SORT_DIRECTION.value]
-		self._classroom_view_sort_by      = attributes[StateEnum.CLASSROOM_VIEW_SORT_BY.value]
-		self._classroom_view_sort_direction = attributes[StateEnum.CLASSROOM_VIEW_SORT_DIRECTION.value]
-		self._building_view_sort_by       = attributes[StateEnum.BUILDING_VIEW_SORT_BY.value]
-		self._building_view_sort_direction = attributes[StateEnum.BUILDING_VIEW_SORT_DIRECTION.value]
-		self._sort_by                     = attributes[StateEnum.SORT_BY.value]
-		self._sort_direction              = attributes[StateEnum.SORT_DIRECTION.value]
-		self._left_pane                   = attributes[StateEnum.LEFT_PANE.value]
-		self._right_pane                  = attributes[StateEnum.RIGHT_PANE.value]
-		self._conflicts                   = attributes[StateEnum.CONFLICTS.value]
-		self._ignores                     = attributes[StateEnum.IGNORES.value]
+class AssignmentFile:
+	def __init__(self, sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom], conflicts: Dict[str, Conflict]) -> None:
+		self._sections 		= sections
+		self._classrooms 	= classrooms
+		self._conflicts 	= conflicts
 
 
 	@property

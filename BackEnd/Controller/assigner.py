@@ -12,7 +12,7 @@ def assign_sections_to_rooms(classrooms: Dict[str, Classroom], sections: Dict[st
             continue  # if there's no room specified at all, skip
 
 		# Default info for a room if it hasn't already been built.
-        if room_name not in classrooms:
+        if room_name[0] not in classrooms:
             row_data = {
                 "Room Number": room_name,
                 "Seats": "None",
@@ -20,7 +20,7 @@ def assign_sections_to_rooms(classrooms: Dict[str, Classroom], sections: Dict[st
                 "Computer Count": "None",
                 "Information and Connectivity": "None"
 			}
-            classrooms[room_name] = Classroom(row_data)
+            classrooms[room_name[0]] = Classroom(row_data)
 
 		# Now add the course section's schedule to that classroom
-        classrooms[room_name].add_course_section_object(section_obj)
+        classrooms[room_name[0]].add_course_section_object(section_obj)

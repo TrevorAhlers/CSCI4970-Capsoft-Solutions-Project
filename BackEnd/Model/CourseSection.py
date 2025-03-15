@@ -10,8 +10,10 @@
 #
 #....................................................................................
 
+
 from enum import Enum
-from typing import Dict, Optional
+from typing import Dict, List, Tuple
+import re
 
 class CourseSectionEnum(Enum):
     DEPARTMENT_CODE    = 'Department Code'
@@ -46,13 +48,69 @@ class CourseSectionEnum(Enum):
     NOTES1             = 'Notes#1'
     NOTES2             = 'Notes#2'
 
-    def lower(self):
-        return self.lower
+def lower(self):
+    return self.lower
+    
+def split_rooms(room):
+    if not room:
+         return []
+    output = []
+    if ';' in room:
+        rooms1 = room.split("; ")
+        for x in rooms1:
+            if x != 'Partially Online':
+                output.append(x)
+        return output
+    else:
+        return [room]
+    
+def split_meetings(meetings, rooms):
+    if (not rooms) or (not meetings):
+        return []
+    output = []
+    if ';' in meetings:
+        meetings1 = meetings.split("; ")
+        for i in range(len(rooms)):
+            # If we have more rooms than times, then something is wrong.
+            # So we ignore time entries that exceed
+            output.append(meetings1[i])
+        return output
+    else:
+        return [meetings]
+    
+def parse_meetings(line: str) -> List[Tuple[str, int, int]]:
+	meetings = []
+	for chunk in line.split(';'):
+		parts = chunk.strip().split(maxsplit=2)
+		if len(parts) < 2:
+			continue
+		days = parts[0]	# ex) "MW" or "TRF"
+		time_range = parts[1]	# ex) "3pm-4:15pm"
+		if '-' not in time_range:
+			continue
+		start_str, end_str = time_range.split('-')
+		start_min = parse_time(start_str)
+		end_min = parse_time(end_str)
+		for d in days:	# days ex) "MW" -> ['M','W']
+			meetings.append((d, start_min, end_min))
+	return meetings
+
+def parse_time(timestr: str) -> int:
+	match = re.match(r'(\d{1,2})(?::(\d{2}))?(am|pm)', timestr.strip().lower())
+	if not match:
+		return 0
+	hour = int(match.group(1))
+	minute = int(match.group(2)) if match.group(2) else 0
+	ampm = match.group(3)
+	if ampm == 'pm' and hour != 12:
+		hour += 12
+	elif ampm == 'am' and hour == 12:
+		hour = 0
+	return hour * 60 + minute
 
 
 class CourseSection:
     def __init__(self, attributes: Dict[str, str]) -> None:
-        # Look up each attribute using the enum's value (i.e. header text)
         self._department_code   = attributes[		CourseSectionEnum.DEPARTMENT_CODE.value]
         self._subject_code      = attributes[		CourseSectionEnum.SUBJECT_CODE.value]
         self._catalog_number    = attributes[		CourseSectionEnum.CATALOG_NUMBER.value]
@@ -61,7 +119,7 @@ class CourseSection:
         self._section_type      = attributes[		CourseSectionEnum.SECTION_TYPE.value]
         self._title_topic       = attributes[		CourseSectionEnum.TITLE_TOPIC.value]
         self._meeting_pattern   = attributes[		CourseSectionEnum.MEETING_PATTERN.value]
-        self._meetings          = attributes[		CourseSectionEnum.MEETINGS.value]
+        #self._meetings          = attributes[		CourseSectionEnum.MEETINGS.value]
         self._instructor        = attributes[		CourseSectionEnum.INSTRUCTOR.value]
         self._room              = attributes[		CourseSectionEnum.ROOM.value]
         self._session           = attributes[		CourseSectionEnum.SESSION.value]
@@ -85,7 +143,38 @@ class CourseSection:
         self._notes1            = attributes[		CourseSectionEnum.NOTES1.value]
         self._notes2            = attributes[		CourseSectionEnum.NOTES2.value]
 
-        self._room_number = self._room.split()[-1]
+        self._room_numbers = [split_rooms(self._room)[0]] if self._room else ["-1"]
+        self.id = f'{self._subject_code} {self._catalog_number}-{self._section}'
+
+        self._parsed_meetings = parse_meetings(self._meeting_pattern)
+        self.start_time = [self._parsed_meetings[0][1]] if parse_meetings(self._meeting_pattern) else -1
+        self.end_time   = [self._parsed_meetings[0][2]] if parse_meetings(self._meeting_pattern) else -1
+        self._rooms = split_rooms(self._room)
+        
+
+    @property
+    def parsed_meetings(self) -> List:
+        return self._parsed_meetings
+
+    @parsed_meetings.setter
+    def parsed_meetings(self, value: List) -> None:
+        self._parsed_meetings = value
+
+    @property
+    def rooms(self) -> str:
+        return self._rooms
+
+    @rooms.setter
+    def rooms(self, value: str) -> None:
+        self._rooms = value
+
+    @property
+    def id(self) -> str:
+        return self._id
+
+    @id.setter
+    def id(self, value: str) -> None:
+        self._id = value
 
     @property
     def department_code(self) -> str:

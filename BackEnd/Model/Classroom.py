@@ -61,7 +61,8 @@ class ClassroomEnum(Enum):
 
 class Classroom:
 	def __init__(self, attributes: Dict[str, str]) -> None:
-		self._room_number            = attributes[ClassroomEnum.ROOM_NUMBER.value]
+		self._room		             = attributes[ClassroomEnum.ROOM_NUMBER.value]
+		#self._room_number 			 = self._room
 		self._seats                  = attributes[ClassroomEnum.SEATS.value]
 		self._displays               = attributes[ClassroomEnum.DISPLAYS.value]
 		self._computer_count         = attributes[ClassroomEnum.COMPUTER_COUNT.value]
@@ -136,9 +137,9 @@ class Classroom:
 #	'MW 3pm-4:15pm; F 8:30am-10:20am') and adds it to this room's schedule.
 #....................................................................................
 	def add_course_section_object(self, course_section_object) -> None:
-		meeting_str = course_section_object.meetings
-		course_id = f"{course_section_object.catalog_number}-{course_section_object.section}"
-		for d, start_min, end_min in parse_meeting_line(meeting_str):
+		meeting_str = course_section_object.parsed_meetings
+		course_id = f"{course_section_object.id}"
+		for d, start_min, end_min in meeting_str:
 			if d in DAY_OFFSETS:
 				day_offset = DAY_OFFSETS[d]
 				start_slot = day_offset + start_min
@@ -171,7 +172,7 @@ class Classroom:
 				else:
 					if in_block:
 						# close the block
-						intervals.append((cid, block_start, minute))
+						intervals.append([cid, block_start, minute])
 						in_block = False
 			# if we end the day still in a block
 			if in_block:
@@ -194,6 +195,8 @@ class Classroom:
 					continue  # don't compare same course to itself
 				# Overlap if each interval starts before the other ends
 				if start1 < end2 and start2 < end1:
-					conflicts.append((cid1, start1, end1, cid2, start2, end2))
+					add1 = [cid1, start1, end1, cid2, start2, end2]
+					if add1 not in conflicts:
+						conflicts.append(add1)
 
 		return conflicts
