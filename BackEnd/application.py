@@ -15,12 +15,12 @@ from Model.CourseSection import CourseSection, CourseSectionEnum
 from Model.Classroom import Classroom, ClassroomEnum
 from Model.Conflict import Conflict
 #from Utils.assignment_file_manager import backup_session_data, restore_session_data
-from Controller.course_section_data_formatter import generate_strings_section_view
+from Utils.course_section_data_formatter import generate_strings_section_view
 import Utils.course_section_factory as csf
 import Utils.classroom_factory as cf
 import Utils.conflict_factory as cof
 import Controller.assigner as assigner
-import Utils.room_scorer as room_scorer
+import Controller.room_scorer as room_scorer
 # Other
 from flask import Flask, jsonify, session, request, redirect, url_for, flash
 import os
@@ -30,7 +30,7 @@ from flask_cors import CORS
 #....................................................................................
 
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
-INPUT_CSV = 'Fall2025.csv'
+INPUT_CSV = 'Fall2025_assignment_conflict_test.csv'
 ROOMS_CSV = 'PKIRooms.csv'
 TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 
@@ -67,13 +67,13 @@ def index():
 	sections = build_freq_map(sections)
 
 	
-	# # Print all sections and their room(s).
+	# Print all sections and their room(s).
 	for _,section in sections.items():
 		print(f'-------------------------------')
 		print(f'Section: {section.id}')
 		#for room in section.room_numbers:
-		#print(section.room_numbers)
-		print(section.parsed_meetings)
+		print(section.room_numbers)
+		print(section.schedule)
 		print(section.room_freq)
 		
 	# for _,class1 in classrooms.items():
@@ -91,8 +91,8 @@ def index():
 	for attr in CourseSectionEnum:
 		attributes.append(attr)
 	
-	#for conflict in conflicts:
-		#print(conflict.to_str())
+	for conflict in conflicts:
+		print(conflict.to_str())
 	
 
 	data_row_list = generate_strings_section_view(sections, attributes)

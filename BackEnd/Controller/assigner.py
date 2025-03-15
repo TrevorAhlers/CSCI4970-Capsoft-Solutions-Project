@@ -21,7 +21,7 @@ def assign_sections_to_rooms(classrooms: Dict[str, Classroom], sections: Dict[st
                     "Computer Count": "None",
                     "Information and Connectivity": "None"
                 }
-                classrooms[room_name[0]] = Classroom(row_data)
+                classrooms[room_name] = Classroom(row_data)
 
 		# Now add the course section's schedule to that classroom
-            classrooms[room_name[0]].add_course_section_object(section_obj)
+            classrooms[room_name].add_course_section_object(section_obj)
