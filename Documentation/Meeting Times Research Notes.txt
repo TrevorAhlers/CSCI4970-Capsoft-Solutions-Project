@@ -1,0 +1,77 @@
+cases:
+-section has multiple meeting times that correspond to multiple rooms...
+ex)  T 7:30am-9:20am; T 7:30am-9:20am
+Peter Kiewit Institute 260; Peter Kiewit Institute 130
+Section Type = Laboratory
+
+-section has multiple meeting times for one room... 
+ex) MW 9am-9:50am; F 8:30am-10:20am 
+Section Type = Lecture
+
+---------------------------------------------------------------------------
+
+We now see a difference between Meeting Pattern and Meeting.
+
+Meeting pattern does not duplicate a time to represent multiple rooms whereas Meetings does.
+AREN 8220
+Meeting Pattern = T 7:30am-9:20am
+Meetings = T 7:30am-9:20am; T 7:30am-9:20am
+Instructor = Alahmad, Mahmoud (71470100) [Primary Instructor, Post, Print]; Alahmad, Mahmoud (71470100) [Primary Instructor, Post, Print]
+
+So we have same instructor... same time... different rooms?
+
+---------------------------------------------------------------------------
+
+Maybe the solution here is to assign multiple coursesection objects with the classroom object schedling logic under the same id?
+
+---------------------------------------------------------------------------
+
+Questions for sponsor:
+1. How do instructors teach two different classes in two different classrooms at the same time? example:
+Spring 2023	1231	UNO-AE	AREN	8220	AREN 8220	2	ELECTRICAL SYSTEMS FOR BUILDINGS II	Laboratory	Laboratory	T 7:30am-9:20am	T 7:30am-9:20am; T 7:30am-9:20am	Alahmad, Mahmoud (71470100) [Primary Instructor, Post, Print]; Alahmad, Mahmoud (71470100) [Primary Instructor, Post, Print]	Peter Kiewit Institute 260; Peter Kiewit Institute 130	Active	Regular Academic Session	UNO Engineering	In Person		Yes	No Special Consent Required	3	3	Graded				19	20			0	20						Any
+
+
+Whereas this is used differently... two different class periods, two different meeting times, two different rooms makes sense because the room just changes depending on the day:
+
+Spring 2023	1231	UNO-ELEC	ECEN	491	ECEN 491	2	SPECIAL TOPICS IN ELECTRIC AND COMPUTER ENGINEERING IV	Lecture	INTRO TO RENEWABLE ENR & SUS	W 6pm-8:15pm; S 10am-11:30am	W 6pm-8:15pm; S 10am-11:30am	Chen, Bing (13376740) [Primary Instructor, Post, Print]; Chen, Bing (13376740) [Primary Instructor, Post, Print]	Peter Kiewit Institute 252; Peter Kiewit Institute 313	Active	Regular Academic Session	UNO Engineering	In Person		Yes	No Special Consent Required	1	4	Graded				6	20			0	20	Also ECEN 891-004	36		0	36		DONE, AMJ - Please assign to PKI 252
+
+solution? Meeting Pattern seems to only duplicate when the class periods are separate... Meetings doesnt have reliable duplication. It seems extraneous.
+
+
+
+2. CIVE classes are labeled as remote learning in the Attributes column but are scheduled to rooms. These sections are at the same time as a non-remote class. Does this mean the physical location is a class and a zoom of the lecture is provided for remote students?
+
+It doesn't seem to matter if attributes says remote learning or not, because those attributes are included for distance education and for in person with no discernable pattern.
+
+Distance education classes in the Inst. Method column are assigned to rooms on our spring spreadsheet.
+
+does section 820 mean remote?
+does section 860 mean partially online? yes
+
+-------------------------------------------------------------------
+
+ECEN 491 - SPECIAL TOPICS IN ELECTRIC AND COMPUTER ENGINEERING IV
+
+confirmed example where two times and two rooms means they match up by index. first time is at first room. second time is at second room.
+
+AREN-8220: ELECTRICAL SYS FOR BLDGS II (3 hrs)
+
+confirmed this instructor booked both rooms for one time slot. The lab class is a lecture plus lab (section 2). The lecture class above it is just a lecture class. (section 1)
+
+Maybe the instructor does a lecture one week and a lab the next, or maybe they use both rooms each day. Either way, nobody is scheduled over this double scheduling to conflict with it. We must assume both rooms are booked regardless if they are actively being used or not.
+
+PROBLEM: the double booking is described by Meetings with two times. Meeting Pattern only shows one. But Meeting Pattern is accurate in every other way, and Meetings is less predictable and has seemingly duplicate values.
+
+SOLUTION: If 2 rooms and 1 time -> use same time for both rooms.
+
+CONJECTURE: What if classes have 2 rooms and 2 times and both times are supposed to apply to both rooms, rather than being parsed?
+
+This seems like an attempt to express every-other-week on the spreadsheet.
+
+SOLUTION: If 2 meeting times exist with 2 rooms... we should check if meeting times are identical or different. If different apply both meeting times to both rooms (double-booked scenario). If same then we assign that single time to both rooms (double-booked scenario)
+
+---------------------------------------------------------------------
+
+Implementation:
+
+CourseSections manage times and rooms and have functions to output schedules already matched. Then 

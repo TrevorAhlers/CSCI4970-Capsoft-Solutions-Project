@@ -30,7 +30,6 @@ def build_classrooms(filename: str) -> Dict[str, Classroom]:
 
         #print(key)
         cl = Classroom(row_data)
-
         classrooms[key] = cl
 
     print(f"Built {len(classrooms)} Classroom objects.")
