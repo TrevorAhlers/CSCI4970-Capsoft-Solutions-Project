@@ -6,3 +6,7 @@ npm install
 
 Run:
 npx ng serve
+
+To install libraries:
+       # Library name
+ng add @angular/material

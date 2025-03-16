@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';  
 import { DataService } from './home/data.service';
+import { DataComponent } from './data/data.component';
 import { AppComponent } from './app.component';  
 import { HomeComponent } from './home/home.component';  
 import { RouterModule, Routes } from '@angular/router';
@@ -41,7 +42,8 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideAnimationsAsync('noop')
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA // Add this line

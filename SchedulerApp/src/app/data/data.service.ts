@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  private apiUrl = 'http://localhost:5000/api/data'; // Adjust for your Flask backend
+  private apiUrl = 'http://localhost:5000/api/data'; // Flask port 5000 request
 
   constructor(private http: HttpClient) {}
 
