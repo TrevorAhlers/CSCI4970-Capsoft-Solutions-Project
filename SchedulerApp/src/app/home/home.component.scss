@@ -1,4 +1,3 @@
-
 :host {
     display: flex;
    
@@ -8,8 +7,10 @@
     padding: 10px;
     
   }
-
-
+.mat-mdc-outlined-button {
+    border-color: black !important; /* Force custom outline */
+    color: black !important;         /* Text color */
+}
 
 .Scheduler_app.h1{
     text-align: center;
@@ -18,9 +19,10 @@
 
 }
 
-.sch{
+.scheduler_app_text{
     position: absolute;
-    left: 660px;
+    left: 640px;
+    top:50px;
 }
 .profile_box.your_profile{
    position: relative;
@@ -30,8 +32,8 @@
 
 .back_home_button{
     position: relative;
-    bottom: 100px;
-    left:130px;
+    bottom: 120px;
+    left:120px;
     
 }
 .profile_box{
@@ -43,9 +45,9 @@
     box-shadow: 10px 5px 5px grey;
     border-color: black;
     background-color: lightblue;
-    width:240px;
+    width:170px;
     height:130px;
-    position: relative;
+    position: absolute;
     
     left: 10px;
 }
@@ -56,12 +58,12 @@
     border: 5px solid lightgrey;
     padding: 40px;
     margin: 2px;
-    box-shadow: 10px 1px 1px lightgrey;
+    box-shadow: 10px 1px 1px grey;
     border-color: black;
     background-color: lightblue;
-    width: 750px;
-    height:700px;
-    left:450px;
+    width: 700px;
+    height:760px;
+    left:300px;
     top:150px;
 
 }
@@ -70,14 +72,20 @@
     width:100px;
     height:100px;
     position: relative;
-    bottom: 10px;
+    bottom: 15px;
+    right:30px;
 }
 
 .Account{
-    position: relative;
-    left:120px;
-    bottom: 120px;
+    position: absolute;
+    left:130px;
+    bottom: 150px;
 
+}
+.export_buttom{
+    display: flex;
+    justify-content: center;
+    background: darkcyan;
 }
 
 
@@ -87,6 +95,139 @@
 
 .upload_file{
     position: relative;
-    left:240px;
+    left:220px;
     top:280px;
+}
+
+.file_details{
+    position: absolute;
+    
+    border: 5px solid black;
+    padding: 40px;
+    margin: 2px;
+    top:270px;
+    width:170px;
+    height:200px;
+    margin-top: 10px;
+    
+}
+
+.vl {
+    border-top: 3px dotted #bbb;
+    position: absolute;
+    top:100px;
+    
+}
+
+.heading {
+    text-align: center;
+    position: relative;
+    margin: 0;
+    padding: 0 10px;
+}
+
+.heading::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    bottom: 100px;
+    width: 100%;
+    height: 2px; /* Thickness of the line */
+    background-color: black;
+    z-index: 0;
+   
+}
+
+.conflict_box{
+    position: absolute;
+    
+    border: 5px solid black;
+    padding: 40px;
+    margin: 2px;
+    box-shadow: 10px 1px 1px grey;
+    border-color: black;
+    background-color: lightblue;
+    width: 150px;
+    height:920px;
+    left:1110px;
+    top:10px;
+    bottom:100px;
+
+}
+
+.tabs{
+    position: absolute;
+    top:60px;
+    left:20px;
+}
+
+.logoff-button-row .mat-mdc-button-base {
+    margin: 8px 8px 8px 0;
+    border-radius: 20px !important;
+    background-color: bisque;
+    position: absolute;
+    bottom: 110px;
+    left:120px;
+    
+  }
+
+
+.conflict_title{
+    position: absolute;
+    bottom: 965px;
+    left: 75px;
+}
+
+.conflict_inner_box-card{
+    position:absolute;
+    right:5px;
+    width: 220px;
+    height: 50px;
+    border: 1px solid black;
+    height: 950px;
+    background-color: bisque;
+}
+
+.upload_img{
+    width: 100px;
+}
+
+.upload_pic{
+    position: relative;
+    bottom: 200px;
+    right:50px;
+}
+
+
+.file-input{
+    position: absolute;
+    bottom: 200px;
+    left:70px;
+}
+
+.upload_text{
+    position: absolute;
+    bottom: 540px;
+    left:90px;
+}
+
+.file_card{
+    position: absolute;
+    top:300px;
+    width: 260px;
+    padding: 16px;
+    height:300px;
+    background: lightcyan;
+    border: 1px solid black;
+}
+
+.recent_file_card{
+    position: absolute;
+    top:670px;
+    width: 260px;
+    padding: 16px;
+    height:300px;
+    background: lightcyan;
+    border: 1px solid black; 
 }

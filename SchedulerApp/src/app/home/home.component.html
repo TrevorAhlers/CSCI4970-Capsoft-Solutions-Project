@@ -1,34 +1,61 @@
 
-<div class="Scheduler_app">
-  <h1 class="sch">Schedular App</h1>
-<br>
-<br>
-<br>
+<div class="Template_page">
+  <h1 class="scheduler_app_text">Scheduler App</h1>
+  <!--    Make sure that the page zoom out instead of sideways when pressing the (-) -->
+  <div class="profile_box">
+    <img class="user_pic" src="/assets/Capture.JPG" alt="profile-pic" >
+    <p class="Account"> Guest User</p>
+    <div class="logoff-button-row">
+      <button mat-flat-button (click)="navigateToHome()">Log Off</button>    
+    </div>
+      <button class="export_buttom" mat-fab extended>
+        <mat-icon>download</mat-icon>
+                Export
+      </button>
+  </div>
 
-  
- 
-</div>
+
+  <div class="upload_box">
+    <div class="upload_file" >
+      <h2 class="upload_text">Upload File</h2>
+      <form action="/action_page.php" action="/action_page.php" > 
+        <img class="upload_pic" src="/assets/cloud_upload_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png">
+        <input type="file" class="file-input" #fileUpload />
+      </form>
+    </div>
+  </div>
 
 
-<div class="profile_box">
-  
-  <img class="user_pic" src="/assets/Capture.JPG" alt="profile-pic" >
-  <p class="Account"> Guest User</p>
-  <button class="back_home_button" (click)="navigateToHome()">Sign off</button>
 
-</div>
+  <mat-card class="file_card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>File details</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+  </mat-card>
 
-<div class="upload_box">
-  <div class="upload_file" >
-    <form action="/action_page.php" action="/action_page.php" >
-      <label for="myfile">Upload File:</label>
-      <br>
-      <input type="file" ><br><br>
-      <input type="submit" (click)="navigateToData()">
-    </form>
+  <mat-card class="recent_file_card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Recent Files</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    
+  </mat-card>
+
+
+
+  <!--    Added a slider-->
+  <div class="conflict_box">
+
+    <mat-card-title class="conflict_title" style="text-align: center;">Conflicts</mat-card-title>
+    <mat-card class="conflict_inner_box-card" appearance="outlined">
+      <mat-tab-group disablePagination="true" animationDuration="0ms">
+        <mat-tab label="Active"></mat-tab>
+        <mat-tab label="Ignore"></mat-tab>
+      </mat-tab-group>
+    </mat-card>
 
   </div>
-  
-</div>
 
+</div>
 
