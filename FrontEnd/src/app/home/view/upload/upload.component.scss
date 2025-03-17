@@ -1,21 +1,33 @@
 .upload {
+	//display: flex;
+	//flex-direction: column;
+	//justify-content: center;
+	align-items: center;
 	padding: 4%;
 	background-color: rgb(73, 73, 73);
-	width: 100%;
+	//width: 100%;
 	border-radius: 8px;
-	align-items: center;
+	min-height: 100%;
 }
 
 .upload_file {
-	background-color: transparent;
+	margin: 50%;
 }
-.upload-pic {
-	background-color: transparent;
+.upload.pic {
+	padding: 5%;
+	width:50%;
+	opacity: 50%;
 
 }
-.file-input {
+.file.input {
 	background-color: transparent;
 }
 .upload_text {
 	background-color: transparent;
+}
+
+.space{
+	flex: 0 0 20%;
+
+	background-color: rgb(255, 0, 0);
 }

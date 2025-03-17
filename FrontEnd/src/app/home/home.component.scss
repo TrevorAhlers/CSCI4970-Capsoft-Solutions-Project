@@ -36,19 +36,25 @@
 
 .column.left > * {
 	flex: 1;
-	min-height: 10%;
+	min-height: 30%;
 }
 
 
 .column.center {
-	//flex: 1;
-	flex: 0 0 59%;
-	//display: flex;
+	flex: 1;
+	flex: 0% 0 59%;
+}
+
+.column.center > * {
+	flex: 1;
+	min-height: 100%;
 }
 
 .column.right {
 	flex: 0 0 20%;
 }
+
+
 
 .home.header {
 	flex: 0 0 5%;
