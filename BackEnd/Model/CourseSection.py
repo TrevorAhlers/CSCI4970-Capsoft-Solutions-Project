@@ -10,8 +10,11 @@
 #
 #....................................................................................
 
+
 from enum import Enum
-from typing import Dict
+from typing import Dict, List, Tuple
+import re
+from collections import defaultdict, Counter
 
 class CourseSectionEnum(Enum):
     DEPARTMENT_CODE    = 'Department Code'
@@ -46,13 +49,179 @@ class CourseSectionEnum(Enum):
     NOTES1             = 'Notes#1'
     NOTES2             = 'Notes#2'
 
-    def lower(self):
-        return self.lower
+def lower(self):
+    return self.lower
+    
+def parse_rooms(room):
+    if not room:
+         return []
+    output = []
+    if ';' in room:
+        rooms1 = room.split("; ")
+        for x in rooms1:
+            if x != 'Partially Online':
+                output.append(x)
+        return output
+    else:
+        return [room]
+    
+    
+def parse_meetings(line: str) -> List[Tuple[str, int, int]]:
+	meetings = []
+	for chunk in line.split(';'):
+		parts = chunk.strip().split(maxsplit=2)
+		if len(parts) < 2:
+			continue
+		days = parts[0]	# ex) "MW" or "TRF"
+		time_range = parts[1]	# ex) "3pm-4:15pm"
+		if '-' not in time_range:
+			continue
+		start_str, end_str = time_range.split('-')
+		start_min = parse_time(start_str)
+		end_min = parse_time(end_str)
+		for d in days:	# days ex) "MW" -> ['M','W']
+			meetings.append((d, start_min, end_min))
+	return meetings
 
+def parse_time(timestr: str) -> int:
+	match = re.match(r'(\d{1,2})(?::(\d{2}))?(am|pm)', timestr.strip().lower())
+	if not match:
+		return 0
+	hour = int(match.group(1))
+	minute = int(match.group(2)) if match.group(2) else 0
+	ampm = match.group(3)
+	if ampm == 'pm' and hour != 12:
+		hour += 12
+	elif ampm == 'am' and hour == 12:
+		hour = 0
+	return hour * 60 + minute
+
+def extract_room_numbers(rooms: List[str]) -> List[str]:
+	if not rooms:
+		return []
+	room_numbers = []
+	for r in rooms:
+		match = re.search(r'\d+', r)
+		room_numbers.append(match.group() if match else "TBD")
+	return room_numbers
+
+def time_to_str(minutes: int) -> str:
+        hour = minutes // 60
+        minute = minutes % 60
+        ampm = "am"
+        if hour == 0:
+            hour = 12
+        elif hour == 12:
+            ampm = "pm"
+        elif hour > 12:
+            hour -= 12
+            ampm = "pm"
+        return f"{hour}:{minute:02}{ampm}"
+
+def update_meetings(self, value: List[Tuple[str, str, str, int, int]]) -> None:
+    self._parsed_meetings = value
+    if not value:
+        self._meeting_pattern = ""
+        self._room = ""
+        return
+    groups = defaultdict(list)
+    for section_id, room, day, start, end in value:
+        groups[(room, start, end)].append(day)
+    chunks = []
+    all_rooms = []
+    for (room, start, end), days in groups.items():
+        days_str = "".join(sorted(days))
+        chunks.append(f"{days_str} {time_to_str(start)}-{time_to_str(end)}")
+        all_rooms.append(room)
+    self._meeting_pattern = "; ".join(chunks)
+    self._room = "; ".join(sorted(set(all_rooms)))
+    self._schedule = combine_section_info(self._id, self._parsed_meetings, self._rooms)
+
+def combine_section_info(
+	section_id: str,
+	meeting_times: List[Tuple[str, int, int]],
+	rooms: List[str]
+) -> Tuple[List[Tuple[str, str, str, int, int]], str]:
+	results = []
+	warning = ""
+
+	# single room => all times get that one room
+	if len(rooms) == 1:
+		for (day, start, end) in meeting_times:
+			results.append((section_id, rooms[0], day, start, end))
+		return results, warning
+
+	# same count => pair in order
+	if len(rooms) == len(meeting_times):
+		for ((day, start, end), rm) in zip(meeting_times, rooms):
+			results.append((section_id, rm, day, start, end))
+		return results, warning
+
+	# Condition 2a: two rooms, one meeting => double-booking
+	if len(rooms) == 2 and len(meeting_times) == 1:
+		(day, start, end) = meeting_times[0]
+		results.append((section_id, rooms[0], day, start, end))
+		results.append((section_id, rooms[1], day, start, end))
+		return results, warning
+
+	# Condition 1: two rooms, multiple meetings
+	if len(rooms) == 2 and len(meeting_times) > 2:
+		se_counts = Counter((mt[1], mt[2]) for mt in meeting_times)
+		dup_start_end = [x for x, c in se_counts.items() if c > 1]
+		if dup_start_end:
+			# find second occurrence of that start-end
+			(start_dup, end_dup) = dup_start_end[0]
+			first_idx = None
+			split_idx = None
+			for i, (day, s, e) in enumerate(meeting_times):
+				if s == start_dup and e == end_dup:
+					if first_idx is None:
+						first_idx = i
+					else:
+						split_idx = i
+						break
+			for i, (day, s, e) in enumerate(meeting_times):
+				r = rooms[0] if split_idx and i < split_idx else rooms[1]
+				results.append((section_id, r, day, s, e))
+		else:
+			# last time => second room, others => first
+			for i, (day, s, e) in enumerate(meeting_times):
+				if i == len(meeting_times) - 1:
+					results.append((section_id, rooms[1], day, s, e))
+				else:
+					results.append((section_id, rooms[0], day, s, e))
+		return results, warning
+
+	# Condition 2b: more rooms than times
+	if len(rooms) > 2 and len(meeting_times) < len(rooms):
+		warning = f'Condition 2b triggered: 2 or more rooms and even more meeting times. Make sure {section_id} has correct meeting times with each room it uses.'
+
+	# Condition 3: len(rooms) > 2, len(meetings) > 3 => assign from the back
+	if len(rooms) > 2 and len(meeting_times) > 3:
+		mt_idx = len(meeting_times) - 1
+		rm_idx = len(rooms) - 1
+		while rm_idx >= 0 and mt_idx >= 0:
+			day, start, end = meeting_times[mt_idx]
+			results.append((section_id, rooms[rm_idx], day, start, end))
+			mt_idx -= 1
+			rm_idx -= 1
+		while mt_idx >= 0:
+			day, start, end = meeting_times[mt_idx]
+			results.append((section_id, rooms[0], day, start, end))
+			mt_idx -= 1
+		results.reverse()
+		return results, warning
+
+	# Fallback: pair in order until one runs out
+	warning = warning or f'Fallback assignment used. Make sure {section_id} has correct meeting times with each room it uses.'
+	for i, mt in enumerate(meeting_times):
+		r = rooms[min(i, len(rooms)-1)]
+		results.append((section_id, r, mt[0], mt[1], mt[2]))
+
+	return results, warning
 
 class CourseSection:
     def __init__(self, attributes: Dict[str, str]) -> None:
-        # Look up each attribute using the enum's value (i.e. header text)
         self._department_code   = attributes[		CourseSectionEnum.DEPARTMENT_CODE.value]
         self._subject_code      = attributes[		CourseSectionEnum.SUBJECT_CODE.value]
         self._catalog_number    = attributes[		CourseSectionEnum.CATALOG_NUMBER.value]
@@ -61,9 +230,12 @@ class CourseSection:
         self._section_type      = attributes[		CourseSectionEnum.SECTION_TYPE.value]
         self._title_topic       = attributes[		CourseSectionEnum.TITLE_TOPIC.value]
         self._meeting_pattern   = attributes[		CourseSectionEnum.MEETING_PATTERN.value]
-        self._meetings          = attributes[		CourseSectionEnum.MEETINGS.value]
+        #self._meetings          = attributes[		CourseSectionEnum.MEETINGS.value]
         self._instructor        = attributes[		CourseSectionEnum.INSTRUCTOR.value]
-        self._room              = attributes[		CourseSectionEnum.ROOM.value]
+        self._room = (
+            attributes.get(CourseSectionEnum.ROOM.value)
+            if "Peter Kiewit Institute" in str(attributes.get(CourseSectionEnum.ROOM.value, ""))
+            else "TBD")
         self._session           = attributes[		CourseSectionEnum.SESSION.value]
         self._campus            = attributes[		CourseSectionEnum.CAMPUS.value]
         self._inst_method       = attributes[		CourseSectionEnum.INST_METHOD.value]
@@ -84,6 +256,63 @@ class CourseSection:
         self._comments          = attributes[		CourseSectionEnum.COMMENTS.value]
         self._notes1            = attributes[		CourseSectionEnum.NOTES1.value]
         self._notes2            = attributes[		CourseSectionEnum.NOTES2.value]
+
+        self._id = f'{self._subject_code} {self._catalog_number}-{self._section}'
+        self._parsed_meetings = parse_meetings(self._meeting_pattern)
+        self._start_time = [self._parsed_meetings[0][1]] if parse_meetings(self._meeting_pattern) else -1
+        self._end_time   = [self._parsed_meetings[0][2]] if parse_meetings(self._meeting_pattern) else -1
+        self._rooms = parse_rooms(self._room)
+        self._room_numbers = extract_room_numbers(self._rooms)
+        self._schedule = combine_section_info(self._id, self._parsed_meetings, self._rooms)
+        self._room_freq = {}
+
+    @property
+    def schedule(self) -> List:
+        return self._schedule
+
+    @schedule.setter
+    def schedule(self, value: List) -> None:
+        self._schedule = value 
+
+    @property
+    def room_freq(self) -> Dict[str, int]:
+        return self._room_freq
+
+    @room_freq.setter
+    def room_freq(self, value: Dict[str, int]) -> None:
+        self._room_freq = value 
+
+    @property
+    def room_numbers(self) -> List:
+        return self._room_numbers
+
+    @room_numbers.setter
+    def room_numbers(self, value: List) -> None:
+        self._room_numbers = value 
+
+    @property
+    def parsed_meetings(self) -> List:
+        return self._parsed_meetings
+
+    @parsed_meetings.setter
+    def parsed_meetings(self, value: List) -> None:
+        self._parsed_meetings = value
+
+    @property
+    def rooms(self) -> str:
+        return self._rooms
+
+    @rooms.setter
+    def rooms(self, value: str) -> None:
+        self._rooms = value
+
+    @property
+    def id(self) -> str:
+        return self._id
+
+    @id.setter
+    def id(self, value: str) -> None:
+        self._id = value
 
     @property
     def department_code(self) -> str:

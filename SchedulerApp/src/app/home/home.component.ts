@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
     this.dataService.getData().subscribe(
       (response) => {
         this.data = response;  // Store the response data in the component
-        console.log(this.data);  // Log the response to the console (optional)
       },
       (error) => {
         console.error('Error fetching data:', error);  // Handle errors
@@ -33,6 +32,10 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToHome() {
-    this.router.navigate(['/..']);
+    this.router.navigate(['/home']);
+  }
+
+  navigateToData() {
+    this.router.navigate(['/data']);
   }
 }

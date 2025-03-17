@@ -1,19 +1,19 @@
 #####################################################################################
-#   CourseSection Data Formatter Prototype
+#   CourseSection Data Formatter
 #____________________________________________________________________________________
 #
 #  CourseSection Objects + Needed Attributes -> List of Strings to Represent Data
 #....................................................................................
 
 from p_CourseSection import CourseSection, CourseSectionEnum
-from p_course_section_factory import build_course_sections as csvp
+from p_course_section_factory import build_course_sections as csf
 
 import csv
 import os
 import sys
 
 def main():
-      print("p_course_section_data_formatter: ran as main. No logic in the main() function.")
+      print("course_section_data_formatter: Ran as main() ... No output.")
 
 #####################################################################################
 # Takes dictionary of CourseSection objects and outputs formatted strings or "data

@@ -1,7 +1,7 @@
 from enum import Enum
 import re
 from typing import Dict, List, Tuple
-from p_CourseSection import CourseSection
+from Model.CourseSection import CourseSection
 
 DAY_OFFSETS = {
 	'M': 0 * 1440,
@@ -51,8 +51,14 @@ def parse_meeting_line(line: str) -> List[Tuple[str, int, int]]:
 			meetings.append((d, start_min, end_min))
 	return meetings
 
+def make_int_str(attribute: str) -> str:
+	if attribute.endswith(".0"):
+		attribute = attribute[:-2]
+		return attribute
+	return attribute
+
 class ClassroomEnum(Enum):
-	ROOM_NUMBER             = 'Room Number'
+	ROOM             = 'Room Number'
 	SEATS                   = 'Seats'
 	DISPLAYS                = 'Displays'
 	COMPUTER_COUNT          = 'Computer Count'
@@ -61,8 +67,8 @@ class ClassroomEnum(Enum):
 
 class Classroom:
 	def __init__(self, attributes: Dict[str, str]) -> None:
-		self._room_number            = attributes[ClassroomEnum.ROOM_NUMBER.value]
-		self._seats                  = attributes[ClassroomEnum.SEATS.value]
+		self._room		             = attributes[ClassroomEnum.ROOM.value]
+		self._seats                  = make_int_str(attributes[ClassroomEnum.SEATS.value])
 		self._displays               = attributes[ClassroomEnum.DISPLAYS.value]
 		self._computer_count         = attributes[ClassroomEnum.COMPUTER_COUNT.value]
 		self._info_and_connectivity  = attributes[ClassroomEnum.INFO_AND_CONNECTIVITY.value]
@@ -74,12 +80,12 @@ class Classroom:
 		self._minute_schedule: List[List[str]] = [[] for _ in range(7 * 1440)]
 
 	@property
-	def room_number(self) -> str:
-		return self._room_number
+	def room(self) -> str:
+		return self._room
 
-	@room_number.setter
-	def room_number(self, value: str) -> None:
-		self._room_number = value
+	@room.setter
+	def room(self, value: str) -> None:
+		self._room = value
 
 	@property
 	def seats(self) -> str:
@@ -136,9 +142,9 @@ class Classroom:
 #	'MW 3pm-4:15pm; F 8:30am-10:20am') and adds it to this room's schedule.
 #....................................................................................
 	def add_course_section_object(self, course_section_object) -> None:
-		meeting_str = course_section_object.meetings
-		course_id = f"{course_section_object.catalog_number}-{course_section_object.section}"
-		for d, start_min, end_min in parse_meeting_line(meeting_str):
+		meeting_str = course_section_object.parsed_meetings
+		course_id = f"{course_section_object.id}"
+		for d, start_min, end_min in meeting_str:
 			if d in DAY_OFFSETS:
 				day_offset = DAY_OFFSETS[d]
 				start_slot = day_offset + start_min
@@ -171,7 +177,7 @@ class Classroom:
 				else:
 					if in_block:
 						# close the block
-						intervals.append((cid, block_start, minute))
+						intervals.append([cid, block_start, minute])
 						in_block = False
 			# if we end the day still in a block
 			if in_block:
@@ -194,6 +200,8 @@ class Classroom:
 					continue  # don't compare same course to itself
 				# Overlap if each interval starts before the other ends
 				if start1 < end2 and start2 < end1:
-					conflicts.append((cid1, start1, end1, cid2, start2, end2))
+					add1 = [cid1, start1, end1, cid2, start2, end2]
+					if add1 not in conflicts:
+						conflicts.append(add1)
 
 		return conflicts
