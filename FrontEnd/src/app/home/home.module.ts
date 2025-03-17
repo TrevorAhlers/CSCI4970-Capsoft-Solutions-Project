@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeComponent } from './home.component';
-import { UploadBoxComponent } from './view/upload-box/upload-box.component';
+import { UploadComponent } from './view/upload/upload.component';
 import { ConflictManagerComponent} from './conflict-manager/conflict-manager.component';
 import { FileManagerComponent} from './file-manager/file-manager.component';
 import { DetailsComponent} from './details/details.component';
@@ -31,7 +31,7 @@ import { HomeRoutingModule } from './home.routes';
 	],
 	declarations: [
 		HomeComponent,
-		UploadBoxComponent,
+		UploadComponent,
 		ConflictManagerComponent,
 		FileManagerComponent,
 		DetailsComponent,
