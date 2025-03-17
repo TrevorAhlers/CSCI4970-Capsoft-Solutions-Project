@@ -1,61 +1,17 @@
-
-<div class="Template_page">
-  <h1 class="scheduler_app_text">Scheduler App</h1>
-  <!--    Make sure that the page zoom out instead of sideways when pressing the (-) -->
-  <div class="profile_box">
-    <img class="user_pic" src="/assets/Capture.JPG" alt="profile-pic" >
-    <p class="Account"> Guest User</p>
-    <div class="logoff-button-row">
-      <button mat-flat-button (click)="navigateToHome()">Log Off</button>    
+<div class="homepage-container">
+  <div class="home header"></div>
+    <div class="columns">
+      <div class="column left">
+        <app-profile></app-profile>
+        <app-details></app-details>
+        <app-file-manager></app-file-manager>
+      </div>
+      <div class="column center">
+        <app-upload-box></app-upload-box>
+      </div>
+      <div class="column right">
+        <app-conflict-manager></app-conflict-manager>
+      </div>
     </div>
-      <button class="export_buttom" mat-fab extended>
-        <mat-icon>download</mat-icon>
-                Export
-      </button>
-  </div>
-
-
-  <div class="upload_box">
-    <div class="upload_file" >
-      <h2 class="upload_text">Upload File</h2>
-      <form action="/action_page.php" action="/action_page.php" > 
-        <img class="upload_pic" src="/assets/cloud_upload_100dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png">
-        <input type="file" class="file-input" #fileUpload />
-      </form>
-    </div>
-  </div>
-
-
-
-  <mat-card class="file_card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>File details</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-  </mat-card>
-
-  <mat-card class="recent_file_card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>Recent Files</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    
-  </mat-card>
-
-
-
-  <!--    Added a slider-->
-  <div class="conflict_box">
-
-    <mat-card-title class="conflict_title" style="text-align: center;">Conflicts</mat-card-title>
-    <mat-card class="conflict_inner_box-card" appearance="outlined">
-      <mat-tab-group disablePagination="true" animationDuration="0ms">
-        <mat-tab label="Active"></mat-tab>
-        <mat-tab label="Ignore"></mat-tab>
-      </mat-tab-group>
-    </mat-card>
-
-  </div>
-
+    <div class="home footer"></div>
 </div>
-

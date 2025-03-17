@@ -1,19 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from '@services/data.service';
 import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatDividerModule} from '@angular/material/divider'
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    standalone: false
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss']
 })
-export class HomeComponent implements OnInit {
 
-  data: any;  // Variable to store the data
+export class ProfileComponent {
+
+  data: any;
   profileImage:string = "Capture.png"
  
   
@@ -33,5 +30,9 @@ export class HomeComponent implements OnInit {
 
   navigateToData() {
     this.router.navigate(['/data']);
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/home']);
   }
 }

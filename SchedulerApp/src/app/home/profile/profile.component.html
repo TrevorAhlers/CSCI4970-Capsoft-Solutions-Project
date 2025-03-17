@@ -1,0 +1,16 @@
+<mat-card class="profile" appearance="outlined">
+  <mat-card-header>
+    <img mat-card-avatar class="user_pic" src="/assets/Capture.JPG" alt="profile-pic">
+    <mat-card-title>Guest User</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="logoff-button-row">
+      <button class="export_button" mat-fab extended>
+        <mat-icon>download</mat-icon>
+                Export
+      </button>
+      <button mat-flat-button (click)="navigateToHome()">Log Off</button>
+    </div>
+  </mat-card-content>
+</mat-card>

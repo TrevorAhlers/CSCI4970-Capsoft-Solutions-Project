@@ -1,233 +1,61 @@
 :host {
-    display: flex;
-   
-    height: 100vh;
-  background: lightcyan;
-    border: 1px solid black;
-    padding: 10px;
-    
-  }
-.mat-mdc-outlined-button {
-    border-color: black !important; /* Force custom outline */
-    color: black !important;         /* Text color */
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	background-color: rgb(25, 25, 29);
 }
 
-.Scheduler_app.h1{
-    text-align: center;
-    
-    margin: 0;
-
+.homepage-container {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	//box-sizing: border-box;
 }
 
-.scheduler_app_text{
-    position: absolute;
-    left: 640px;
-    top:50px;
-}
-.profile_box.your_profile{
-   position: relative;
-   bottom: 500px;
-   
-}
-
-.back_home_button{
-    position: relative;
-    bottom: 120px;
-    left:120px;
-    
-}
-.profile_box{
-
-   
-    border: 5px solid lightgrey;
-    padding: 40px;
-    margin: 2px;
-    box-shadow: 10px 5px 5px grey;
-    border-color: black;
-    background-color: lightblue;
-    width:170px;
-    height:130px;
-    position: absolute;
-    
-    left: 10px;
+.columns {
+	display: flex;
+	flex: 1;
+	min-height: 0;
+	gap: 10px;
+	padding-left: .5%;
+    padding-right: .5%;
+    padding-top: 0%;
+    padding-bottom: 0%;
 }
 
-.upload_box{
-    position: absolute;
-    
-    border: 5px solid lightgrey;
-    padding: 40px;
-    margin: 2px;
-    box-shadow: 10px 1px 1px grey;
-    border-color: black;
-    background-color: lightblue;
-    width: 700px;
-    height:760px;
-    left:300px;
-    top:150px;
-
+.column {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	//box-sizing: border-box;
 }
 
-.user_pic{
-    width:100px;
-    height:100px;
-    position: relative;
-    bottom: 15px;
-    right:30px;
+.column.left {
+	flex: 0 0 20%;
 }
 
-.Account{
-    position: absolute;
-    left:130px;
-    bottom: 150px;
-
-}
-.export_buttom{
-    display: flex;
-    justify-content: center;
-    background: darkcyan;
+.column.left > * {
+	flex: 1;
+	min-height: 10%;
 }
 
 
-.profile_box.h1{
-    text-align: center;
+.column.center {
+	//flex: 1;
+	flex: 0 0 59%;
+	//display: flex;
 }
 
-.upload_file{
-    position: relative;
-    left:220px;
-    top:280px;
+.column.right {
+	flex: 0 0 20%;
 }
 
-.file_details{
-    position: absolute;
-    
-    border: 5px solid black;
-    padding: 40px;
-    margin: 2px;
-    top:270px;
-    width:170px;
-    height:200px;
-    margin-top: 10px;
-    
+.home.header {
+	flex: 0 0 5%;
+	background-color: transparent;
 }
 
-.vl {
-    border-top: 3px dotted #bbb;
-    position: absolute;
-    top:100px;
-    
-}
-
-.heading {
-    text-align: center;
-    position: relative;
-    margin: 0;
-    padding: 0 10px;
-}
-
-.heading::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    bottom: 100px;
-    width: 100%;
-    height: 2px; /* Thickness of the line */
-    background-color: black;
-    z-index: 0;
-   
-}
-
-.conflict_box{
-    position: absolute;
-    
-    border: 5px solid black;
-    padding: 40px;
-    margin: 2px;
-    box-shadow: 10px 1px 1px grey;
-    border-color: black;
-    background-color: lightblue;
-    width: 150px;
-    height:920px;
-    left:1110px;
-    top:10px;
-    bottom:100px;
-
-}
-
-.tabs{
-    position: absolute;
-    top:60px;
-    left:20px;
-}
-
-.logoff-button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-    border-radius: 20px !important;
-    background-color: bisque;
-    position: absolute;
-    bottom: 110px;
-    left:120px;
-    
-  }
-
-
-.conflict_title{
-    position: absolute;
-    bottom: 965px;
-    left: 75px;
-}
-
-.conflict_inner_box-card{
-    position:absolute;
-    right:5px;
-    width: 220px;
-    height: 50px;
-    border: 1px solid black;
-    height: 950px;
-    background-color: bisque;
-}
-
-.upload_img{
-    width: 100px;
-}
-
-.upload_pic{
-    position: relative;
-    bottom: 200px;
-    right:50px;
-}
-
-
-.file-input{
-    position: absolute;
-    bottom: 200px;
-    left:70px;
-}
-
-.upload_text{
-    position: absolute;
-    bottom: 540px;
-    left:90px;
-}
-
-.file_card{
-    position: absolute;
-    top:300px;
-    width: 260px;
-    padding: 16px;
-    height:300px;
-    background: lightcyan;
-    border: 1px solid black;
-}
-
-.recent_file_card{
-    position: absolute;
-    top:670px;
-    width: 260px;
-    padding: 16px;
-    height:300px;
-    background: lightcyan;
-    border: 1px solid black; 
+.home.footer {
+	flex: 0 0 5%;
+	background-color: transparent;
 }

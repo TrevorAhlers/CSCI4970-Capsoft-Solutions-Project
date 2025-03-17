@@ -1,0 +1,26 @@
+:host {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	//border: 1px solid rgb(255, 255, 255);
+	background-color: rgb(73, 73, 73);
+	padding-top: 2%;
+	padding-bottom: 1%;
+	padding-left: 0%;
+	padding-right: 0%;
+	box-sizing: border-box;
+	border-radius: 8px;
+}
+
+.conflict_title {
+	//margin-bottom: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.conflict_inner_box-card {
+	flex: 1;
+	//margin-top: 10px;
+	background-color: rgb(177, 177, 177);
+	box-sizing: border-box;
+}
