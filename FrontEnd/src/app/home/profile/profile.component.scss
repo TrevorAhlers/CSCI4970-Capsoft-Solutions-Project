@@ -39,9 +39,11 @@
  .user-container {
     position: relative;
     display: inline-flex;
-    background-color: cyan;
+    //background-color: cyan;
     height: 100%;
-    padding-right:20%
+    //padding-right:20%
+    padding-left:2%;
+    padding-top: 2%;
 
  }
 
@@ -50,7 +52,7 @@
 	position: relative;
 	margin-top:1%;
     margin-bottom:1%;
-    //margin-left:1%;
+    margin-left:1%;
     margin-right:1%;
     //left: 5%;
     //left:180px;
