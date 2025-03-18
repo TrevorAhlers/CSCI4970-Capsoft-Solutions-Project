@@ -1,37 +1,49 @@
 .upload {
-	//display: flex;
+	display: flexbox;
 	//flex-direction: column;
 	//justify-content: center;
 	align-items: center;
 	padding: 4%;
-	background-color: rgb(73, 73, 73);
+	background-color: #F8FAFC;
 	//width: 100%;
-	border-radius: 8px;
+	border-radius: 5px;
 	min-height: 100%;
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.upload_file {
-	margin-left: 47%;
-}
-.upload.pic {
+.upload-pic {
 	padding: 5%;
-	width:30%;
-	margin-left: 50%;
-	margin-right: 50%;
+	width: 30%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-top: 10%;
 	opacity: 50%;
-
 }
+
 .file.input {
-	background-color: transparent;
-	margin-left: 20%;
+	padding: 5%;
+	width:30%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
+	opacity: 50%;
 }
 .upload_text {
-	background-color: transparent;
+	padding: 5%;
+	width:30%;
+	margin-right: 100%;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	opacity: 50%;
 }
 
 .space{
 	flex: 0 0 20%;
 
 	
+}
+
+.file {
+	margin-left: 5%;
+
 }

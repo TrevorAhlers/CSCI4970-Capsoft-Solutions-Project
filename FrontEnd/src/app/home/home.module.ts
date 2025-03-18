@@ -17,6 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HomeRoutingModule } from './home.routes';
+import { LoginComponent } from '../login/login.component';
 
 @NgModule({
 	imports: [

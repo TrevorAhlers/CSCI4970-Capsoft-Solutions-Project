@@ -3,7 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';  
 import { DataComponent } from './services/data.component';
 import { AppComponent } from './app.component';  
+
 import { RouterModule, Routes } from '@angular/router';
+import { AppRoutingModule } from './app.routes';
+
 import { LoginComponent } from './login/login.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; 
 import { MatCard } from '@angular/material/card';
@@ -29,6 +32,7 @@ const routes: Routes = [
 	imports: [
 		BrowserModule,
 		RouterModule.forRoot(routes),
+		AppRoutingModule,
 		HttpClientModule,
 		MatCardModule,
 		MatCard,

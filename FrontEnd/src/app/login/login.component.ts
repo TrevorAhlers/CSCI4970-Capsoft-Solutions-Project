@@ -12,7 +12,7 @@ export class LoginComponent {
   constructor(private router: Router) {}
   
   navigateToHome() {
-    this.router.navigate(['/home']);
+    this.router.navigateByUrl('/home');
   }
 }
 

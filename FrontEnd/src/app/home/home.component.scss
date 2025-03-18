@@ -2,9 +2,7 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	background-color: rgb(25, 25, 29);
-	// padding-left: 2%;
-	// padding-right: 2%;
+	background: linear-gradient(180deg, #BCCCDC, #9AA6B2);
 }
 
 .homepage-container {
@@ -63,17 +61,18 @@
 
 .home.footer {
 	flex: 0 0 5%;
-	background-color: rgb(15, 15, 17);
+	background-color:#9AA6B2;
 }
 
 p.footer {
 	color: rgb(78, 78, 78);
 	height: 15%;
-	left: 49%;
-	top: 45%;
+	top: 50%;
+	left: 49.4%;
+	//transform: translateY(-50%) translateX(-50%);
 	position: relative;
-	align-self: center;
 	font-size: small;
+	//transform: translateX(-50%);
 }
 
 p {
@@ -82,7 +81,10 @@ p {
 
 .logo{
 	height: 15%;
-	left: 50%;
 	top: 50%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
 	position: relative;
+	transform: translateX(-50%);
+	opacity: .5;
 }

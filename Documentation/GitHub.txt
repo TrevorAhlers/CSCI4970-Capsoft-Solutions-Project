@@ -5,8 +5,11 @@ git branch
 git checkout dev
 
 *if you need to update your local project with the latest on github... lets say the dev branch (be careful you arent saving over changes you want to keep locally)
+git checkout dev-tyler
 git fetch origin
-git pull origin dev
+git merge origin/dev
+git push origin dev-tyler
+
 
 *if you need to make your own branch (and switch to it)
 git checkout -b new-branch-name

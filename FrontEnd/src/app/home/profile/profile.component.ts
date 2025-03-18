@@ -35,4 +35,8 @@ export class ProfileComponent {
   navigateToHome() {
     this.router.navigate(['/home']);
   }
+
+  navigateToLogin() {
+    this.router.navigateByUrl('/login');
+  }
 }
