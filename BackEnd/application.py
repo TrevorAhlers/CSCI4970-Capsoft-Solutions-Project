@@ -25,6 +25,7 @@ import Controller.room_scorer as room_scorer
 from flask import Flask, jsonify, session, request, redirect, url_for, flash
 import os
 from flask_cors import CORS
+import pickle
 
 
 #....................................................................................
@@ -39,6 +40,39 @@ TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 application = Flask(__name__)
 application.secret_key = 'your_secret_key'
 CORS(application)
+
+UPLOAD_FOLDER = 'uploads'
+application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+application.config['ALLOWED_EXTENSIONS'] = {'csv'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
+
+def get_data():
+    base_dir = os.path.dirname(__file__)
+    csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
+    
+    attributes = [
+        CourseSectionEnum.CATALOG_NUMBER,
+        CourseSectionEnum.SECTION,
+        CourseSectionEnum.ROOM,
+        CourseSectionEnum.ENROLLMENT,
+        CourseSectionEnum.MAX_ENROLLMENT,
+    ]
+
+	
+    
+    course_section_instantiation_dict = csf.build_course_sections(csv_file)
+    data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
+
+    data = []
+    for row in data_row_list:
+        values = row.split(" | ")  # Assuming data is formatted similarly
+        entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
+        data.append(entry)
+
+    return jsonify({"courses": data})
+
 
 
 #....................................................................................
@@ -124,10 +158,45 @@ def course_info():
     return jsonify(info_list)
 
 
+
+
+
+
+@application.route('/upload', methods=['POST'])
+def upload():
+    
+    if not os.path.exists(application.config['UPLOAD_FOLDER']):
+        os.makedirs(application.config['UPLOAD_FOLDER'])  
+
+
+    if 'file' not in request.files:
+        return jsonify({"message": "No file part"}), 400
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({"message": "No selected file"}), 400
+
+
+    if file and allowed_file(file.filename):
+        filename = os.path.join(application.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filename)
+        global INPUT_CSV 
+        INPUT_CSV = file.filename
+        print(INPUT_CSV)
+        print(file.filename)
+
+
+        return jsonify({"message": "File uploaded successfully", "filename": file.filename})
+
+    return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
+
 @application.route('/api/data', methods=['GET'])
-def get_data():
+def get_data(): 
     base_dir = os.path.dirname(__file__)
     csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
+    
+    print(INPUT_CSV)
     
     attributes = [
         CourseSectionEnum.CATALOG_NUMBER,
@@ -136,6 +205,8 @@ def get_data():
         CourseSectionEnum.ENROLLMENT,
         CourseSectionEnum.MAX_ENROLLMENT,
     ]
+
+	
     
     course_section_instantiation_dict = csf.build_course_sections(csv_file)
     data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
