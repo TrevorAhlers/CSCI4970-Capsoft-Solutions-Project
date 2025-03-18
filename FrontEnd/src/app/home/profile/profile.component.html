@@ -1,16 +1,19 @@
 <mat-card class="profile" appearance="outlined">
+  <div class="user container">
   <mat-card-header>
     <img mat-card-avatar class="user_pic" src="/assets/Capture.JPG" alt="profile-pic">
-    <mat-card-title>Guest User</mat-card-title>
+    
+    <h1 class="header">Guest User</h1>
+    <a class = "log out" routerLink="/login">Log Out</a>
   </mat-card-header>
+  
+
+  </div>
   <mat-divider></mat-divider>
-  <mat-card-content>
-    <div class="logoff-button-row">
-      <button class="export_button" mat-fab extended>
+  <mat-card-content class="profile card content">
+      <button class="export_button">
         <mat-icon>download</mat-icon>
-                Export
+                <p class="p export">Export</p>
       </button>
-      <button mat-flat-button (click)="navigateToHome()">Log Off</button>
-    </div>
   </mat-card-content>
 </mat-card>

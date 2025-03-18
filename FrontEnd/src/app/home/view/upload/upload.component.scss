@@ -11,16 +11,20 @@
 }
 
 .upload_file {
-	margin: 50%;
+	margin-left: 47%;
 }
 .upload.pic {
 	padding: 5%;
-	width:50%;
+	width:30%;
+	margin-left: 50%;
+	margin-right: 50%;
+	margin-top: 10%;
 	opacity: 50%;
 
 }
 .file.input {
 	background-color: transparent;
+	margin-left: 20%;
 }
 .upload_text {
 	background-color: transparent;
@@ -29,5 +33,5 @@
 .space{
 	flex: 0 0 20%;
 
-	background-color: rgb(255, 0, 0);
+	
 }
