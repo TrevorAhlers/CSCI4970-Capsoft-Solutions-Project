@@ -12,7 +12,10 @@ from typing import Dict, List, Optional
 from Model.Classroom import Classroom, ClassroomEnum
 from Model.CourseSection import CourseSection, CourseSectionEnum
 
-def build_classrooms(filename: str) -> Dict[str, Classroom]:
+def build_classrooms(filename: str, sections: Dict[str,CourseSection]) -> Dict[str, Classroom]:
+
+    classroom_keys = []
+
     df = pd.read_csv(filename, header=0)
     classrooms: Dict[str, Classroom] = {}
 
@@ -27,8 +30,13 @@ def build_classrooms(filename: str) -> Dict[str, Classroom]:
         room_num_str = row_data.get("Room Number", "")
         tokens = room_num_str.split()
         key = tokens[-1] if tokens else room_num_str
+        key = "Peter Kiewit Institute " + key
+        print("Class:", key)
 
         cl = Classroom(row_data)
+        classroom_keys.append(cl.room)
+
+        # Default object values
         if not cl.seats:
             cl.seats = "N/A"
         if not cl.computer_count:
@@ -37,8 +45,22 @@ def build_classrooms(filename: str) -> Dict[str, Classroom]:
             cl.displays = "N/A"
         if not cl.info_and_connectivity:
             cl.info_and_connectivity = "N/A"
+
         classrooms[key] = cl
+    
+    for _,section in sections.items():
+        for section_room in section.rooms:
+            if section_room not in classroom_keys:
+                row_data = {
+                    "Room Number": section_room,
+                    "Seats": "N/A",
+                    "Displays": "N/A",
+                    "Computer Count": "N/A",
+                    "Information and Connectivity": "N/A"
+                }
+                classrooms[section_room] = Classroom(row_data)
 
     print(f"Built {len(classrooms)} Classroom objects.")
+    
 
     return classrooms

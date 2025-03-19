@@ -58,7 +58,7 @@ def make_int_str(attribute: str) -> str:
 	return attribute
 
 class ClassroomEnum(Enum):
-	ROOM             = 'Room Number'
+	ROOM             		= 'Room Number'
 	SEATS                   = 'Seats'
 	DISPLAYS                = 'Displays'
 	COMPUTER_COUNT          = 'Computer Count'
@@ -72,12 +72,23 @@ class Classroom:
 		self._displays               = attributes[ClassroomEnum.DISPLAYS.value]
 		self._computer_count         = attributes[ClassroomEnum.COMPUTER_COUNT.value]
 		self._info_and_connectivity  = attributes[ClassroomEnum.INFO_AND_CONNECTIVITY.value]
+		self._sections				 = []
+		self._assigned				 = [True if self._room else False]
 		# self._department             = attributes[ClassroomEnum.DEPARTMENT.value]
 
-		# A 1440 * possible_days = total slots if we combine days into one array.
-		# For simplicity, we’ll do only 1440 per day and add offsets for T/W/etc. below.
-		# This example just keeps 7*1440 to handle up to Saturday.
+		# A 1440 * possible_days = total items
 		self._minute_schedule: List[List[str]] = [[] for _ in range(7 * 1440)]
+
+	@property
+	def sections(self) -> List:
+		return self._sections
+	
+	def add_section(self, value: CourseSection) -> None:
+		self._sections.append(value)
+
+	@sections.setter
+	def sections(self, value: List) -> None:
+		self._sections = value
 
 	@property
 	def room(self) -> str:
@@ -123,7 +134,7 @@ class Classroom:
 #####################################################################################
 # 	# Occupies minutes [start_slot, end_slot) in the _minute_schedule.
 #....................................................................................
-	def add_course_section(self, course_id: str, start_slot: int, end_slot: int) -> None:
+	def add_course_section(self, course_id: str, room: str, start_slot: int, end_slot: int) -> None:
 		for minute in range(start_slot, end_slot):
 			self._minute_schedule[minute].append(course_id)
 
@@ -141,20 +152,21 @@ class Classroom:
 # 	Parses course_section_object.meetings (assuming it's something like
 #	'MW 3pm-4:15pm; F 8:30am-10:20am') and adds it to this room's schedule.
 #....................................................................................
-	def add_course_section_object(self, course_section_object) -> None:
-		meeting_str = course_section_object.parsed_meetings
-		course_id = f"{course_section_object.id}"
-		for d, start_min, end_min in meeting_str:
+	def add_course_section_object(self, course_section_object: CourseSection) -> None:
+		schedule = course_section_object.schedule
+		self.add_section(course_section_object)
+		for section_id, room, d, start_min, end_min in schedule:
 			if d in DAY_OFFSETS:
 				day_offset = DAY_OFFSETS[d]
 				start_slot = day_offset + start_min
 				end_slot = day_offset + end_min
-				self.add_course_section(course_id, start_slot, end_slot)
+				self.add_course_section(section_id, room, start_slot, end_slot)
 
-	# ------------------------------------------------------------------
-	# Convert minute-based schedule to intervals, then find conflicts
-	# ------------------------------------------------------------------
-	def _gather_intervals(self) -> List[Tuple[str, int, int]]:
+#....................................................................................
+#####################################################################################
+# Convert minute-based schedule to intervals
+#....................................................................................
+	def gather_intervals(self) -> List[Tuple[str, int, int]]:
 		# Scans the minute_schedule to produce a list of (course_id, start_min, end_min).
 		# For example, if a course occupies minutes 540..560, we store (course_id, 540, 560).
 
@@ -185,23 +197,25 @@ class Classroom:
 
 		return intervals
 
+#....................................................................................
+#####################################################################################
+# Return interval overlaps as conflicts
+#....................................................................................
 	def find_conflicts(self) -> List[Tuple[str, int, int, str, int, int]]:
-		# Identify all overlaps among intervals. Returns a list of tuples:
-		# (course_id1, start1, end1, course_id2, start2, end2).
-
-		conflicts = []
-		intervals = self._gather_intervals()
+		conflict_set = set()
+		intervals = self.gather_intervals()
 
 		for i in range(len(intervals)):
 			cid1, start1, end1 = intervals[i]
 			for j in range(i + 1, len(intervals)):
 				cid2, start2, end2 = intervals[j]
 				if cid1 == cid2:
-					continue  # don't compare same course to itself
-				# Overlap if each interval starts before the other ends
+					continue
 				if start1 < end2 and start2 < end1:
-					add1 = [cid1, start1, end1, cid2, start2, end2]
-					if add1 not in conflicts:
-						conflicts.append(add1)
-
+					# Reduces redundancy by making a conflict signature (canonical form)
+					conflict = tuple(sorted([(cid1, start1, end1), (cid2, start2, end2)]))
+					conflict_set.add(conflict)
+		
+		# Convert set items back to flat tuples if needed.
+		conflicts = [first + second for first, second in conflict_set]
 		return conflicts

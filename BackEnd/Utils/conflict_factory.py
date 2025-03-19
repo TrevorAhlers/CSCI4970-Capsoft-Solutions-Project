@@ -5,15 +5,10 @@ from Model.Conflict import Conflict
 
 TIME_BETWEEN_CLASSES = 5
 
-def add_conflict_if_unique(output_conflicts: List[Conflict], conflict_cluster: List[CourseSection],
-	times: List[List], rooms: List[str], msg: str = "") -> None:
-	
-	new_conflict = Conflict(conflict_cluster, times, rooms, msg)
-	if not any(existing.id == new_conflict._id for existing in output_conflicts):
-		output_conflicts.append(new_conflict)
-
 def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom]) -> List[Conflict]:
+
 	output_conflicts = []
+	conflict_exclusion = []
 	
 	for _, classroom in classrooms.items():
 		classroom_conflicts = classroom.find_conflicts()
@@ -27,10 +22,19 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 			n = len(conflict_array)
 			while i < n:
 				section_id = conflict_array[i]
+				exclusion = conflict_exclusions_generator(sections[section_id], sections)
+				if exclusion not in conflict_exclusion:
+					conflict_exclusion += exclusion
+				if sections[section_id].crosslistings_cleaned:
+					conflict_exclusion += sections[section_id].crosslistings_cleaned
+					#print(section_id, "crosslist:",sections[section_id].crosslistings_cleaned)
+				if section_id in conflict_exclusion:
+					break
 				start_time = conflict_array[i+1]
 				end_time   = conflict_array[i+2]
 				i += 3
 				
+
 				# New cluster
 				if not conflict_cluster:
 					conflict_cluster.append(sections[section_id])
@@ -77,5 +81,42 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 				add_conflict_if_unique(output_conflicts, [sec], [], sec.rooms, str(e))
 
 	print(f"Built {len(output_conflicts)} Conflict objects.")
+
+	for i,conflict_check in enumerate(output_conflicts):
+		if (conflict_check.conflict_message == "") and conflict_check.section_count < 2:
+			del output_conflicts[i]
+
 	
 	return output_conflicts
+
+def add_conflict_if_unique(output_conflicts: List[Conflict], conflict_cluster: List[CourseSection],
+							times: List[List[int]], rooms: List[str], msg: str = "") -> None:
+	
+	# Canonical signature to compare all conflicts to detect duplicates
+	conflict_entries = sorted((sec.id, t[0], t[1]) for sec, t in zip(conflict_cluster, times))
+	rooms_signature = tuple(sorted(rooms))
+	conflict_signature = (tuple(conflict_entries), rooms_signature)
+	new_conflict = Conflict(conflict_cluster, times, rooms, msg)
+
+	# Override the object's conflict id with our canonical signature
+	new_conflict._id = conflict_signature
+
+	if not any(existing._id == new_conflict._id for existing in output_conflicts):
+		output_conflicts.append(new_conflict)
+
+# Remote learning classes are still assigned to rooms. We just need to know which other 
+# section its schedule mirrors. We can assign it to that matching section's room without 
+# conflict. So we suppress the conflict here.
+def conflict_exclusions_generator(remote_section: CourseSection, sections: Dict[str,CourseSection]):
+
+	conflict_exclusion_list = []
+
+	try:
+		if 830 > int(remote_section.section) >= 820:
+			if remote_section.id not in conflict_exclusion_list:
+				conflict_exclusion_list.append(remote_section.id)
+
+	except:
+		print(f'remote_learning_conflict_avoidance: error')
+
+	return conflict_exclusion_list

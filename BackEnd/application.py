@@ -21,18 +21,22 @@ import Utils.classroom_factory as cf
 import Utils.conflict_factory as cof
 import Controller.assigner as assigner
 import Controller.room_scorer as room_scorer
+import Controller.exporter as exporter
 # Other
 from flask import Flask, jsonify, session, request, redirect, url_for, flash
 import os
 from flask_cors import CORS
 import pickle
+from typing import Dict
 
 
 #....................................................................................
 
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
-INPUT_CSV = 'Fall2025_assignment_conflict_test.csv'
+INPUT_CSV = 'Spring2023_unassigned.csv'
 ROOMS_CSV = 'PKIRooms.csv'
+UNASSIGNED_CSV = 'Spring2023_unassigned.csv'
+OUTPUT_CSV = 'OutputCSV.csv'
 TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 
 #....................................................................................
@@ -46,32 +50,32 @@ application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 application.config['ALLOWED_EXTENSIONS'] = {'csv'}
 
 def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
 
 def get_data():
-    base_dir = os.path.dirname(__file__)
-    csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
-    
-    attributes = [
-        CourseSectionEnum.CATALOG_NUMBER,
-        CourseSectionEnum.SECTION,
-        CourseSectionEnum.ROOM,
-        CourseSectionEnum.ENROLLMENT,
-        CourseSectionEnum.MAX_ENROLLMENT,
+	base_dir = os.path.dirname(__file__)
+	csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
+
+	attributes = [
+		CourseSectionEnum.CATALOG_NUMBER,
+		CourseSectionEnum.SECTION,
+		CourseSectionEnum.ROOM,
+		CourseSectionEnum.ENROLLMENT,
+		CourseSectionEnum.MAX_ENROLLMENT,
     ]
 
-	
-    
-    course_section_instantiation_dict = csf.build_course_sections(csv_file)
-    data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
 
-    data = []
-    for row in data_row_list:
-        values = row.split(" | ")  # Assuming data is formatted similarly
-        entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
-        data.append(entry)
 
-    return jsonify({"courses": data})
+	course_section_instantiation_dict = csf.build_course_sections(csv_file)
+	data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
+
+	data = []
+	for row in data_row_list:
+		values = row.split(" | ")  # Assuming data is formatted similarly
+		entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
+		data.append(entry)
+
+	return jsonify({"courses": data})
 
 
 
@@ -88,8 +92,8 @@ def get_data():
 @application.route('/')
 def index():
 
-	sections = build_sections()
-	classrooms = build_classrooms()
+	sections: 	Dict[str,CourseSection] = build_sections()
+	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
 
 	# Frequency map populates section object attribute: room_freq
 	# this attribute contains a dictionary of all the rooms this
@@ -99,34 +103,37 @@ def index():
 	# input data as possible, and can even continue to do so if the
 	# users add finalized assignment csvs to the training data.
 	sections = build_freq_map(sections)
-
 	
-	# Print all sections and their room(s).
-	for _,section in sections.items():
-		print(f'-------------------------------')
-		print(f'Section: {section.id}')
-		#for room in section.room_numbers:
-		print(section.room_numbers)
-		print(section.schedule)
-		print(section.room_freq)
-		
-	# for _,class1 in classrooms.items():
-	# 	print(f'===============================')
-	# 	print("Class",class1.room)
-	# 	print("Seats",class1.seats)
+	
 
 
-	assigner.assign_sections_to_rooms(classrooms, sections)
+	classrooms, sections = assigner.default_assignment(classrooms, sections)
 
 	conflicts = build_conflicts(sections, classrooms)
 
 	attributes = []
+
+	# for _,classroom in classrooms.items():
+
+	# 	print(classroom.room)
 
 	for attr in CourseSectionEnum:
 		attributes.append(attr)
 	
 	for conflict in conflicts:
 		print(conflict.to_str())
+
+		#Print all sections and their room(s).
+	for _,section in sections.items():
+		print(f'-------------------------------')
+		print(f'Section: {section.id}')
+		#for room in section.room_numbers:
+		print(section.rooms)
+		#print(section.schedule)
+		#print(section.room_freq)
+		#print(section.crosslistings_cleaned)
+
+	export(sections)
 	
 
 	data_row_list = generate_strings_section_view(sections, attributes)
@@ -151,11 +158,11 @@ def index():
 #....................................................................................
 @application.route('/api/course-info')
 def course_info():
-    base_dir = os.path.dirname(__file__)
-    section_csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
-    instantiation_dict = csf.build_course_sections(section_csv_file)
-    info_list = generate_strings_section_view(instantiation_dict)
-    return jsonify(info_list)
+	base_dir = os.path.dirname(__file__)
+	section_csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
+	instantiation_dict = csf.build_course_sections(section_csv_file)
+	info_list = generate_strings_section_view(instantiation_dict)
+	return jsonify(info_list)
 
 
 
@@ -164,60 +171,60 @@ def course_info():
 
 @application.route('/upload', methods=['POST'])
 def upload():
-    
-    if not os.path.exists(application.config['UPLOAD_FOLDER']):
-        os.makedirs(application.config['UPLOAD_FOLDER'])  
+		
+	if not os.path.exists(application.config['UPLOAD_FOLDER']):
+		os.makedirs(application.config['UPLOAD_FOLDER'])  
 
 
-    if 'file' not in request.files:
-        return jsonify({"message": "No file part"}), 400
+	if 'file' not in request.files:
+		return jsonify({"message": "No file part"}), 400
 
-    file = request.files['file']
+	file = request.files['file']
 
-    if file.filename == '':
-        return jsonify({"message": "No selected file"}), 400
-
-
-    if file and allowed_file(file.filename):
-        filename = os.path.join(application.config['UPLOAD_FOLDER'], file.filename)
-        file.save(filename)
-        global INPUT_CSV 
-        INPUT_CSV = file.filename
-        print(INPUT_CSV)
-        print(file.filename)
+	if file.filename == '':
+		return jsonify({"message": "No selected file"}), 400
 
 
-        return jsonify({"message": "File uploaded successfully", "filename": file.filename})
+	if file and allowed_file(file.filename):
+		filename = os.path.join(application.config['UPLOAD_FOLDER'], file.filename)
+		file.save(filename)
+		global INPUT_CSV 
+		INPUT_CSV = file.filename
+		print(INPUT_CSV)
+		print(file.filename)
 
-    return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
+
+		return jsonify({"message": "File uploaded successfully", "filename": file.filename})
+
+	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
 @application.route('/api/data', methods=['GET'])
 def get_data(): 
-    base_dir = os.path.dirname(__file__)
-    csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
-    
-    print(INPUT_CSV)
-    
-    attributes = [
-        CourseSectionEnum.CATALOG_NUMBER,
-        CourseSectionEnum.SECTION,
-        CourseSectionEnum.ROOM,
-        CourseSectionEnum.ENROLLMENT,
-        CourseSectionEnum.MAX_ENROLLMENT,
-    ]
+	base_dir = os.path.dirname(__file__)
+	csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
+		
+	print(INPUT_CSV)
+		
+	attributes = [
+	CourseSectionEnum.CATALOG_NUMBER,
+	CourseSectionEnum.SECTION,
+	CourseSectionEnum.ROOM,
+	CourseSectionEnum.ENROLLMENT,
+	CourseSectionEnum.MAX_ENROLLMENT,
+	]
 
 	
-    
-    course_section_instantiation_dict = csf.build_course_sections(csv_file)
-    data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
+		
+	course_section_instantiation_dict = csf.build_course_sections(csv_file)
+	data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
 
-    data = []
-    for row in data_row_list:
-        values = row.split(" | ")  # Assuming data is formatted similarly
-        entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
-        data.append(entry)
+	data = []
+	for row in data_row_list:
+		values = row.split(" | ")  # Assuming data is formatted similarly
+		entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
+		data.append(entry)
 
-    return jsonify({"courses": data})
+	return jsonify({"courses": data})
 
 #....................................................................................
 # Helper functions:
@@ -229,15 +236,15 @@ def build_freq_map(sections):
 			sections[id].room_freq = freq_section
 	return sections
 
-def build_classrooms():
+def build_classrooms(sections):
 	base_dir = os.path.dirname(__file__)
 	classroom_csv_file = os.path.join(base_dir, 'Files', ROOMS_CSV)
-	classroom_instantiation_dict = cf.build_classrooms(classroom_csv_file)
+	classroom_instantiation_dict = cf.build_classrooms(classroom_csv_file, sections)
 	return classroom_instantiation_dict
 
 def build_sections():
 	base_dir = os.path.dirname(__file__)
-	section_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
+	section_csv_file = os.path.join(base_dir, 'Files', UNASSIGNED_CSV)
 	course_section_instantiation_dict = csf.build_course_sections(section_csv_file)
 	return course_section_instantiation_dict
 
@@ -245,10 +252,17 @@ def build_conflicts(sections, classrooms):
 	conflict_instantiation_list = cof.build_conflicts(sections, classrooms)
 	return conflict_instantiation_list
 
+def export(sections):
+	base_dir = os.path.dirname(__file__)
+	input_csv_file = os.path.join(base_dir, 'Files', UNASSIGNED_CSV)
+	output_csv_file = os.path.join(base_dir, 'Files', 'Exports', OUTPUT_CSV)
+	conflict_instantiation_list = exporter.update_csv_with_room(input_csv_file,output_csv_file,sections)
+	return conflict_instantiation_list
+
 
 #....................................................................................
 
 if __name__ == '__main__':
-    application.run(debug=True)
+	application.run(debug=True)
 
 #....................................................................................

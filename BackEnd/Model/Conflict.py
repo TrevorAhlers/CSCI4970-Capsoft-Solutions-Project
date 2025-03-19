@@ -38,6 +38,14 @@ class Conflict:
 		self._conflict_message			  = msg
 
 	@property
+	def conflict_message(self) -> str:
+		return self._conflict_message
+
+	@conflict_message.setter
+	def conflict_message(self, value: str) -> None:
+		self._conflict_message = value
+
+	@property
 	def id(self) -> str:
 		return self._id
 
