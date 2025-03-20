@@ -53,8 +53,15 @@ def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
 
 def get_data():
+	sections: 	Dict[str,CourseSection] = build_sections()
+	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
+	sections = build_freq_map(sections)
+	classrooms, sections = assigner.default_assignment(classrooms, sections)
+	conflicts = build_conflicts(sections, classrooms)
+	export(sections)
+
 	base_dir = os.path.dirname(__file__)
-	csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
+	csv_file = os.path.join(base_dir, 'Files', OUTPUT_CSV)
 
 	attributes = [
 		CourseSectionEnum.CATALOG_NUMBER,
@@ -64,10 +71,7 @@ def get_data():
 		CourseSectionEnum.MAX_ENROLLMENT,
     ]
 
-
-
-	course_section_instantiation_dict = csf.build_course_sections(csv_file)
-	data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
+	data_row_list = generate_strings_section_view(sections, attributes)
 
 	data = []
 	for row in data_row_list:
@@ -199,24 +203,26 @@ def upload():
 	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
 @application.route('/api/data', methods=['GET'])
-def get_data(): 
-	base_dir = os.path.dirname(__file__)
-	csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
-		
-	print(INPUT_CSV)
-		
-	attributes = [
-	CourseSectionEnum.CATALOG_NUMBER,
-	CourseSectionEnum.SECTION,
-	CourseSectionEnum.ROOM,
-	CourseSectionEnum.ENROLLMENT,
-	CourseSectionEnum.MAX_ENROLLMENT,
-	]
+def get_data():
+	sections: 	Dict[str,CourseSection] = build_sections()
+	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
+	sections = build_freq_map(sections)
+	classrooms, sections = assigner.default_assignment(classrooms, sections)
+	conflicts = build_conflicts(sections, classrooms)
+	export(sections)
 
-	
-		
-	course_section_instantiation_dict = csf.build_course_sections(csv_file)
-	data_row_list = generate_strings_section_view(course_section_instantiation_dict, attributes)
+	base_dir = os.path.dirname(__file__)
+	csv_file = os.path.join(base_dir, 'Files', OUTPUT_CSV)
+
+	attributes = [
+		CourseSectionEnum.CATALOG_NUMBER,
+		CourseSectionEnum.SECTION,
+		CourseSectionEnum.ROOM,
+		CourseSectionEnum.ENROLLMENT,
+		CourseSectionEnum.MAX_ENROLLMENT,
+    ]
+
+	data_row_list = generate_strings_section_view(sections, attributes)
 
 	data = []
 	for row in data_row_list:

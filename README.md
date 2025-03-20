@@ -18,6 +18,24 @@ Each semester, the Classroom Coordinator receives a CSV file containing all cour
 1. Classroom Coordinators come and go, so our platform must cater to a diverse set of preferences and workflows to drive engagement and remain relevant to all users.
 2. The input spreadsheet is part of a standardized course-section scheduling system used by many colleges, and our output CSV will conform to this format.
 
+## RELEASE NOTES MILESTONE 2 (v0.2.28)
+
+This second major release of our project showcases a homepage design for our user interface for scheduling classes. The user can upload a CSV file and our automatic scheduler will attempt an assignment model based on first-generation scheduling logic.
+
+For our milestone 2 we had the goals of CSV upload functionality from the frontend to the backend, class asignment through rudimentary logic, output CSV generation (export functionality), course/room allocation conflict identification and data input error identification, and test functionality and basic testing prototypes. We achieved evverything on our milestone 2 goal sheet except for frontend input validation. Caveats include unintuitive methodology for uploading a CSV and assigning classes. A user needs to browse their filesystem for the CSV and there is no upload button-- then the user navigations to index/data to actually call the assignment logic. In the future this will be more interface-friendly and this iteration is to show the state of functionality for these ideas.
+
+All updated code is in our dev branch, and no additional branches need to be considered to use the program.
+
+Instructions for running locally:
+1. You may need to install dependencies listed in the previous release notes such as flask and pandas.
+2. Open a terminal in your ide, or command line interface, and run the application.py in the BackEnd directory of the project.
+3. Install NodeJS as necessary on your computer.
+4. Open a new terminal and navigate to our projects FrontEnd folder. Run commands: 'npm install' and 'ng add @angular/material'.
+5. Build and run the frontend with 'npx ng serve'.
+6. Click the link in the terminal to load the webpage on your local.
+7. Upload an input CSV file from the interface.
+8. Navigate to http://localhost:4200/data to view the results of the room assignments.
+
 ## RELEASE NOTES MILESTONE 1 (v0.1.25)
 
 This first release focuses on our data models and their basic manipulation to display information comprehensively (row/column format). We can populate all course sections into objects and extract the necessary data for display. Current implementation displays the following attributes of a course-section: Catalog Number, Section Number, Room, Enrollment Count, and Max Enrollment.
