@@ -12,7 +12,7 @@ from typing import Dict, List, Optional
 from Model.Classroom import Classroom, ClassroomEnum
 from Model.CourseSection import CourseSection, CourseSectionEnum
 
-def build_classrooms(filename: str, sections: Dict[str,CourseSection]) -> Dict[str, Classroom]:
+def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[str, Classroom]:
 
     classroom_keys = []
 
@@ -31,7 +31,6 @@ def build_classrooms(filename: str, sections: Dict[str,CourseSection]) -> Dict[s
         tokens = room_num_str.split()
         key = tokens[-1] if tokens else room_num_str
         key = "Peter Kiewit Institute " + key
-        print("Class:", key)
 
         cl = Classroom(row_data)
         classroom_keys.append(cl.room)
@@ -48,7 +47,7 @@ def build_classrooms(filename: str, sections: Dict[str,CourseSection]) -> Dict[s
 
         classrooms[key] = cl
     
-    for _,section in sections.items():
+    for _, section in sections.items():
         for section_room in section.rooms:
             if section_room not in classroom_keys:
                 row_data = {
@@ -60,7 +59,15 @@ def build_classrooms(filename: str, sections: Dict[str,CourseSection]) -> Dict[s
                 }
                 classrooms[section_room] = Classroom(row_data)
 
+    # ASSIGN SECTIONS TO CLASSROOMS:
+    # For each section in the sections dictionary, iterate through its room list.
+    # If the room exists in the classrooms dictionary, call add_course_section_object to
+    # assign the section (and populate the minute schedule) in that Classroom.
+    for _, section in sections.items():
+        for section_room in section.rooms:
+            if section_room in classrooms:
+                classrooms[section_room].add_course_section_object(section)
+
     print(f"Built {len(classrooms)} Classroom objects.")
     
-
     return classrooms

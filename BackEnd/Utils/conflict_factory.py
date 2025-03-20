@@ -80,13 +80,17 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 			except ValueError as e:
 				add_conflict_if_unique(output_conflicts, [sec], [], sec.rooms, str(e))
 
+	
+
+	filtered_conflicts = [
+		conflict
+		for conflict in output_conflicts
+		if conflict.section_count >= 2
+	]
+	output_conflicts = filtered_conflicts
+
 	print(f"Built {len(output_conflicts)} Conflict objects.")
 
-	for i,conflict_check in enumerate(output_conflicts):
-		if (conflict_check.conflict_message == "") and conflict_check.section_count < 2:
-			del output_conflicts[i]
-
-	
 	return output_conflicts
 
 def add_conflict_if_unique(output_conflicts: List[Conflict], conflict_cluster: List[CourseSection],

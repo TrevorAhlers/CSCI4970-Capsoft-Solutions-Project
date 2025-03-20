@@ -33,7 +33,8 @@ from typing import Dict
 #....................................................................................
 
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
-INPUT_CSV = 'Spring2023_unassigned.csv'
+INPUT_CSV = 'Spring2023 conflict.csv'
+CONFLICT_CSV = 'Spring2023 conflict.csv'
 ROOMS_CSV = 'PKIRooms.csv'
 UNASSIGNED_CSV = 'Spring2023_unassigned.csv'
 OUTPUT_CSV = 'OutputCSV.csv'
@@ -106,7 +107,8 @@ def index():
 	# The idea is to reinforce valid room assignments with as much
 	# input data as possible, and can even continue to do so if the
 	# users add finalized assignment csvs to the training data.
-	sections = build_freq_map(sections)
+	
+	#sections = build_freq_map(sections)
 	
 	
 
@@ -118,7 +120,6 @@ def index():
 	attributes = []
 
 	# for _,classroom in classrooms.items():
-
 	# 	print(classroom.room)
 
 	for attr in CourseSectionEnum:
@@ -127,17 +128,17 @@ def index():
 	for conflict in conflicts:
 		print(conflict.to_str())
 
-		#Print all sections and their room(s).
-	for _,section in sections.items():
-		print(f'-------------------------------')
-		print(f'Section: {section.id}')
-		#for room in section.room_numbers:
-		print(section.rooms)
-		#print(section.schedule)
-		#print(section.room_freq)
-		#print(section.crosslistings_cleaned)
+	# 	#Print all sections and their room(s).
+	# for _,section in sections.items():
+	# 	print(f'-------------------------------')
+	# 	print(f'Section: {section.id}')
+	# 	#for room in section.room_numbers:
+	# 	print(section.rooms)
+	# 	print(section.schedule)
+	# 	#print(section.room_freq)
+	# 	#print(section.crosslistings_cleaned)
 
-	export(sections)
+	#export(sections)
 	
 
 	data_row_list = generate_strings_section_view(sections, attributes)
@@ -250,7 +251,7 @@ def build_classrooms(sections):
 
 def build_sections():
 	base_dir = os.path.dirname(__file__)
-	section_csv_file = os.path.join(base_dir, 'Files', UNASSIGNED_CSV)
+	section_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
 	course_section_instantiation_dict = csf.build_course_sections(section_csv_file)
 	return course_section_instantiation_dict
 
@@ -260,7 +261,7 @@ def build_conflicts(sections, classrooms):
 
 def export(sections):
 	base_dir = os.path.dirname(__file__)
-	input_csv_file = os.path.join(base_dir, 'Files', UNASSIGNED_CSV)
+	input_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
 	output_csv_file = os.path.join(base_dir, 'Files', 'Exports', OUTPUT_CSV)
 	conflict_instantiation_list = exporter.update_csv_with_room(input_csv_file,output_csv_file,sections)
 	return conflict_instantiation_list
