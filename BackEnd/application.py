@@ -250,7 +250,7 @@ def build_classrooms(sections):
 
 def build_sections():
 	base_dir = os.path.dirname(__file__)
-	section_csv_file = os.path.join(base_dir, 'Files', UNASSIGNED_CSV)
+	section_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
 	course_section_instantiation_dict = csf.build_course_sections(section_csv_file)
 	return course_section_instantiation_dict
 
@@ -260,7 +260,7 @@ def build_conflicts(sections, classrooms):
 
 def export(sections):
 	base_dir = os.path.dirname(__file__)
-	input_csv_file = os.path.join(base_dir, 'Files', UNASSIGNED_CSV)
+	input_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
 	output_csv_file = os.path.join(base_dir, 'Files', 'Exports', OUTPUT_CSV)
 	conflict_instantiation_list = exporter.update_csv_with_room(input_csv_file,output_csv_file,sections)
 	return conflict_instantiation_list
