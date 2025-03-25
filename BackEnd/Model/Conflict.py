@@ -38,6 +38,14 @@ class Conflict:
 		self._conflict_message			  = msg
 
 	@property
+	def section_count(self) -> int:
+		return self._section_count
+
+	@section_count.setter
+	def section_count(self, value: int) -> None:
+		self._section_count = value
+
+	@property
 	def conflict_message(self) -> str:
 		return self._conflict_message
 

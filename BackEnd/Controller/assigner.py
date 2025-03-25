@@ -8,6 +8,7 @@ from Model.CourseSection import CourseSection
 def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection]):
 	classrooms, sections = assign_sections_to_rooms(classrooms, sections)
 	classrooms, sections = assign_via_frequency_map(classrooms, sections)
+	print(f'')
 	return classrooms, sections
 
 
@@ -68,9 +69,6 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 				continue
 			# find best candidate room
 			best_candidate_rooms, count = find_max_frequency(section.room_freq)
-			print("best_candidate_rooms",best_candidate_rooms)
-
-			#print("best_candidate_rooms",best_candidate_rooms)
 
 			while (best_candidate_rooms):
 				conflicts = None
@@ -104,7 +102,7 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 	return classrooms, sections
 
 
-def find_max_frequency(frequency_map: Dict[str, int]):      # use value from dict... (x[0], x[1]) same as (key, value)
+def find_max_frequency(frequency_map: Dict[str, int]):		# use value from dict... (x[0], x[1]) same as (key, value)
 	sorted_items = sorted(frequency_map.items(), key=lambda x: x[1], reverse=True)
 	if sorted_items:
 		top5_keys = [room for room, count in sorted_items[:5]]

@@ -193,7 +193,7 @@ def combine_section_info(
 
 	# Condition 2b: more rooms than times
 	if len(rooms) > 2 and len(meeting_times) > len(rooms):
-		warning = f'Condition 2b triggered: 3+ rooms and 4+ meeting times. Make sure {section_id} has correct meeting times with each room it uses.'
+		warning = f'Condition 2b triggered: 3+ rooms and 4+ meeting times. Make sure {section_id} has correct meeting times with each room it uses. Unable to determine automatically.'
 
 	# Condition 3: len(rooms) > 2, len(meetings) > 3 => assign from the back
 	if len(rooms) > 2 and len(meeting_times) > 3:
@@ -212,7 +212,7 @@ def combine_section_info(
 		return results, warning
 	else:
 		# Fallback: pair in order until one runs out
-		warning = warning or f'Fallback assignment used. Make sure {section_id} has correct meeting times with each room it uses.'
+		warning = warning or f'Ambiguity in the meeting times versus rooms. Make sure {section_id} has correct meeting times with each room it uses.'
 		for i, mt in enumerate(meeting_times):
 			r = rooms[min(i, len(rooms)-1)]
 			results.append((section_id, r, mt[0], mt[1], mt[2]))
@@ -260,7 +260,10 @@ class CourseSection:
 		self._link_to           = attributes[		CourseSectionEnum.LINK_TO.value]
 		self._comments          = attributes[		CourseSectionEnum.COMMENTS.value]
 		self._notes1            = attributes[		CourseSectionEnum.NOTES1.value]
-		self._notes2            = attributes[		CourseSectionEnum.NOTES2.value]
+		try:
+			self._notes2            = attributes[		CourseSectionEnum.NOTES2.value]
+		except:
+			self._notes2			= ""
 
 		self._id = f'{self._subject_code} {self._catalog_number}-{self._section}'
 		self._parsed_meetings = parse_meetings(self._meeting_pattern)
@@ -268,11 +271,20 @@ class CourseSection:
 		self._end_time   = [self._parsed_meetings[0][2]] if parse_meetings(self._meeting_pattern) else -1
 		self._rooms = parse_rooms(self._room)
 		self._room_numbers = extract_room_numbers(self._rooms)
-		self._schedule,_ = combine_section_info(self._id, self._parsed_meetings, self._rooms)
+		self._schedule,self._warning = combine_section_info(self._id, self._parsed_meetings, self._rooms)
+
 		self._room_freq = {}
 		
 		self._crosslistings_cleaned = parse_crosslistings(self._cross_listings)
 
+
+	@property
+	def warning(self) -> str:
+		return self._warning
+
+	@warning.setter
+	def warning(self, value: str) -> None:
+		self._warning = value 
 
 	@property
 	def crosslistings_cleaned(self) -> List:
