@@ -136,7 +136,8 @@ class Classroom:
 #....................................................................................
 	def add_course_section(self, course_id: str, room: str, start_slot: int, end_slot: int) -> None:
 		for minute in range(start_slot, end_slot):
-			self._minute_schedule[minute].append(course_id)
+			if room != ['TBD']:
+				self._minute_schedule[minute].append(course_id)
 
 #....................................................................................
 #####################################################################################

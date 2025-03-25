@@ -33,9 +33,9 @@ from typing import Dict
 #....................................................................................
 
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
-INPUT_CSV = 'Spring2023_unassigned.csv'
+INPUT_CSV = 'Fall2025.csv'
 ROOMS_CSV = 'PKIRooms.csv'
-UNASSIGNED_CSV = 'Spring2023_unassigned.csv'
+UNASSIGNED_CSV = 'Spring2023 conflict.csv'
 OUTPUT_CSV = 'OutputCSV.csv'
 TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 
@@ -118,7 +118,6 @@ def index():
 	attributes = []
 
 	# for _,classroom in classrooms.items():
-
 	# 	print(classroom.room)
 
 	for attr in CourseSectionEnum:
@@ -127,15 +126,17 @@ def index():
 	for conflict in conflicts:
 		print(conflict.to_str())
 
-		#Print all sections and their room(s).
-	for _,section in sections.items():
-		print(f'-------------------------------')
-		print(f'Section: {section.id}')
-		#for room in section.room_numbers:
-		print(section.rooms)
-		#print(section.schedule)
-		#print(section.room_freq)
-		#print(section.crosslistings_cleaned)
+	# 	#Print all sections and their room(s).
+	# for _,section in sections.items():
+	# 	print(f'-------------------------------')
+	# 	print(f'Section: {section.id}')
+	# 	#for room in section.room_numbers:
+	# 	if section.cross_listings:
+	# 		print("cross_listings",section.cross_listings)
+	# 		print("crosslistings_cleaned",section.crosslistings_cleaned)
+	# 	#print(section.schedule)
+	# 	#print(section.room_freq)
+	# 	#print(section.crosslistings_cleaned)
 
 	export(sections)
 	

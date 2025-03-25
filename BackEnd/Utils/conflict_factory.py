@@ -16,7 +16,7 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 			conflict_cluster = []   # List[CourseSection]
 			times = []              # [start, end]
 			current_window = None   # span of conflict time
-
+			
 			# conflict_array format: [section_id, start_time, end_time]
 			i = 0
 			n = len(conflict_array)
@@ -65,29 +65,33 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 		# We try to parse meeting times with their rooms. If we encounter uncertainty or failure
 		# we create a conflict object.
 		for sec_id, sec in sections.items():
+			if sec.rooms == ['TBD']:
+				continue
 			meeting_times = sec.parsed_meetings
 
 			try:
-				combined, warn_msg = combine_section_info(sec_id, meeting_times, sec.rooms)
+				warn_msg = sections[sec_id].warning
 
 				# If there's a warning for the user, due to uncertainty for room/meetings
 				# parsing, then we create a conflict object for them to ignore or fix.
-				if warn_msg:
+				if warn_msg and (sec.rooms != ['TBD']):
 					add_conflict_if_unique(output_conflicts, [sec], [], sec.rooms, warn_msg)
 
 			# Worst case scenario where we fail to parse entirely and we pass the error onto the
 			# user as a conflict object. Better than crashing for no reason...
 			except ValueError as e:
-				add_conflict_if_unique(output_conflicts, [sec], [], sec.rooms, str(e))
+				if (len(set(sec.rooms)) == 1) and (sec.rooms != ['TBD']):
+					add_conflict_if_unique(output_conflicts, [sec], [], sec.rooms, str(e))
+
+	output_conflicts = [
+		conflict
+		for conflict in output_conflicts
+		if conflict.conflict_message or conflict.section_count >= 2
+	]
 
 	print(f"Built {len(output_conflicts)} Conflict objects.")
-
-	for i,conflict_check in enumerate(output_conflicts):
-		if (conflict_check.conflict_message == "") and conflict_check.section_count < 2:
-			del output_conflicts[i]
-
-	
 	return output_conflicts
+
 
 def add_conflict_if_unique(output_conflicts: List[Conflict], conflict_cluster: List[CourseSection],
 							times: List[List[int]], rooms: List[str], msg: str = "") -> None:
@@ -115,6 +119,13 @@ def conflict_exclusions_generator(remote_section: CourseSection, sections: Dict[
 		if 830 > int(remote_section.section) >= 820:
 			if remote_section.id not in conflict_exclusion_list:
 				conflict_exclusion_list.append(remote_section.id)
+
+	except:
+		print(f'remote_learning_conflict_avoidance: error')
+
+	try:
+		if remote_section.rooms == ['TBD']:
+			conflict_exclusion_list.append(remote_section.id)
 
 	except:
 		print(f'remote_learning_conflict_avoidance: error')

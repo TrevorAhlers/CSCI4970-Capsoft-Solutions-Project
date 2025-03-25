@@ -73,7 +73,10 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 				if (cs.inst_method != "Totally Online") and (cs.inst_method != "Off Campus"):
 					course_sections[key] = cs
 
+	finalize_all_crosslistings(course_sections)
+
 	print(f"Built {len(course_sections)} CourseSection objects.")
+
 	return course_sections
 
 
@@ -105,3 +108,24 @@ def get_headers(filename: str, defaults: Optional[Dict[int, str]] = None) -> Lis
 		return columns
 	except FileNotFoundError as e:
 		raise FileNotFoundError(f"CSV file not found: {filename}") from e
+
+
+#....................................................................................
+#####################################################################################
+# 	Some sections fail to account for all crosslisted classes... so we investigate
+#	by exploring all crosslistings of the crosslistings to get a full list.
+#....................................................................................
+def finalize_all_crosslistings(sections: Dict[str, CourseSection]) -> None:
+	for sec_id, section in sections.items():
+		expanded = set()
+		stack = list(section.crosslistings_cleaned)
+
+		# remove dupes of aggregate crosslistings
+		while stack:
+			c_id = stack.pop()
+			if c_id not in expanded:
+				expanded.add(c_id)
+				if c_id in sections:
+					stack.extend(sections[c_id].crosslistings_cleaned)
+
+		section.crosslistings_cleaned = sorted(expanded)
