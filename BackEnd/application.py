@@ -33,10 +33,14 @@ from typing import Dict
 #....................................................................................
 
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
+<<<<<<< HEAD
 INPUT_CSV = 'Spring2023 conflict.csv'
 CONFLICT_CSV = 'Spring2023 conflict.csv'
+=======
+INPUT_CSV = 'Fall2025.csv'
+>>>>>>> dev-tyler
 ROOMS_CSV = 'PKIRooms.csv'
-UNASSIGNED_CSV = 'Spring2023_unassigned.csv'
+UNASSIGNED_CSV = 'Spring2023 conflict.csv'
 OUTPUT_CSV = 'OutputCSV.csv'
 TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 
@@ -133,8 +137,15 @@ def index():
 	# 	print(f'-------------------------------')
 	# 	print(f'Section: {section.id}')
 	# 	#for room in section.room_numbers:
+<<<<<<< HEAD
 	# 	print(section.rooms)
 	# 	print(section.schedule)
+=======
+	# 	if section.cross_listings:
+	# 		print("cross_listings",section.cross_listings)
+	# 		print("crosslistings_cleaned",section.crosslistings_cleaned)
+	# 	#print(section.schedule)
+>>>>>>> dev-tyler
 	# 	#print(section.room_freq)
 	# 	#print(section.crosslistings_cleaned)
 
