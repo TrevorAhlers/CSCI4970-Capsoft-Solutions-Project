@@ -27,17 +27,10 @@ def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[
 				cell_str = str(cell_value) if pd.notna(cell_value) else ""
 				row_data[enum_col.value] = cell_str
 
-<<<<<<< HEAD
-        room_num_str = row_data.get("Room Number", "")
-        tokens = room_num_str.split()
-        key = tokens[-1] if tokens else room_num_str
-        key = "Peter Kiewit Institute " + key
-=======
 		room_num_str = row_data.get("Room Number", "")
 		tokens = room_num_str.split()
 		key = tokens[-1] if tokens else room_num_str
 		key = "Peter Kiewit Institute " + key
->>>>>>> dev-tyler
 
 		cl = Classroom(row_data)
 		classroom_keys.append(cl.room)
@@ -52,34 +45,6 @@ def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[
 		if not cl.info_and_connectivity:
 			cl.info_and_connectivity = "N/A"
 
-<<<<<<< HEAD
-        classrooms[key] = cl
-    
-    for _, section in sections.items():
-        for section_room in section.rooms:
-            if section_room not in classroom_keys:
-                row_data = {
-                    "Room Number": section_room,
-                    "Seats": "N/A",
-                    "Displays": "N/A",
-                    "Computer Count": "N/A",
-                    "Information and Connectivity": "N/A"
-                }
-                classrooms[section_room] = Classroom(row_data)
-
-    # ASSIGN SECTIONS TO CLASSROOMS:
-    # For each section in the sections dictionary, iterate through its room list.
-    # If the room exists in the classrooms dictionary, call add_course_section_object to
-    # assign the section (and populate the minute schedule) in that Classroom.
-    for _, section in sections.items():
-        for section_room in section.rooms:
-            if section_room in classrooms:
-                classrooms[section_room].add_course_section_object(section)
-
-    print(f"Built {len(classrooms)} Classroom objects.")
-    
-    return classrooms
-=======
 		classrooms[key] = cl
 
 	for _,section in sections.items():
@@ -103,4 +68,3 @@ def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[
 
 
 	return classrooms
->>>>>>> dev-tyler

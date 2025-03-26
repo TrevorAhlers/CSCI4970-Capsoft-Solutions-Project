@@ -99,10 +99,6 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 	output_conflicts = filtered_conflicts
 
 	print(f"Built {len(output_conflicts)} Conflict objects.")
-<<<<<<< HEAD
-
-=======
->>>>>>> dev-tyler
 	return output_conflicts
 
 

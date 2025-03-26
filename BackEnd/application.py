@@ -33,12 +33,7 @@ from typing import Dict
 #....................................................................................
 
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
-<<<<<<< HEAD
 INPUT_CSV = 'Spring2023 conflict.csv'
-CONFLICT_CSV = 'Spring2023 conflict.csv'
-=======
-INPUT_CSV = 'Fall2025.csv'
->>>>>>> dev-tyler
 ROOMS_CSV = 'PKIRooms.csv'
 UNASSIGNED_CSV = 'Spring2023 conflict.csv'
 OUTPUT_CSV = 'OutputCSV.csv'
@@ -116,10 +111,11 @@ def index():
 	
 	
 
-
 	classrooms, sections = assigner.default_assignment(classrooms, sections)
-
 	conflicts = build_conflicts(sections, classrooms)
+	for conflict in conflicts:
+		print(conflict.to_str())
+	
 
 	attributes = []
 
@@ -128,24 +124,16 @@ def index():
 
 	for attr in CourseSectionEnum:
 		attributes.append(attr)
-	
-	for conflict in conflicts:
-		print(conflict.to_str())
 
 	# 	#Print all sections and their room(s).
 	# for _,section in sections.items():
 	# 	print(f'-------------------------------')
 	# 	print(f'Section: {section.id}')
 	# 	#for room in section.room_numbers:
-<<<<<<< HEAD
-	# 	print(section.rooms)
-	# 	print(section.schedule)
-=======
 	# 	if section.cross_listings:
 	# 		print("cross_listings",section.cross_listings)
 	# 		print("crosslistings_cleaned",section.crosslistings_cleaned)
 	# 	#print(section.schedule)
->>>>>>> dev-tyler
 	# 	#print(section.room_freq)
 	# 	#print(section.crosslistings_cleaned)
 

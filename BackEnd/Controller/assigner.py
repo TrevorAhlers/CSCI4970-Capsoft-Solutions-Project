@@ -3,12 +3,15 @@ from typing import Dict
 from Model.Classroom import Classroom
 from Model.CourseSection import CourseSection
 
-
+global count
 
 def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection]):
 	classrooms, sections = assign_sections_to_rooms(classrooms, sections)
-	classrooms, sections = assign_via_frequency_map(classrooms, sections)
-	print(f'')
+	classrooms, sections, assigned_count = assign_via_frequency_map(classrooms, sections)
+	print(f'```````````````````````````')
+	print(f'assigner.py: Automatically assigned {assigned_count}/{len(sections)} sections to rooms.')
+	print(f'assigner.py: Total rooms assigned: {print_assignment_stats(sections)}/{len(sections)}.')
+	print(f'===========================')
 	return classrooms, sections
 
 
@@ -58,48 +61,53 @@ def assign_sections_to_rooms(classrooms: Dict[str, Classroom], sections: Dict[st
 	return classrooms, sections
 
 def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection]):
-
-	for room_key,classroom in classrooms.items():
+	assigned_count = 0
+	for room_key, classroom in classrooms.items():
 		room = classroom.room
-		# section freq map example - Dict['Peter Kiewit Institute 276': 1]
-		for section_key,section in sections.items():
-			if (room not in section.room_freq.keys()):
+		for section_key, section in sections.items():
+			if section.rooms != ['TBD']:
 				continue
-			if (section.rooms != ['TBD']):
+			if room not in section.room_freq:
 				continue
-			# find best candidate room
-			best_candidate_rooms, count = find_max_frequency(section.room_freq)
 
-			while (best_candidate_rooms):
+			best_candidate_rooms, _ = find_max_frequency(section.room_freq)
+
+			while best_candidate_rooms:
 				conflicts = None
-				for best_candidate_room in best_candidate_rooms:
-					if best_candidate_room not in classrooms:
-						best_candidate_rooms.pop(0)
-						continue
-					try:
-						conflicts = classrooms[best_candidate_room].find_conflicts()
-					except:
-						print(f'Failed to attempt candidate {best_candidate_room} assignment to {section.id}.')
-						pass
-					
-					if conflicts:
-						best_candidate_rooms.pop(0)
-						print(f'Could not assign {section.id} to {best_candidate_room}. Conflicts: {len(conflicts)}')
-						continue
-					elif (section.rooms != ['TBD']):
-						best_candidate_rooms.pop(0)
-						continue
-					else:
-						print(f'Assigned {section.id} to room {room}. Method: freq map')
-						if section.rooms == ['TBD']:
-							section.rooms = [best_candidate_room]
-							section.room = room_str_maker(section)
-						else:
-							classroom.add_course_section_object(section)
-							section.add_room(best_candidate_room)
-							section.room = room_str_maker(section)
-						best_candidate_rooms.pop(0)
-	return classrooms, sections
+				best_candidate_room = best_candidate_rooms[0]
+
+				if best_candidate_room not in classrooms:
+					best_candidate_rooms.pop(0)
+					continue
+
+				try:
+					classrooms[best_candidate_room].add_course_section_object(section)
+					conflicts = classrooms[best_candidate_room].find_conflicts()
+				except:
+					print(f'assigner.py: Failed to attempt candidate {best_candidate_room} assignment to {section.id}.')
+					best_candidate_rooms.pop(0)
+					continue
+
+				if conflicts:
+					classrooms[best_candidate_room].remove_course_section(section)
+					best_candidate_rooms.pop(0)
+					print(f'assigner.py: Could not assign {section.id} to {best_candidate_room}. Conflicts: {len(conflicts)}')
+					continue
+
+				if section.rooms == ['TBD']:
+					section.rooms = [best_candidate_room]
+					section.room = room_str_maker(section)
+					assigned_count += 1
+					print(f'assigner.py: Assigned {section.id} to room {room}. Method: freq map')
+				else:
+					section.add_room(best_candidate_room)
+					section.room = room_str_maker(section)
+					classrooms[best_candidate_room].add_course_section_object(section)
+					assigned_count += 1
+					print(f'assigner.py: Assigned {section.id} to room {room}. Method: freq map')
+				break
+	return classrooms, sections, assigned_count
+
 
 
 def find_max_frequency(frequency_map: Dict[str, int]):		# use value from dict... (x[0], x[1]) same as (key, value)
@@ -116,3 +124,10 @@ def room_str_maker(section):
 		room_update_str += f'{room_u}; '
 	room_update_str = room_update_str[:-2]
 	return room_update_str
+
+def print_assignment_stats(sections: Dict[str, CourseSection]):
+	count = 0
+	for _,section in sections.items():
+		if section.rooms != ['TBD']:
+			count += 1
+	return count

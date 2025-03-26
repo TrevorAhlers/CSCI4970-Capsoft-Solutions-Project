@@ -111,7 +111,7 @@ class Conflict:
 		for section in self._sections:
 			two += f'{section.id}, '
 		two = two[:-2]
-		three = f'\nConflict from: {self._conflict_area_start} to {self._conflict_area_end}.'
+		three = f'\nConflict from: {self._conflict_area_start} to {self._conflict_area_end}'
 		if self._conflict_message:
 			four = "\n" + f'Message: {self._conflict_message}'
 			return one + two + three + four
