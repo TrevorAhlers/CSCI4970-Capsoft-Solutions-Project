@@ -75,9 +75,16 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 
 	finalize_all_crosslistings(course_sections)
 
-	print(f"Built {len(course_sections)} CourseSection objects.")
+	filtered_sections = {}
 
-	return course_sections
+	for key1,section1 in course_sections.items():
+		print(section1.id)
+		if len(section1.id) > 5:
+			filtered_sections[key1] = section1
+
+	print(f"course_section_factory.py: Built {len(filtered_sections)} CourseSection objects.")
+
+	return filtered_sections
 
 
 #....................................................................................

@@ -106,13 +106,24 @@ class Conflict:
 		self._classrooms = value
 
 	def to_str(self) -> str:
+		out_str = ""
+
 		one = f'-----------------------\nConflict: \nRoom: {self._classrooms}\nSection Count: {self._section_count}\n'
+		out_str += one
+
 		two = 'Sections: '
 		for section in self._sections:
 			two += f'{section.id}, '
 		two = two[:-2]
+		if self._sections:
+			out_str += two
+
 		three = f'\nConflict from: {self._conflict_area_start} to {self._conflict_area_end}'
+		if self._conflict_area_start > 0 or self._conflict_area_end > 0:
+			out_str += three
+
 		if self._conflict_message:
 			four = "\n" + f'Message: {self._conflict_message}'
-			return one + two + three + four
-		return one + two + three
+			out_str += four
+		
+		return out_str

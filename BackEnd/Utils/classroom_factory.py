@@ -64,7 +64,7 @@ def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[
 			if section_room in classrooms and section_room != 'TBD':
 				classrooms[section_room].add_course_section_object(section)
 
-	print(f"Built {len(classrooms)} Classroom objects.")
+	print(f"classroom_factory.py: Built {len(classrooms)} Classroom objects.")
 
 
 	return classrooms
