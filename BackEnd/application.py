@@ -28,6 +28,7 @@ import os
 from flask_cors import CORS
 import pickle
 from typing import Dict
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 
 #....................................................................................
@@ -43,6 +44,8 @@ TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 
 application = Flask(__name__)
 application.secret_key = 'your_secret_key'
+application.config['JWT_SECRET_KEY'] = 'super-secret'
+jwt = JWTManager(application)
 CORS(application)
 
 UPLOAD_FOLDER = 'uploads'
@@ -94,6 +97,7 @@ def get_data():
 #
 #....................................................................................
 @application.route('/')
+#@jwt_required()
 def index():
 
 	sections: 	Dict[str,CourseSection] = build_sections()
@@ -102,12 +106,12 @@ def index():
 	# Frequency map populates section object attribute: room_freq
 	# this attribute contains a dictionary of all the rooms this
 	# section has been assigned to, and how many times.
-	#
+	
 	# The idea is to reinforce valid room assignments with as much
 	# input data as possible, and can even continue to do so if the
 	# users add finalized assignment csvs to the training data.
 	
-	#sections = build_freq_map(sections)
+	sections = build_freq_map(sections)
 	
 	
 
@@ -125,19 +129,19 @@ def index():
 	for attr in CourseSectionEnum:
 		attributes.append(attr)
 
-	# 	#Print all sections and their room(s).
+		#Print all sections and their room(s).
 	# for _,section in sections.items():
 	# 	print(f'-------------------------------')
 	# 	print(f'Section: {section.id}')
-	# 	#for room in section.room_numbers:
-	# 	if section.cross_listings:
-	# 		print("cross_listings",section.cross_listings)
-	# 		print("crosslistings_cleaned",section.crosslistings_cleaned)
-	# 	#print(section.schedule)
-	# 	#print(section.room_freq)
-	# 	#print(section.crosslistings_cleaned)
+		#for room in section.room_numbers:
+		# if section.cross_listings:
+		# 	print("cross_listings",section.cross_listings)
+		# 	print("crosslistings_cleaned",section.crosslistings_cleaned)
+		#print(section.schedule)
+		#print(section.room_freq)
+		#print(section.crosslistings_cleaned)
 
-	#export(sections)
+	export(sections)
 	
 
 	data_row_list = generate_strings_section_view(sections, attributes)
@@ -153,6 +157,21 @@ def index():
 	html_content += "</pre></body></html>"
 	return html_content
 
+#....................................................................................
+#####################################################################################
+# 	Login page
+#____________________________________________________________________________________
+# 	jwt_extended authentication
+#....................................................................................
+@application.route('/login', methods=['POST'])
+def login():
+	username = request.json.get('username')
+	password = request.json.get('password')
+	# Simple check, replace with your real user verification
+	if username == "testuser" and password == "testpass":
+		access_token = create_access_token(identity=username)
+		return jsonify(access_token=access_token), 200
+	return jsonify({"msg": "Invalid credentials"}), 401
 
 #....................................................................................
 #####################################################################################
@@ -161,6 +180,7 @@ def index():
 # Description placeholder text
 #....................................................................................
 @application.route('/api/course-info')
+#@jwt_required()
 def course_info():
 	base_dir = os.path.dirname(__file__)
 	section_csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
@@ -170,10 +190,8 @@ def course_info():
 
 
 
-
-
-
 @application.route('/upload', methods=['POST'])
+#@jwt_required()
 def upload():
 		
 	if not os.path.exists(application.config['UPLOAD_FOLDER']):
@@ -203,6 +221,7 @@ def upload():
 	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
 @application.route('/api/data', methods=['GET'])
+#@jwt_required()
 def get_data():
 	sections: 	Dict[str,CourseSection] = build_sections()
 	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)

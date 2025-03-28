@@ -78,7 +78,6 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 	filtered_sections = {}
 
 	for key1,section1 in course_sections.items():
-		print(section1.id)
 		if len(section1.id) > 5:
 			filtered_sections[key1] = section1
 

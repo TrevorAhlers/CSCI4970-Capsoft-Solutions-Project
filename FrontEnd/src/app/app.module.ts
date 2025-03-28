@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';  
-import { DataComponent } from './services/data.component';
-import { AppComponent } from './app.component';  
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-import { AppRoutingModule } from './app.routes';
 
+import { AppComponent } from './app.component';
+import { DataComponent } from './services/data.component';
 import { LoginComponent } from './login/login.component';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; 
-import { MatCard } from '@angular/material/card';
+
 import { MatCardModule } from '@angular/material/card';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+// for login page data entry:
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
 	{ path: '', component: LoginComponent },
@@ -27,27 +27,28 @@ const routes: Routes = [
 @NgModule({
 	declarations: [
 		AppComponent,
-		DataComponent
+		DataComponent,
+		LoginComponent
 	],
 	imports: [
 		BrowserModule,
-		RouterModule.forRoot(routes),
-		AppRoutingModule,
+		FormsModule,
+		BrowserAnimationsModule,
 		HttpClientModule,
+		RouterModule.forRoot(routes),
 		MatCardModule,
-		MatCard,
 		MatButtonModule,
 		MatTabsModule,
 		MatDividerModule,
 		MatIconModule
 	],
-	bootstrap: [AppComponent],
 	providers: [
-		provideAnimationsAsync(),
-		provideAnimationsAsync('noop')
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthInterceptor,
+			multi: true
+		}
 	],
-	schemas: [
-		CUSTOM_ELEMENTS_SCHEMA
-	]
+	bootstrap: [AppComponent]
 })
 export class AppModule {}

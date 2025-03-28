@@ -1,25 +1,8 @@
-
- <div class="page">
-  <div class="login-container">
-    <body >
-      <h2  >Group 3's PKI Scheduler App</h2>
-     
-  
-  
-     <label class="email">Email </label>
-     <input class="NUID_ID">
-
-     
-     
-    <button (click)="navigateToHome()">Login</button>
-  
-  
-    </body>
-    
-  </div>
-    
-
- </div>
-
-  
-
+<div>
+	<h2>Group 3's PKI Scheduler App</h2>
+	<label>Email</label>
+	<input [(ngModel)]="username">
+	<label>Password</label>
+	<input [(ngModel)]="password" type="password">
+	<button (click)="onLogin()">Login</button>
+</div>
