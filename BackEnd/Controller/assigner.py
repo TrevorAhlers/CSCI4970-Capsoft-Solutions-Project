@@ -6,6 +6,16 @@ from Model.CourseSection import CourseSection
 global count
 
 def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection]):
+	"""
+    Automatically assigns sections to classrooms based on predefined criteria.
+
+    Args:
+        classrooms (Dict[str, Classroom]): A dictionary of classroom objects indexed by room names.
+        sections (Dict[str, CourseSection]): A dictionary of course sections indexed by section IDs.
+
+    Returns:
+        Tuple[Dict[str, Classroom], Dict[str, CourseSection]]: Updated dictionaries of classrooms and sections.
+    """
 	classrooms, sections = assign_sections_to_rooms(classrooms, sections)
 	classrooms, sections, assigned_count = assign_via_frequency_map(classrooms, sections)
 	print(f'```````````````````````````')
@@ -16,6 +26,18 @@ def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, Cou
 
 
 def assign_sections_to_rooms(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection]):
+	"""
+    This function finds sections that have assigned rooms (assigned on the spreadsheet or through editing)
+    and creates room objects (if they don't exist already) with default "None" data for all attributes.
+    Then assigns sections to those rooms and generates a frequency map.
+
+    Args:
+        classrooms (Dict[str, Classroom]): A dictionary of classroom objects indexed by room names.
+        sections (Dict[str, CourseSection]): A dictionary of course sections indexed by section IDs.
+
+    Returns:
+        Tuple[Dict[str, Classroom], Dict[str, CourseSection]]: Updated dictionaries of classrooms and sections.
+    """
 
 	# This function finds sections that have assigned rooms (assigned on the spreadsheet or through editing)
 	# and creates room objects (if they don't exist already) with default "None" data for all attributes.
@@ -61,6 +83,18 @@ def assign_sections_to_rooms(classrooms: Dict[str, Classroom], sections: Dict[st
 	return classrooms, sections
 
 def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection]):
+	"""
+    Assigns course sections to classrooms using a frequency map. The frequency map is used to determine
+    the best classroom for each section based on the room's availability and conflicts.
+
+    Args:
+        classrooms (Dict[str, Classroom]): A dictionary of classroom objects indexed by room names.
+        sections (Dict[str, CourseSection]): A dictionary of course sections indexed by section IDs.
+
+    Returns:
+        Tuple[Dict[str, Classroom], Dict[str, CourseSection], int]: 
+        Updated dictionaries of classrooms and sections, and the count of assigned sections.
+    """
 	assigned_count = 0
 	for room_key, classroom in classrooms.items():
 		room = classroom.room
@@ -111,6 +145,15 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 
 
 def find_max_frequency(frequency_map: Dict[str, int]):		# use value from dict... (x[0], x[1]) same as (key, value)
+	"""
+    Finds the rooms with the highest frequency in the provided frequency map.
+
+    Args:
+        frequency_map (Dict[str, int]): A dictionary mapping room names to their respective frequencies.
+
+    Returns:
+        Tuple[List[str], int]: A list of room names with the highest frequency and the frequency value.
+    """
 	sorted_items = sorted(frequency_map.items(), key=lambda x: x[1], reverse=True)
 	if sorted_items:
 		top5_keys = [room for room, count in sorted_items[:5]]
@@ -119,6 +162,15 @@ def find_max_frequency(frequency_map: Dict[str, int]):		# use value from dict...
 	return None, 0
 
 def room_str_maker(section):
+	"""
+    Generates a string representation of the rooms assigned to a section.
+
+    Args:
+        section (CourseSection): The course section whose rooms are being represented.
+
+    Returns:
+        str: A string of room names separated by semicolons.
+    """
 	room_update_str = ''
 	for room_u in section.rooms:
 		room_update_str += f'{room_u}; '
@@ -126,6 +178,15 @@ def room_str_maker(section):
 	return room_update_str
 
 def print_assignment_stats(sections: Dict[str, CourseSection]):
+	"""
+    Prints statistics on the current assignments of sections to rooms.
+
+    Args:
+        sections (Dict[str, CourseSection]): A dictionary of course sections indexed by section IDs.
+
+    Returns:
+        int: The number of sections that have been successfully assigned to rooms.
+    """
 	count = 0
 	for _,section in sections.items():
 		if section.rooms != ['TBD']:

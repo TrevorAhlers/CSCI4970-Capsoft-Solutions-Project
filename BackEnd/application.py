@@ -50,9 +50,24 @@ application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 application.config['ALLOWED_EXTENSIONS'] = {'csv'}
 
 def allowed_file(filename):
+	"""
+    Checks if the uploaded file is allowed (CSV format only).
+    
+    Args:
+        filename (str): Name of the file being uploaded.
+    
+    Returns:
+        bool: True if file is allowed, False otherwise.
+    """
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
 
 def get_data():
+	"""
+    Retrieves course section and classroom data, assigns sections to rooms, and exports results.
+    
+    Returns:
+        JSON response containing assigned course sections.
+    """
 	sections: 	Dict[str,CourseSection] = build_sections()
 	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
 	sections = build_freq_map(sections)
@@ -95,6 +110,13 @@ def get_data():
 #....................................................................................
 @application.route('/')
 def index():
+	"""
+    Index route that initializes and assigns sections to classrooms.
+    Displays course information in HTML format.
+    
+    Returns:
+        str: HTML page containing course assignments.
+    """
 
 	sections: 	Dict[str,CourseSection] = build_sections()
 	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
@@ -162,6 +184,12 @@ def index():
 #....................................................................................
 @application.route('/api/course-info')
 def course_info():
+	"""
+    Retrieves course section data from a CSV file.
+    
+    Returns:
+        JSON response containing course information.
+    """
 	base_dir = os.path.dirname(__file__)
 	section_csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
 	instantiation_dict = csf.build_course_sections(section_csv_file)
@@ -171,10 +199,14 @@ def course_info():
 
 
 
-
-
 @application.route('/upload', methods=['POST'])
 def upload():
+	"""
+    Handles file uploads, verifying CSV format, and saving the file.
+    
+    Returns:
+        JSON response indicating success or failure.
+    """
 		
 	if not os.path.exists(application.config['UPLOAD_FOLDER']):
 		os.makedirs(application.config['UPLOAD_FOLDER'])  
@@ -204,6 +236,12 @@ def upload():
 
 @application.route('/api/data', methods=['GET'])
 def get_data():
+	"""
+    API endpoint that returns assigned course section data.
+    
+    Returns:
+        JSON response containing course assignments.
+    """
 	sections: 	Dict[str,CourseSection] = build_sections()
 	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
 	sections = build_freq_map(sections)
@@ -236,6 +274,9 @@ def get_data():
 # Helper functions:
 
 def build_freq_map(sections):
+	"""
+    Builds a frequency map of room assignments from historical training data.
+    """
 	freq_map = room_scorer.map_assignment_freq(TRAINING_CSVS)
 	for id,freq_section in freq_map.items():
 		if id in sections:
@@ -243,22 +284,34 @@ def build_freq_map(sections):
 	return sections
 
 def build_classrooms(sections):
+	"""
+    Constructs classroom objects from CSV data.
+    """
 	base_dir = os.path.dirname(__file__)
 	classroom_csv_file = os.path.join(base_dir, 'Files', ROOMS_CSV)
 	classroom_instantiation_dict = cf.build_classrooms(classroom_csv_file, sections)
 	return classroom_instantiation_dict
 
 def build_sections():
+	"""
+    Constructs course section objects from input CSV file.
+    """
 	base_dir = os.path.dirname(__file__)
 	section_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
 	course_section_instantiation_dict = csf.build_course_sections(section_csv_file)
 	return course_section_instantiation_dict
 
 def build_conflicts(sections, classrooms):
+	"""
+    Identifies scheduling conflicts based on assigned sections and classrooms.
+    """
 	conflict_instantiation_list = cof.build_conflicts(sections, classrooms)
 	return conflict_instantiation_list
 
 def export(sections):
+	"""
+    Exports updated course assignments to CSV.
+    """
 	base_dir = os.path.dirname(__file__)
 	input_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
 	output_csv_file = os.path.join(base_dir, 'Files', 'Exports', OUTPUT_CSV)

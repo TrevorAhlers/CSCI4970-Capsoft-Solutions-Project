@@ -13,6 +13,23 @@ from Model.Classroom import Classroom, ClassroomEnum
 from Model.CourseSection import CourseSection, CourseSectionEnum
 
 def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[str, Classroom]:
+	"""
+    Builds a dictionary of Classroom objects from a CSV file and integrates course section assignments.
+
+    Args:
+        filename (str): The path to the CSV file containing classroom data.
+        sections (Dict[str, CourseSection]): A dictionary of CourseSection objects representing scheduled courses.
+
+    Returns:
+        Dict[str, Classroom]: A dictionary mapping room numbers to Classroom objects.
+
+    Functionality:
+        - Reads classroom data from a CSV file.
+        - Instantiates Classroom objects and assigns default values for missing attributes.
+        - Adds missing classrooms from the course section data.
+        - Associates sections with classrooms based on room assignments.
+        - Prints the total number of classroom objects created.
+    """
 
 	classroom_keys = []
 
