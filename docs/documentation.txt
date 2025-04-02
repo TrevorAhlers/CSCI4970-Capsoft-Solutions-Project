@@ -1,0 +1,57 @@
+# Sphinx Documentation Setup Guide
+
+## 1. Create and Activate a Virtual Environment
+python -m venv venv
+
+# On Windows:
+venv\Scripts\activate
+
+# On macOS/Linux:
+source venv/bin/activate
+
+# IMPORTANT: Ensure that all required libraries are installed inside this virtual environment.
+
+## 2. Install Sphinx and Required Extensions
+pip install sphinx sphinx-rtd-theme
+
+# or
+
+pip install -r requirements.txt
+
+## 3. Create and Move to the Docs Directory
+mkdir docs
+cd docs
+
+## 4. Initialize a Sphinx Project (if not already created)
+sphinx-quickstart
+
+# Follow the prompts:
+
+
+## 5. Configure Sphinx (Modify conf.py)
+# Open `conf.py` in the `docs` directory and add/edit:
+# Theme configuration:
+html_theme = "sphinx_rtd_theme"
+
+# Ensure Sphinx can find your Python modules by adding the correct path:
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../BackEnd'))
+
+# Add any extensions if needed:
+extensions = [
+    "sphinx.ext.autodoc",  # For docstring-based documentation
+]
+
+## 6. Build Documentation
+make html
+
+# On Windows:
+.\make.bat html
+
+## 7. Open Generated Documentation
+# Open `_build/html/index.html` in a browser.
+
+## 8. Update Documentation
+# After making changes, rebuild and refresh:
+make html
