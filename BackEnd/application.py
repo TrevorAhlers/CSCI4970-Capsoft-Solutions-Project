@@ -1,12 +1,9 @@
 #####################################################################################
 #	application.py - Flask Route File
 #____________________________________________________________________________________
-# 
-# Line 43 is where you can start
 #
 # Routes requests and manages program state.
-# Each @application.route('') is executed when the address
-# is visited.
+# Each @application.route('') is executed when the address is visited.
 #
 #....................................................................................
 
@@ -30,18 +27,16 @@ import pickle
 from typing import Dict
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
-
 #....................................................................................
-
 # FILE NAMES: (note it's currently using a test CSV to show a conflict)
-INPUT_CSV = 'Spring2023_test_261.csv'
+INPUT_CSV = 'Spring2023_unassigned.csv'
+#INPUT_CSV = 'Spring2023_test_261.csv'
 ROOMS_CSV = 'PKIRooms.csv'
 UNASSIGNED_CSV = 'Spring2023 conflict.csv'
 OUTPUT_CSV = 'OutputCSV.csv'
 TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
 
 #....................................................................................
-
 application = Flask(__name__)
 application.secret_key = 'your_secret_key'
 application.config['JWT_SECRET_KEY'] = 'super-secret'
@@ -56,10 +51,13 @@ def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
 
 def get_data():
-	sections: 	Dict[str,CourseSection] = build_sections()
-	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
+	sections: 	Dict[str, CourseSection] = build_sections()
+	classrooms: Dict[str, Classroom] = build_classrooms(sections)
 	sections = build_freq_map(sections)
-	classrooms, sections = assigner.default_assignment(classrooms, sections)
+
+	# Removed the return capture since dictionaries are mutated in place
+	assigner.default_assignment(classrooms, sections)
+
 	conflicts = build_conflicts(sections, classrooms)
 	export(sections)
 
@@ -72,18 +70,16 @@ def get_data():
 		CourseSectionEnum.ROOM,
 		CourseSectionEnum.ENROLLMENT,
 		CourseSectionEnum.MAX_ENROLLMENT,
-    ]
+	]
 
 	data_row_list = generate_strings_section_view(sections, attributes)
-
 	data = []
 	for row in data_row_list:
-		values = row.split(" | ")  # Assuming data is formatted similarly
+		values = row.split(" | ")
 		entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
 		data.append(entry)
 
 	return jsonify({"courses": data})
-
 
 
 #....................................................................................
@@ -99,50 +95,25 @@ def get_data():
 @application.route('/')
 #@jwt_required()
 def index():
-
 	sections: 	Dict[str,CourseSection] = build_sections()
 	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
 
 	# Frequency map populates section object attribute: room_freq
-	# this attribute contains a dictionary of all the rooms this
-	# section has been assigned to, and how many times.
-	
-	# The idea is to reinforce valid room assignments with as much
-	# input data as possible, and can even continue to do so if the
-	# users add finalized assignment csvs to the training data.
-	
 	sections = build_freq_map(sections)
-	
-	
+	build_department_freq_map(sections, classrooms)
 
-	classrooms, sections = assigner.default_assignment(classrooms, sections)
+	# Removed the return capture for the same reason
+	assigner.default_assignment(classrooms, sections)
+
 	conflicts = build_conflicts(sections, classrooms)
 	for conflict in conflicts:
 		print(conflict.to_str())
-	
 
 	attributes = []
-
-	# for _,classroom in classrooms.items():
-	# 	print(classroom.room)
-
 	for attr in CourseSectionEnum:
 		attributes.append(attr)
 
-		#Print all sections and their room(s).
-	# for _,section in sections.items():
-	# 	print(f'-------------------------------')
-	# 	print(f'Section: {section.id}')
-		#for room in section.room_numbers:
-		# if section.cross_listings:
-		# 	print("cross_listings",section.cross_listings)
-		# 	print("crosslistings_cleaned",section.crosslistings_cleaned)
-		#print(section.schedule)
-		#print(section.room_freq)
-		#print(section.crosslistings_cleaned)
-
 	export(sections)
-	
 
 	data_row_list = generate_strings_section_view(sections, attributes)
 
@@ -156,6 +127,7 @@ def index():
 		html_content += f"{row}\n"
 	html_content += "</pre></body></html>"
 	return html_content
+
 
 #....................................................................................
 #####################################################################################
@@ -173,6 +145,7 @@ def login():
 		return jsonify(access_token=access_token), 200
 	return jsonify({"msg": "Invalid credentials"}), 401
 
+
 #....................................................................................
 #####################################################################################
 # 	GET CourseSection Objects for the Input Spreadsheet
@@ -188,45 +161,41 @@ def course_info():
 	info_list = generate_strings_section_view(instantiation_dict)
 	return jsonify(info_list)
 
-
-
 @application.route('/upload', methods=['POST'])
 #@jwt_required()
 def upload():
-		
 	if not os.path.exists(application.config['UPLOAD_FOLDER']):
-		os.makedirs(application.config['UPLOAD_FOLDER'])  
-
+		os.makedirs(application.config['UPLOAD_FOLDER'])
 
 	if 'file' not in request.files:
 		return jsonify({"message": "No file part"}), 400
 
 	file = request.files['file']
-
 	if file.filename == '':
 		return jsonify({"message": "No selected file"}), 400
-
 
 	if file and allowed_file(file.filename):
 		filename = os.path.join(application.config['UPLOAD_FOLDER'], file.filename)
 		file.save(filename)
-		global INPUT_CSV 
+		global INPUT_CSV
 		INPUT_CSV = file.filename
 		print(INPUT_CSV)
 		print(file.filename)
-
-
 		return jsonify({"message": "File uploaded successfully", "filename": file.filename})
 
 	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
+
 @application.route('/api/data', methods=['GET'])
 #@jwt_required()
-def get_data():
+def get_data_endpoint():
 	sections: 	Dict[str,CourseSection] = build_sections()
 	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
 	sections = build_freq_map(sections)
-	classrooms, sections = assigner.default_assignment(classrooms, sections)
+
+	# Same pass-by-reference fix here
+	assigner.default_assignment(classrooms, sections)
+
 	conflicts = build_conflicts(sections, classrooms)
 	export(sections)
 
@@ -239,13 +208,12 @@ def get_data():
 		CourseSectionEnum.ROOM,
 		CourseSectionEnum.ENROLLMENT,
 		CourseSectionEnum.MAX_ENROLLMENT,
-    ]
+	]
 
 	data_row_list = generate_strings_section_view(sections, attributes)
-
 	data = []
 	for row in data_row_list:
-		values = row.split(" | ")  # Assuming data is formatted similarly
+		values = row.split(" | ")
 		entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
 		data.append(entry)
 
@@ -253,10 +221,17 @@ def get_data():
 
 #....................................................................................
 # Helper functions:
-
+#....................................................................................
 def build_freq_map(sections):
 	freq_map = room_scorer.map_assignment_freq(TRAINING_CSVS)
-	for id,freq_section in freq_map.items():
+	for id, freq_section in freq_map.items():
+		if id in sections:
+			sections[id].room_freq = freq_section
+	return sections
+
+def build_department_freq_map(sections, classrooms):
+	freq_map = room_scorer.map_department_freq(TRAINING_CSVS)
+	for id, freq_section in freq_map.items():
 		if id in sections:
 			sections[id].room_freq = freq_section
 	return sections
@@ -281,13 +256,10 @@ def export(sections):
 	base_dir = os.path.dirname(__file__)
 	input_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
 	output_csv_file = os.path.join(base_dir, 'Files', 'Exports', OUTPUT_CSV)
-	conflict_instantiation_list = exporter.update_csv_with_room(input_csv_file,output_csv_file,sections)
+	conflict_instantiation_list = exporter.update_csv_with_room(input_csv_file, output_csv_file, sections)
 	return conflict_instantiation_list
 
-
 #....................................................................................
-
 if __name__ == '__main__':
 	application.run(debug=True)
-
 #....................................................................................

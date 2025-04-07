@@ -10,6 +10,7 @@ import os
 import pandas as pd
 from typing import Dict, List, Optional
 from Model.CourseSection import CourseSection, CourseSectionEnum
+from Model.Classroom import Classroom
 
 float_headers = [
 	"Section #",
@@ -72,6 +73,13 @@ def map_assignment_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
 
 	return output_map
 
+def map_department_freq(sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom]):
+	for _,section in sections.items():
+		for room in section.rooms:
+			if room != "TBD":
+				if section.subject_code not in classrooms[room].department_counts:
+					classrooms[room].department_counts[section.subject_code] = 0
+				classrooms[room].department_counts[section.subject_code] += 1
 
 
 def make_int_str(attribute: str) -> str:
