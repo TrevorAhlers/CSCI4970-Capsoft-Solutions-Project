@@ -10,6 +10,17 @@
 	flex-direction: column;
 	flex: 1;
 }
+.fixed-select {
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	background: white;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	z-index: 1000; 
+  }
 
 .columns {
 	display: flex;
@@ -38,15 +49,13 @@
 }
 
 
+
 .column.center {
 	flex: 1;
 	flex: 0% 0 59%;
 }
 
-.column.center > * {
-	flex: 1;
-	min-height: 100%;
-}
+
 
 .column.right {
 	flex: 0 0 20%;

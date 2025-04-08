@@ -1,18 +1,26 @@
-<h1>"HI"</h1>
 <mat-card class="listview" appearance="outlined">
+  <mat-card-title>Course List</mat-card-title>
   <mat-divider></mat-divider>
-  <div *ngIf="courses.length > 0;">
-    <table>
+
+  <div *ngIf="courses.length > 0" class="table-container">
+    <table class="interactive-table">
       <thead>
         <tr>
           <th *ngFor="let key of courses[0] | keyvalue">{{ key.key }}</th>
+
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let course of courses">
+        <tr 
+          *ngFor="let course of courses" 
+          (click)="onRowClick(course)" 
+          class="row-hover"
+        >
           <td *ngFor="let key of course | keyvalue">{{ key.value }}</td>
+
         </tr>
       </tbody>
     </table>
   </div>
-</mat-card>
+
+

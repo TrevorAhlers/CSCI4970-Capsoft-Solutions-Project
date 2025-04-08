@@ -8,7 +8,22 @@
           <app-file-manager></app-file-manager>
         </div>
       <div class="column center">
-        <app-upload></app-upload>
+        
+        <select (change)="changeView($event)">
+          <option value="upload">Upload View</option>
+          <option value="listview">List View</option>
+
+        </select>
+        
+        
+        <div [ngSwitch]="selectedView">
+          <app-upload *ngSwitchCase="'upload'"></app-upload>
+          <app-section-view *ngSwitchCase="'listview'"></app-section-view>
+         
+          
+        </div>
+
+
       </div>
       <div class="column right">
         <app-conflict-manager></app-conflict-manager>
