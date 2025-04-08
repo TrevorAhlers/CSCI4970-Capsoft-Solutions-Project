@@ -220,13 +220,14 @@ def get_data():
 		CourseSectionEnum.ROOM,
 		CourseSectionEnum.ENROLLMENT,
 		CourseSectionEnum.MAX_ENROLLMENT,
+		CourseSectionEnum.MEETING_PATTERN,
     ]
 
 	data_row_list = generate_strings_section_view(sections, attributes)
 
 	data = []
 	for row in data_row_list:
-		values = row.split(" | ")  # Assuming data is formatted similarly
+		values = row.split(" | ") 
 		entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
 		data.append(entry)
 
