@@ -55,9 +55,11 @@ def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[
 					"Seats": "N/A",
 					"Displays": "N/A",
 					"Computer Count": "N/A",
-					"Information and Connectivity": "N/A"
+					"Information and Connectivity": "N/A",
+					"Assigned": True,
 				}
 				classrooms[section_room] = Classroom(row_data)
+
 
 	for _, section in sections.items():
 		for section_room in section.rooms:

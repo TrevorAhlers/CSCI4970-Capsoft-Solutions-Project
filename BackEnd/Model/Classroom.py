@@ -12,6 +12,28 @@ DAY_OFFSETS = {
 	'S': 5 * 1440
 }
 
+SUBJECT_CODES = {
+	"AREN": "Architectural Engineering",
+	"BIOI": "Bioinformatics",
+	"BMI": "Biomedical Informatics",
+	"CIST": "College of Information Science & Technology",
+	"CIVE": "Civil Engineering",
+	"CNST": "Construction Management",
+	"CONE": "Construction Engineering",
+	"CSCI": "Computer Science",
+	"CYBR": "Cybersecurity",
+	"ECEN": "Electrical & Computer Engineering",
+	"ENGR": "Engineering",
+	"ENVE": "Environmental Engineering",
+	"HONR": "Honors Program",
+	"ISQA": "Information Systems & Quantitative Analysis",
+	"ITIN": "IT Innovation",
+	"MATH": "Mathematics",
+	"MECH": "Mechanical Engineering",
+	"SCMT": "Supply Chain Management"
+}
+
+
 #....................................................................................
 #####################################################################################
 # 	Convert something like "9am" or "10:30pm" to minutes (0..1439) from midnight.
@@ -63,7 +85,6 @@ class ClassroomEnum(Enum):
 	DISPLAYS                = 'Displays'
 	COMPUTER_COUNT          = 'Computer Count'
 	INFO_AND_CONNECTIVITY   = 'Information and Connectivity'
-	#DEPARTMENT              = 'Department'
 
 class Classroom:
 	def __init__(self, attributes: Dict[str, str]) -> None:
@@ -74,10 +95,22 @@ class Classroom:
 		self._info_and_connectivity  = attributes[ClassroomEnum.INFO_AND_CONNECTIVITY.value]
 		self._sections				 = []
 		self._assigned				 = [True if self._room else False]
-		# self._department             = attributes[ClassroomEnum.DEPARTMENT.value]
+		self._department_counts             = {}
 
 		# A 1440 * possible_days = total items
 		self._minute_schedule: List[List[str]] = [[] for _ in range(7 * 1440)]
+
+	@property
+	def department_counts(self) -> Dict:
+		return self._department_counts
+
+	@department_counts.setter
+	def department_counts(self, value: Dict) -> None:
+		self._department_counts = value
+
+	@property
+	def assigned(self) -> bool:
+		return bool(self._room)
 
 	@property
 	def sections(self) -> List:
@@ -156,6 +189,11 @@ class Classroom:
 	def add_course_section_object(self, course_section_object: CourseSection) -> None:
 		schedule = course_section_object.schedule
 		self.add_section(course_section_object)
+
+		
+		course_section_object.update_meetings(schedule)
+
+
 		for section_id, room, d, start_min, end_min in schedule:
 			if d in DAY_OFFSETS:
 				day_offset = DAY_OFFSETS[d]

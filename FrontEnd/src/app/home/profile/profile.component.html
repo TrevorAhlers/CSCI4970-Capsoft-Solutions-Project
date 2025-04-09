@@ -1,20 +1,20 @@
 <mat-card class="profile" appearance="outlined">
-  <div class="user-container">
+	<div class="user-container">
+	
+	  <img mat-card-avatar class="user-pic" src="/assets/Capture.JPG" alt="profile-pic">
+	  
+	  <div class ="username">
+	  <h1 class="header">Guest User</h1>
+	  <a class="log-out" (click)="navigateToLogin()">Log Out</a>
+	</div>
   
-    <img mat-card-avatar class="user-pic" src="/assets/Capture.JPG" alt="profile-pic">
-    
-    <div class ="username">
-    <h1 class="header">Guest User</h1>
-    <a class="log-out" (click)="navigateToLogin()">Log Out</a>
-  </div>
-
-  </div>
-  <mat-divider></mat-divider>
-  
-      <div class="button-container">
-      <button class="export_button">
-        <mat-icon>download</mat-icon>
-                <p class="p export">Export</p>
-      </button>
-    </div>
-</mat-card>
+	</div>
+	<mat-divider></mat-divider>
+	
+		<div class="button-container">
+		<button class="export_button">
+		  <mat-icon>download</mat-icon>
+				  <p class="p export">Export</p>
+		</button>
+	  </div>
+  </mat-card>

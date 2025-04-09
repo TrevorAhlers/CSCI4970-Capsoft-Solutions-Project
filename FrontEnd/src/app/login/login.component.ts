@@ -15,4 +15,3 @@ export class LoginComponent {
     this.router.navigateByUrl('/home');
   }
 }
-

@@ -1,78 +1,78 @@
 // Background styling for the entire page
 :host {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #001f3f, #003366); // Navy gradient
-  border: 1px solid black;
-  padding: 10px;
-  
-}
-  
-  // Container for login content
-  .login-container {
-    padding: 40px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    height: 400px;
-    width: 400px;
-    
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background: linear-gradient(135deg, #001f3f, #003366); // Navy gradient
+	border: 1px solid black;
+	padding: 10px;
+	
   }
+	
+	// Container for login content
+	.login-container {
+	  padding: 40px;
+	  background: white;
+	  border-radius: 10px;
+	  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+	  text-align: center;
+	  height: 400px;
+	  width: 400px;
+	  
+	}
+	
+	// Login button styling
+	button {
+	  margin-top: 20px;
+	  padding: 12px 24px;
+	  font-size: 18px;
+	  font-weight: bold;
+	  background-color: lightblue; // Coral (complementary to navy)
+	  color: white;
+	  border: none;
+	  border-radius: 5px;
+	  cursor: pointer;
+	  transition: all 0.3s ease-in-out;
+	  width:100px
+	 
+	}
+	
+	// Hover and active (click) effects
+	button:hover {
+	  background-color:lightseagreen; // Darker coral for hover effect
+	}
+	
+	button:active {
+	  transform: scale(0.95);
+	}
   
-  // Login button styling
-  button {
-    margin-top: 20px;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: lightblue; // Coral (complementary to navy)
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    width:100px
+	.h2{
+	  font-family: sans-serif;
+	  font-weight: normal;
+	}
+  
+	.log_in{
+	  margin-right: 300px;
+	}
+  
+  
+	.email{
+	  margin-top: 1px;
+	  margin-right: 340px;
+	 
+	}
+	.NUID_ID{
+	  margin-top: 10px;
+	  margin-right: 30px;
+	  width: 400px;
+	  height: 30px;
+	  border-radius: 7px;
+	  overflow: hidden;
+	  border: 2px solid #ccc;
+	 
+	}
+  
    
-  }
   
-  // Hover and active (click) effects
-  button:hover {
-    background-color:lightseagreen; // Darker coral for hover effect
-  }
-  
-  button:active {
-    transform: scale(0.95);
-  }
-
-  .h2{
-    font-family: sans-serif;
-    font-weight: normal;
-  }
-
-  .log_in{
-    margin-right: 300px;
-  }
-
-
-  .email{
-    margin-top: 1px;
-    margin-right: 340px;
-   
-  }
-  .NUID_ID{
-    margin-top: 10px;
-    margin-right: 30px;
-    width: 400px;
-    height: 30px;
-    border-radius: 7px;
-    overflow: hidden;
-    border: 2px solid #ccc;
-   
-  }
-
- 
-
-  
+	

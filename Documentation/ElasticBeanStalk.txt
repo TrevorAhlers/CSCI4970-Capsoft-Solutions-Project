@@ -12,6 +12,9 @@ I. EB SETUP:
 {
 command used to init EB setup:
 eb init -p python-3.11 app-name
+ex) eb init -p python-3.11 Capstone-4970
+(can also use "eb init --interactive" don't use codecommit if prompted)
+^This is good if it's making your server us-west-2 or something you dont want. We are using us-east-1.
 
 app-name will be Capstone-4970
 

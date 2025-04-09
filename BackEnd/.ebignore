@@ -1,0 +1,16 @@
+# .ebignore
+**/*
+!.elasticbeanstalk/
+!.elasticbeanstalk/config.yml
+!requirements.txt
+!application.py
+!Procfile
+!Utils/**
+!Controller/**
+!Model/**
+!Files/**
+!*.html
+!*.js
+!*.json
+!*.csv
+!*.py

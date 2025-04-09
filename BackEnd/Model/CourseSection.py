@@ -118,24 +118,24 @@ def time_to_str(minutes: int) -> str:
 			ampm = "pm"
 		return f"{hour}:{minute:02}{ampm}"
 
-def update_meetings(self, value: List[Tuple[str, str, str, int, int]]) -> None:
-	self._parsed_meetings = value
-	if not value:
-		self._meeting_pattern = ""
-		self._room = ""
-		return
-	groups = defaultdict(list)
-	for section_id, room, day, start, end in value:
-		groups[(room, start, end)].append(day)
-	chunks = []
-	all_rooms = []
-	for (room, start, end), days in groups.items():
-		days_str = "".join(sorted(days))
-		chunks.append(f"{days_str} {time_to_str(start)}-{time_to_str(end)}")
-		all_rooms.append(room)
-	self._meeting_pattern = "; ".join(chunks)
-	self._room = "; ".join(sorted(set(all_rooms)))
-	self._schedule = combine_section_info(self._id, self._parsed_meetings, self._rooms)
+# def update_meetings(self, value: List[Tuple[str, str, str, int, int]]) -> None:
+# 	self._parsed_meetings = value
+# 	if not value:
+# 		self._meeting_pattern = ""
+# 		self._room = ""
+# 		return
+# 	groups = defaultdict(list)
+# 	for section_id, room, day, start, end in value:
+# 		groups[(room, start, end)].append(day)
+# 	chunks = []
+# 	all_rooms = []
+# 	for (room, start, end), days in groups.items():
+# 		days_str = "".join(sorted(days))
+# 		chunks.append(f"{days_str} {time_to_str(start)}-{time_to_str(end)}")
+# 		all_rooms.append(room)
+# 	self._meeting_pattern = "; ".join(chunks)
+# 	self._room = "; ".join(sorted(set(all_rooms)))
+# 	self._schedule = combine_section_info(self._id, self._parsed_meetings, self._rooms)
 
 def combine_section_info(
 	section_id: str,
@@ -272,11 +272,35 @@ class CourseSection:
 		self._rooms = parse_rooms(self._room)
 		self._room_numbers = extract_room_numbers(self._rooms)
 		self._schedule,self._warning = combine_section_info(self._id, self._parsed_meetings, self._rooms)
+		self.update_meetings(self._schedule)
 
 		self._room_freq = {}
 		
 		self._crosslistings_cleaned = parse_crosslistings(self._cross_listings)
 
+
+	def update_meetings(self, value: List[Tuple[str, str, str, int, int]]) -> None:
+
+		if not value:
+			self._parsed_meetings = []
+			self._meeting_pattern = ""
+			self._room = ""
+			return
+
+		self._parsed_meetings = [(day, start, end) for _, _, day, start, end in value]
+		
+		groups = defaultdict(list)
+		for section_id, room, day, start, end in value:
+			groups[(room, start, end)].append(day)
+		chunks = []
+		all_rooms = []
+		for (room, start, end), days in groups.items():
+			days_str = "".join(sorted(days))
+			chunks.append(f"{days_str} {time_to_str(start)}-{time_to_str(end)}")
+			all_rooms.append(room)
+		self._meeting_pattern = "; ".join(chunks)
+		self._room = "; ".join(sorted(set(all_rooms)))
+		self._schedule,_ = combine_section_info(self._id, self._parsed_meetings, self._rooms)
 
 	@property
 	def warning(self) -> str:
