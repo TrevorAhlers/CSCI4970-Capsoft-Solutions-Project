@@ -12,6 +12,7 @@
         <select (change)="changeView($event)">
           <option value="upload">Upload View</option>
           <option value="listview">List View</option>
+          <option value="classview">Class View</option>
 
         </select>
         
@@ -19,7 +20,7 @@
         <div [ngSwitch]="selectedView">
           <app-upload *ngSwitchCase="'upload'"></app-upload>
           <app-section-view *ngSwitchCase="'listview'"></app-section-view>
-         
+          <app-class-view *ngSwitchCase="'classview'"></app-class-view>
           
         </div>
 

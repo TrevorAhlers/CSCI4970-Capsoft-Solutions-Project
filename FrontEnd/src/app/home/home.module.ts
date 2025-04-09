@@ -7,6 +7,7 @@ import { FileManagerComponent} from './file-manager/file-manager.component';
 import { DetailsComponent} from './details/details.component';
 import { ProfileComponent} from './profile/profile.component';
 import { SectionComponent } from './view/sectionview/section.component';
+import { ClassComponent } from './view/classroomview/classroom.component';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatCardModule } from '@angular/material/card';
@@ -48,7 +49,8 @@ import { MatInputModule } from '@angular/material/input';
 		FileManagerComponent,
 		DetailsComponent,
 		ProfileComponent,
-		SectionComponent
+		SectionComponent,
+		ClassComponent
 		
 	
 	],
