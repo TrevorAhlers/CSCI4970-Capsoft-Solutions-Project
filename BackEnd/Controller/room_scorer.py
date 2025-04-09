@@ -73,13 +73,26 @@ def map_assignment_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
 
 	return output_map
 
-def map_department_freq(sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom]):
-	for _,section in sections.items():
-		for room in section.rooms:
-			if room != "TBD":
-				if section.subject_code not in classrooms[room].department_counts:
-					classrooms[room].department_counts[section.subject_code] = 0
-				classrooms[room].department_counts[section.subject_code] += 1
+def map_department_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
+	output_map: Dict[str, Dict[str, int]] = {}
+
+	for filename in filenames:
+		base_dir = os.path.dirname(__file__)
+		input_csv_file = os.path.join(os.path.dirname(base_dir), 'Files', filename)
+		df = pd.read_csv(input_csv_file, skiprows=2, header=0)
+
+		for _, row in df.iterrows():
+			dept = str(row.get("Subject Code", ""))
+			room_str = row.get("Room", "")
+			rooms = split_rooms(room_str)
+
+			for room in rooms:
+				if "Peter Kiewit Institute" in room:
+					if room not in output_map:
+						output_map[room] = {}
+					output_map[room][dept] = output_map[room].get(dept, 0) + 1
+
+	return output_map
 
 
 def make_int_str(attribute: str) -> str:

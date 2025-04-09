@@ -105,7 +105,7 @@ class Classroom:
 		return self._department_counts
 
 	@department_counts.setter
-	def room(self, value: Dict) -> None:
+	def department_counts(self, value: Dict) -> None:
 		self._department_counts = value
 
 	@property
@@ -189,6 +189,11 @@ class Classroom:
 	def add_course_section_object(self, course_section_object: CourseSection) -> None:
 		schedule = course_section_object.schedule
 		self.add_section(course_section_object)
+
+		
+		course_section_object.update_meetings(schedule)
+
+
 		for section_id, room, d, start_min, end_min in schedule:
 			if d in DAY_OFFSETS:
 				day_offset = DAY_OFFSETS[d]

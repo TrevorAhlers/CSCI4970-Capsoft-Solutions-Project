@@ -56,7 +56,6 @@ def department_match(classroom: Classroom, section: CourseSection):
 	candidate_depts, dept_max = find_max_frequency_dept(classroom.department_counts)
 	if candidate_depts:
 		for dept in candidate_depts:
-			print(dept,"=?",section.subject_code)
 			if dept == section.subject_code:
 				return True
 	return False
@@ -82,7 +81,6 @@ def assign_via_frequency_map_department(classrooms: Dict[str, Classroom], sectio
 				if not department_match(classrooms[best_candidate_room], section):
 					best_candidate_rooms.pop(0)
 					continue
-				print("3")
 				
 
 				try:
@@ -168,13 +166,11 @@ def find_max_frequency_dept(frequency_map: Dict[str, int]):
 	max_solution = []
 	sorted_items = sorted(frequency_map.items(), key=lambda x: x[1], reverse=True)
 	if sorted_items:
-		top5_keys = [room for room, count in sorted_items[:5]]
 		max_value = sorted_items[0][1]
-
-		for tops in top5_keys:
-			print("tops",tops[0], tops[1])
-			if tops[1] == max_value:
-				max_solution.append(tops)
+		for room in sorted_items:
+			if room[1] != max_value:
+				break
+			max_solution.append(room[0])
 		return max_solution, max_value
 	return None, 0
 

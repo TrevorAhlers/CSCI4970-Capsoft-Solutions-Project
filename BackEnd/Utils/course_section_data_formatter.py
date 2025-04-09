@@ -52,7 +52,7 @@ def row_to_string(course_section, attributes):
     display_values = []
     for attr in attributes:
         value = getattr(course_section, attr.name.lower(), "")
-        display_values.append(f"{value:<30.30}")
+        display_values.append(f"{str(value):<30.30}")
     return " | ".join(display_values)
 
 #....................................................................................
