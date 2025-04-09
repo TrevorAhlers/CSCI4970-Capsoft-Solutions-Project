@@ -1,3 +1,8 @@
+.listview {
+
+	min-height: 135%;
+}
+
 .table-container {
 	max-height: 700px; // Or whatever fits your layout
 	max-width: 100%;
@@ -8,7 +13,7 @@
   
   .interactive-table {
 	width: 100%;
-	min-width: 600px; // Optional, sets table minimum
+	min-width: 600px;
 	border-collapse: collapse;
   
 	th, td {
