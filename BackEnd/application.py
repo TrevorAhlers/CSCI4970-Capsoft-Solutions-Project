@@ -27,6 +27,7 @@ from flask_cors import CORS
 import pickle # serialize
 from typing import Dict, List
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from urllib.parse import unquote
 
 #....................................................................................
 # FILE NAMES:
@@ -112,48 +113,59 @@ def index():
 
 @application.route('/details/<id>', methods=['GET'])
 def details(id: str):
-	"""
-	Returns CourseSection data to populate the details pane
-	for a given selection
-	"""
-	assignment_file = load_assignment_file()
-	title = f'<h1>Course: {assignment_file.sections[id].course_title}</h1>'
+    """
+    Returns CourseSection data to populate the details pane
+    for a given selection
+    """
+	
+    # Decode the ID to handle any URL encoding
+	# The FrontEnd was sending spaces as "20%"
+	# for example... so this fixes stuff like that
+    decoded_id = unquote(id)
+    
+    assignment_file = load_assignment_file()
 
-	content = ''
-	content += f'<p>ID: {assignment_file.sections[id].id}</p>'
-	content += f'<p>Type: {assignment_file.sections[id].section_type}</p>'
-	content += f'<p>Meetings: {assignment_file.sections[id].meeting_pattern}</p>'
-	content += f'<p>Instructor: {assignment_file.sections[id].instructor}</p>'
-	content += f'<p>Room: {assignment_file.sections[id].room}</p>'
-	content += f'<p>Session: {assignment_file.sections[id].session}</p>'
-	content += f'<p>Campus: {assignment_file.sections[id].campus}</p>'
-	content += f'<p>Inst. Method: {assignment_file.sections[id].inst_method}</p>'
-	content += f'<p>Consent: {assignment_file.sections[id].consent}</p>'
-	content += f'<p>Credit Hrs Minimum: {assignment_file.sections[id].credit_hours_min}</p>'
-	content += f'<p>Credit Hrs: {assignment_file.sections[id].credit_hours}</p>'
-	content += f'<p>Grade Mode: {assignment_file.sections[id].grade_mode}</p>'
-	content += f'<p>Attributes: {assignment_file.sections[id].attributes}</p>'
-	content += f'<p>Course Attributes: {assignment_file.sections[id].course_attributes}</p>'
-	content += f'<p>Enrollment: {assignment_file.sections[id].enrollment}</p>'
-	content += f'<p>Max Enrollment: {assignment_file.sections[id].max_enrollment}</p>'
-	content += f'<p>Wait Capacity: {assignment_file.sections[id].wait_cap}</p>'
-	content += f'<p>Room Capacity Req.: {assignment_file.sections[id].rm_cap_request}</p>'
-	content += f'<p>Crosslistings: {assignment_file.sections[id].cross_listings}</p>'
-	content += f'<p>Crosslist Maximum: {assignment_file.sections[id].cross_list_max}</p>'
-	content += f'<p>Crosslist Waitlist Capacity: {assignment_file.sections[id].cross_list_wait_cap}</p>'
-	content += f'<p>Link to: {assignment_file.sections[id].link_to}</p>'
-	content += f'<p>Comments: {assignment_file.sections[id].comments}</p>'
-	content += f'<p>Notes 1: {assignment_file.sections[id].notes1}</p>'
-	content += f'<p>Notes 2: {assignment_file.sections[id].notes2}</p>'
-	content += f'<p>Schedule: {assignment_file.sections[id].schedule}</p>'
-	content += f'<p>Warning: {assignment_file.sections[id].warning}</p>'
+    if decoded_id not in assignment_file.sections:
+        return jsonify({"error": "Course not found"}), 404
 
-	return title + content
+    section = assignment_file.sections[decoded_id]
+
+    title = f'<p>Course: {section.course_title}</p>'
+
+    content = ''
+    content += f'<p>ID: {section.id}</p>'
+    content += f'<p>Type: {section.section_type}</p>'
+    content += f'<p>Meetings: {section.meeting_pattern}</p>'
+    content += f'<p>Instructor: {section.instructor}</p>'
+    content += f'<p>Room: {section.room}</p>'
+    content += f'<p>Session: {section.session}</p>'
+    content += f'<p>Campus: {section.campus}</p>'
+    content += f'<p>Inst. Method: {section.inst_method}</p>'
+    content += f'<p>Consent: {section.consent}</p>'
+    content += f'<p>Credit Hrs Minimum: {section.credit_hours_min}</p>'
+    content += f'<p>Credit Hrs: {section.credit_hours}</p>'
+    content += f'<p>Grade Mode: {section.grade_mode}</p>'
+    content += f'<p>Attributes: {section.attributes}</p>'
+    content += f'<p>Course Attributes: {section.course_attributes}</p>'
+    content += f'<p>Enrollment: {section.enrollment}</p>'
+    content += f'<p>Max Enrollment: {section.max_enrollment}</p>'
+    content += f'<p>Wait Capacity: {section.wait_cap}</p>'
+    content += f'<p>Room Capacity Req.: {section.rm_cap_request}</p>'
+    content += f'<p>Crosslistings: {section.cross_listings}</p>'
+    content += f'<p>Crosslist Maximum: {section.cross_list_max}</p>'
+    content += f'<p>Crosslist Waitlist Capacity: {section.cross_list_wait_cap}</p>'
+    content += f'<p>Link to: {section.link_to}</p>'
+    content += f'<p>Comments: {section.comments}</p>'
+    content += f'<p>Notes 1: {section.notes1}</p>'
+    content += f'<p>Notes 2: {section.notes2}</p>'
+    content += f'<p>Schedule: {section.schedule}</p>'
+    content += f'<p>Warning: {section.warning}</p>'
+
+    print(f'application.py: /details/{decoded_id}')
+    return jsonify({"content": title + content})
 
 
-@application.route('/debug-test')
-def debug_test():
-	return jsonify(["<p>hello</p>", "<p>world</p>"])
+
 
 @application.route('/conflicts/all', methods=['GET'])
 def conflicts_all():
@@ -186,6 +198,7 @@ def conflicts_all():
 
 		content_list.append(full_conflict or '')
 
+	print(f'application.py: /conflict/all')
 	return jsonify(content_list)
 
 
@@ -200,6 +213,7 @@ def conflict_ignore(id: str):
 		if conflict.id == id:
 			conflict.ignored = True
 	save_assignment_file(assignment_file)
+	print(f'application.py: /conflict/ignore/{id}')
 
 @application.route('/conflict/unignore/<id>', methods=['GET'])
 def conflict_unignore(id: str):
@@ -212,6 +226,7 @@ def conflict_unignore(id: str):
 		if conflict.id == id:
 			conflict.ignored = False
 	save_assignment_file(assignment_file)
+	print(f'application.py: /conflict/ignore/{id}')
 
 @application.route('/get-username')
 #@jwt_required()
@@ -230,6 +245,7 @@ def course_info():
 	section_csv_file = os.path.join(base_dir, 'Files', 'Spring2023.csv')
 	instantiation_dict = csf.build_course_sections(section_csv_file)
 	info_list = generate_strings_section_view(instantiation_dict)
+	print('application.py: /course-info')
 	return jsonify(info_list)
 
 
@@ -260,6 +276,8 @@ def upload():
 		save_assignment_file(assignment_file)
 
 		return jsonify({"message": "File uploaded and memory updated", "filename": file.filename})
+	
+	print('application.py: /upload')
 
 	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
@@ -268,17 +286,11 @@ def upload():
 def get_data():
 	assignment_file = load_assignment_file()
 
-	# Same pass-by-reference fix here
 	assigner.default_assignment(assignment_file.classrooms, assignment_file.sections)
-
 	conflicts = build_conflicts(assignment_file.sections, assignment_file.classrooms)
 	export(assignment_file.sections)
 
-	base_dir = os.path.dirname(__file__)
-	csv_file = os.path.join(base_dir, 'Files', OUTPUT_CSV)
-
 	attributes = [
-		CourseSectionEnum.CATALOG_NUMBER,
 		CourseSectionEnum.SECTION,
 		CourseSectionEnum.ROOM,
 		CourseSectionEnum.ENROLLMENT,
@@ -289,13 +301,24 @@ def get_data():
 	data_row_list = generate_strings_section_view(assignment_file.sections, attributes)
 
 	data = []
-	for row in data_row_list:
-		values = row.split(" | ") 
+	section_keys = list(assignment_file.sections.keys())
+
+	for i, row in enumerate(data_row_list):
 		values = row.split(" | ")
-		entry = {attr.name: values[i] for i, attr in enumerate(attributes)}
+		section = assignment_file.sections[section_keys[i]]
+
+		entry = {}
+		entry["id"] = section.id  # first column
+		for j, attr in enumerate(attributes):
+			entry[attr.name] = values[j]
+
 		data.append(entry)
+	
+	print('application.py: /api/data')
 
 	return jsonify({"courses": data})
+
+
 
 #....................................................................................
 # Helper functions:

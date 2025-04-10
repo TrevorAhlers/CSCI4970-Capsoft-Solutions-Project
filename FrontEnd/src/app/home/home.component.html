@@ -4,7 +4,7 @@
 	<div class="columns">
 		<div class="column left">
 			<app-profile></app-profile>
-			<app-details></app-details>
+			<app-details [selectedCourse]="selectedCourse"></app-details>
 			<app-file-manager></app-file-manager>
 		</div>
 
@@ -17,7 +17,10 @@
 
 			<div [ngSwitch]="selectedView">
 				<app-upload *ngSwitchCase="'upload'"></app-upload>
-				<app-section-view *ngSwitchCase="'listview'"></app-section-view>
+				<app-section-view 
+					*ngSwitchCase="'listview'" 
+					(rowClicked)="onCourseSelected($event)">
+				</app-section-view>
 				<app-class-view *ngSwitchCase="'classview'"></app-class-view>
 			</div>
 		</div>

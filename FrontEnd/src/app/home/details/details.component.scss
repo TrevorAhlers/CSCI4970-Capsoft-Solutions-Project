@@ -1,9 +1,17 @@
 .details {
 	padding: 1%;
 	background-color: #F8FAFC;
-	min-height: 143%;
-	max-height: 143%;
+	min-height: 41vh;
+	max-height: 41vh;
 	border-radius: 5px;
 	top: -39%;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+	overflow-y: auto;
+	overflow-x: auto;
+}
+
+.courseDetailsHtml {
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 3%;
 }

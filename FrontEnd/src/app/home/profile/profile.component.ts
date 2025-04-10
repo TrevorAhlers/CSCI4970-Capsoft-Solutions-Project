@@ -1,32 +1,15 @@
 import { Component } from '@angular/core';
-import { DataService } from '@services/data.service';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-
 export class ProfileComponent {
+  profileImage: string = "Capture.png"; 
 
-  data: any;
-  profileImage:string = "Capture.png"
- 
-  
-  constructor(private dataService: DataService, private router:Router) {}
-
-  ngOnInit(): void {
-    // Fetch data from the Flask backend
-    this.dataService.getData().subscribe({
-      next: (response: any) => {
-        this.data = response;
-      },
-      error: (err: any) => {
-        console.error('Error fetching data:', err);
-      }
-    });
-  }
+  constructor(private router: Router) {}
 
   navigateToData() {
     this.router.navigate(['/data']);

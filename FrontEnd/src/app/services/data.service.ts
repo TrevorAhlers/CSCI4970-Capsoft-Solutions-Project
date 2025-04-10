@@ -3,30 +3,30 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
-	private refreshTrigger = new Subject<void>();
-	refresh$ = this.refreshTrigger.asObservable();
+  private refreshTrigger = new Subject<void>();
+  refresh$ = this.refreshTrigger.asObservable();
 
-	private conflictRefreshTrigger = new Subject<void>();
-	conflictRefresh$ = this.conflictRefreshTrigger.asObservable();
+  private conflictRefreshTrigger = new Subject<void>();
+  conflictRefresh$ = this.conflictRefreshTrigger.asObservable();
 
-	constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-	getCourses(): Observable<any> {
-		return this.http.get<any>('/api/data');
-	}
+  getCourses(): Observable<any> {
+    return this.http.get<any>('/api/data');
+  }
 
-	getData(): Observable<any> {
-		return this.http.get<any>('/api/data');
-	}
+  getCourseDetails(courseId: string): Observable<any> {
+    return this.http.get<any>(`/details/${courseId}`);
+  }
 
-	triggerRefresh(): void {
-		this.refreshTrigger.next();
-	}
+  triggerRefresh(): void {
+    this.refreshTrigger.next();
+  }
 
-	triggerConflictRefresh(): void {
-		this.conflictRefreshTrigger.next();
-	}
+  triggerConflictRefresh(): void {
+    this.conflictRefreshTrigger.next();
+  }
 }

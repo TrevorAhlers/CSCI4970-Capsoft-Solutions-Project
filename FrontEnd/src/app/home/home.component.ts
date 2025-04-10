@@ -1,40 +1,44 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '@services/data.service';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
 	selector: 'app-home',
 	templateUrl: './home.component.html',
-	styleUrls: ['./home.component.scss']
+	styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-	courses: any[] = [];
-	profileImage: string = 'Capture.png';
+	selectedCourse: any = null;
 	selectedView: string = 'upload';
 
-	constructor(
-		private dataService: DataService,
-		private router: Router,
-		private cdr: ChangeDetectorRef
-	) {}
-
-	changeView(event: Event) {
-		const view = (event.target as HTMLSelectElement).value;
-		this.selectedView = view;
-		this.cdr.detectChanges();
-
-		if (view === 'listview') {
-			setTimeout(() => {
-				this.dataService.triggerRefresh();
-			});
-		}
-	}
+	constructor(private dataService: DataService) {}
 
 	ngOnInit(): void {
-		this.dataService.getCourses().subscribe(data => {
-			this.courses = data.courses;
+		this.dataService.getCourses().subscribe((data) => {
+			console.log('Fetched courses in Home:', data);
 		});
+	}
+
+	// Particular course is selected in the section view	
+	onCourseSelected(courseId: string): void {
+		console.log('Course selected in home:', courseId);
+		this.fetchCourseDetails(courseId);
+	}
+
+	// Details pane data fetch
+	fetchCourseDetails(courseId: string): void {
+		this.dataService.getCourseDetails(courseId).subscribe(
+			(data) => {
+				console.log('Course details fetched successfully:', data);
+				this.selectedCourse = data;
+			},
+			(error) => {
+				console.error('Error fetching course details:', error);
+			}
+		);
+	}
+
+	changeView(event: Event): void {
+		const view = (event.target as HTMLSelectElement).value;
+		this.selectedView = view;
 	}
 }

@@ -1,16 +1,8 @@
-.row-list-container {
-	max-height: 81vh;
-	min-height: 81vh;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
 .row {
 	display: flex;
-	border-bottom: 1px solid #ccc;
 	padding: 6px 0;
+	border-bottom: 1px solid #ddd;
 }
-
 .cell {
 	flex: 1;
 	padding: 0 12px;
@@ -18,12 +10,10 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
-
 .header-row {
 	font-weight: bold;
 	border-bottom: 2px solid #000;
-	background: #f0f0f0;
-	position: sticky;
-	top: 0;
-	z-index: 1;
+}
+.row-hover:hover {
+	background-color: #f5f5f5;
 }
