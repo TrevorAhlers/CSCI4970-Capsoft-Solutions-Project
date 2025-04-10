@@ -1,5 +1,6 @@
 // login.component.ts
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,8 +12,24 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   constructor(private router: Router) {}
   
+
+  loginForm = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl('')
+  })
+  
   navigateToHome() {
     this.router.navigateByUrl('/home');
   }
+
+  navigateToRegistration(){
+    this.router.navigateByUrl('/registration');
+    console.log("Does-s")
+  }
+
+  loginUser(){
+    //Added Service to route getting paramater from formgroup
+  }
+
 }
 

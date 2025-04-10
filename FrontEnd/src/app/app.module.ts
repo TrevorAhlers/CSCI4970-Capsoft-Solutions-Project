@@ -16,18 +16,26 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-
+import {MatFormField} from '@angular/material/form-field'
+import { MatCardTitle } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
 	{ path: '', component: LoginComponent },
 	{ path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
-	{ path: 'data', component: DataComponent }
+	{ path: 'data', component: DataComponent },
+	{path: 'registration', component: RegistrationComponent}
 ];
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		DataComponent
+		DataComponent,
+		LoginComponent,
+		RegistrationComponent
 	],
 	imports: [
 		BrowserModule,
@@ -39,8 +47,15 @@ const routes: Routes = [
 		MatButtonModule,
 		MatTabsModule,
 		MatDividerModule,
-		MatIconModule
+		MatIconModule,
+		MatFormField,
+		MatCardTitle,
+		MatInputModule,
+		MatFormFieldModule,
+		FormsModule,
+		ReactiveFormsModule
 	],
+	exports:[RouterModule],
 	bootstrap: [AppComponent],
 	providers: [
 		provideAnimationsAsync(),

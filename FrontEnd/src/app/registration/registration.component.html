@@ -1,0 +1,51 @@
+<div class="login-container">
+    <mat-card class="login-mat_container">
+      <form [formGroup]="createAnAccount" (submit)="createUser()" >
+        <div class="title_login">
+            <mat-card-title>Create Account</mat-card-title>
+        </div>
+        
+        <mat-card-content>
+        
+            <div class="username_title">
+                <p>Username</p>
+            </div>
+            <mat-form-field appearance="outline" class="username_box">
+                <input type="text" matInput placeholder="Username" formControlName="username">
+            
+            </mat-form-field>
+
+            <div class="email_title">
+                <p>Email</p>
+            </div>
+            <mat-form-field appearance="outline" class="email_box">
+                <input type="text" matInput placeholder="Email" formControlName="email">
+            
+            </mat-form-field>
+             
+            <div class="password_title">
+                <p>Password</p>
+            </div>
+            <mat-form-field appearance="outline" class="password_box">
+                <input type="text" matInput placeholder="Password" formControlName="password">
+            </mat-form-field>
+
+
+            <div class="password_again_title">
+                <p>Confirm Password</p>
+            </div>
+
+            <mat-form-field appearance="outline" class="password_box_again">
+                <input type="text" matInput placeholder="Confirm Password" formControlName="confirm_password" >
+            </mat-form-field>
+
+            <div class="create-button">
+                <button mat-flat-button type="submit" (click)="createAccount()">Create Account</button>    
+            </div>
+        </mat-card-content>
+    </form>
+  
+      </mat-card>
+  </div>
+
+

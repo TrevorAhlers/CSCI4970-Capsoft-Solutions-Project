@@ -17,4 +17,14 @@ export class DataService {
   getData(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
   }
+
+  /* uploadFile(): Observable<any>{
+    //return this.http.post<any>('http://localhost:5000/upload')
+  } */
 }
+
+//section id -> 
+//if (course_id ) = json_object[course_id] return json_object[index]
+
+
+//one json object.
