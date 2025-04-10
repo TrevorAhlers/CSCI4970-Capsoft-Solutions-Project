@@ -1,4 +1,5 @@
 {
 	"/api": { "target": "http://localhost:5000", "secure": false },
-	"/conflicts": { "target": "http://localhost:5000", "secure": false }
-  }
+	"/conflicts": { "target": "http://localhost:5000", "secure": false },
+	"/upload": { "target": "http://localhost:5000", "secure": false }
+}

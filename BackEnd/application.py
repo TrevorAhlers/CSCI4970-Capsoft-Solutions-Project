@@ -240,7 +240,6 @@ def upload():
 	if not os.path.exists(application.config['UPLOAD_FOLDER']):
 		os.makedirs(application.config['UPLOAD_FOLDER'])  
 
-
 	if 'file' not in request.files:
 		return jsonify({"message": "No file part"}), 400
 
@@ -249,15 +248,18 @@ def upload():
 	if file.filename == '':
 		return jsonify({"message": "No selected file"}), 400
 
-
 	if file and allowed_file(file.filename):
 		filename = os.path.join(application.config['UPLOAD_FOLDER'], file.filename)
 		file.save(filename)
+
 		global INPUT_CSV
 		INPUT_CSV = file.filename
-		print(INPUT_CSV)
-		print(file.filename)
-		return jsonify({"message": "File uploaded successfully", "filename": file.filename})
+
+		sections, classrooms, conflicts = build_all()
+		assignment_file = AssignmentFile(sections, classrooms, conflicts)
+		save_assignment_file(assignment_file)
+
+		return jsonify({"message": "File uploaded and memory updated", "filename": file.filename})
 
 	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
