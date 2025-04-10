@@ -62,7 +62,8 @@
               "buildTarget": "SchedulerApp:build:production"
             },
             "development": {
-              "buildTarget": "SchedulerApp:build:development"
+              "buildTarget": "SchedulerApp:build:development",
+			  "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

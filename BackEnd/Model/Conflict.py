@@ -5,13 +5,15 @@ from Model.WorkspaceState import WorkspaceState, WorkspaceStateEnum
 from Model.CourseSection import CourseSection, CourseSectionEnum
 from Model.Classroom import Classroom, ClassroomEnum
 
+
 def make_time_single(times):
 	output = []
 	for x in times:
 		output.append(x[0])
 		output.append(x[1])
 	return output
-		
+
+
 def generate_conflict_id(sections: List[CourseSection], times: List[List], rooms: List, msg: str) -> str:
 	section_ids = [sec.id for sec in sections]
 
@@ -25,17 +27,27 @@ def generate_conflict_id(sections: List[CourseSection], times: List[List], rooms
 
 	return "_".join(parts)
 
+
 class Conflict:
 	def __init__(self, sections: List[CourseSection], times: List[List], rooms: List, msg: str = "") -> None:
-		self._id 						  = generate_conflict_id(sections, times, rooms, msg)
-		self._sections                    = sections
-		self._section_count               = len(sections)
-		self._times                       = times
-		self._times_single                = make_time_single(times)
-		self._conflict_area_start         = min(make_time_single(times)) if times else 0
-		self._conflict_area_end           = max(make_time_single(times)) if times else 0
-		self._classrooms                   = rooms
-		self._conflict_message			  = msg
+		self._id						= generate_conflict_id(sections, times, rooms, msg)
+		self._sections					= sections
+		self._section_count				= len(sections)
+		self._times						= times
+		self._times_single				= make_time_single(times)
+		self._conflict_area_start		= min(make_time_single(times)) if times else 0
+		self._conflict_area_end			= max(make_time_single(times)) if times else 0
+		self._classrooms				= rooms
+		self._conflict_message			= msg
+		self._ignored					= False
+
+	@property
+	def ignored(self) -> bool:
+		return self._ignored
+
+	@ignored.setter
+	def ignored(self, value: bool) -> None:
+		self._ignored = value
 
 	@property
 	def section_count(self) -> int:

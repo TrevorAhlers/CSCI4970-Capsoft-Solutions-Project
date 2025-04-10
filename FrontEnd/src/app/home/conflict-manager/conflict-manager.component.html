@@ -1,11 +1,40 @@
 <div class="conflict_manager">
 
-    <mat-card-title class="conflict_title" style="text-align: center;">Conflicts</mat-card-title>
-    <mat-card class="conflict_inner_box-card" appearance="outlined">
-      <mat-tab-group disablePagination="true" animationDuration="0ms">
-        <mat-tab label="Active"></mat-tab>
-        <mat-tab label="Ignored"></mat-tab>
-      </mat-tab-group>
-    </mat-card>
+	<mat-card-title class="conflict_title" style="text-align: center;">
+		Conflicts
+	</mat-card-title>
 
-  </div>
+	<mat-card class="conflict_inner_box-card" appearance="outlined">
+		<mat-tab-group disablePagination="true" animationDuration="0ms">
+
+			<mat-tab label="Active">
+				<div class="conflict-scroll-container">
+					<ng-container *ngIf="activeConflicts.length === 0">
+						<p style="text-align: center; padding: 1rem;">No active conflicts.</p>
+					</ng-container>
+					
+					<app-conflict-card
+						*ngFor="let conflict of activeConflicts; let i = index"
+						[content]="conflict"
+						(ignore)="onIgnoreConflict(i)">
+					</app-conflict-card>
+				</div>
+			</mat-tab>
+
+			<mat-tab label="Ignored">
+				<div class="conflict-scroll-container">
+					<ng-container *ngIf="ignoredConflicts.length === 0">
+						<p style="text-align: center; padding: 1rem;">No ignored conflicts.</p>
+					</ng-container>
+
+					<app-conflict-card
+						*ngFor="let conflict of ignoredConflicts"
+						[content]="conflict">
+					</app-conflict-card>
+				</div>
+			</mat-tab>
+
+		</mat-tab-group>
+	</mat-card>
+
+</div>

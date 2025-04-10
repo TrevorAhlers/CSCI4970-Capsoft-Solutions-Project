@@ -22,6 +22,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ConflictCardComponent } from './conflict-manager/conflict-card.component';
+
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { MatInputModule } from '@angular/material/input';
 		DetailsComponent,
 		ProfileComponent,
 		SectionComponent,
-		ClassComponent
+		ClassComponent,
+		ConflictCardComponent
 		
 	
 	],

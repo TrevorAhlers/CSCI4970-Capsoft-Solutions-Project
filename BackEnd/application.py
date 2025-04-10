@@ -13,6 +13,7 @@ from Model.Classroom import Classroom, ClassroomEnum
 from Model.Conflict import Conflict
 from Model.AssignmentFile import AssignmentFile
 from Utils.course_section_data_formatter import generate_strings_section_view
+from Data.user_repo import *
 import Utils.course_section_factory as csf
 import Utils.classroom_factory as cf
 import Utils.conflict_factory as cof
@@ -65,8 +66,8 @@ def index():
 
 	save_assignment_file(assignment_file)
 
-	for conflict in assignment_file.conflicts:
-		print(conflict.to_str())
+	# for conflict in assignment_file.conflicts:
+	# 	print(conflict.to_str())
 
 	# for id,section in assignment_file.sections.items():
 	# 	print(f'+++++++++++++++++++++++++++++')
@@ -148,6 +149,75 @@ def details(id: str):
 	content += f'<p>Warning: {assignment_file.sections[id].warning}</p>'
 
 	return title + content
+
+
+@application.route('/debug-test')
+def debug_test():
+	return jsonify(["<p>hello</p>", "<p>world</p>"])
+
+@application.route('/conflicts/all', methods=['GET'])
+def conflicts_all():
+	"""
+	Returns [Conflict] array to populate the conflict pane
+	for an AssignmentFile.
+
+	This is returned in a List so we can iterate over each
+	Conflict object to populate each conflict box component
+	on the FrontEnd.
+	"""
+	assignment_file = load_assignment_file()
+	content_list = []
+
+	for conflict in assignment_file.conflicts:
+		if conflict.ignored:
+			continue
+
+		title = '<h2>Conflict:</h2>'
+
+		if not conflict.conflict_message:
+			conflict_sections = ""
+			for section in conflict.sections:
+				conflict_sections += f'<p>{section.id or ""}: </p><br>'
+				conflict_sections += f'<p>{section.meeting_pattern or ""} </p><br>'
+			full_conflict = title + conflict_sections
+		else:
+			msg = conflict.conflict_message or ''
+			full_conflict = title + f'<p>{msg}</p><br>'
+
+		content_list.append(full_conflict or '')
+
+	return jsonify(content_list)
+
+
+@application.route('/conflict/ignore/<id>', methods=['GET'])
+def conflict_ignore(id: str):
+	"""
+	Updates a Conflict object to have it's attribute "ignored"
+	set to True.
+	"""
+	assignment_file = load_assignment_file()
+	for conflict in assignment_file.conflicts:
+		if conflict.id == id:
+			conflict.ignored = True
+	save_assignment_file(assignment_file)
+
+@application.route('/conflict/unignore/<id>', methods=['GET'])
+def conflict_unignore(id: str):
+	"""
+	Updates a Conflict object to have it's attribute "ignored"
+	set to False.
+	"""
+	assignment_file = load_assignment_file()
+	for conflict in assignment_file.conflicts:
+		if conflict.id == id:
+			conflict.ignored = False
+	save_assignment_file(assignment_file)
+
+@application.route('/get-username')
+#@jwt_required()
+def get_username():
+	pass
+	# user = get_user_from_db(host: str, user: str, password: str, database: str, user_id: str)
 
 
 @application.route('/api/course-info')
@@ -267,11 +337,6 @@ def build_conflicts(sections, classrooms):
 	conflict_instantiation_list = cof.build_conflicts(sections, classrooms)
 	return conflict_instantiation_list
 
-def make_assignment_file(sections: Dict[str,CourseSection], classrooms: Dict[str,Classroom], conflicts: List[Conflict]):
-	assignment_file = AssignmentFile(sections, classrooms, conflicts)
-	return assignment_file
-
-
 def export(sections):
 	base_dir = os.path.dirname(__file__)
 	input_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
@@ -319,6 +384,10 @@ def save_assignment_file(assignment_file: AssignmentFile):
 def load_assignment_file():
 	with open('assignment_file.pkl', 'rb') as f:
 		return pickle.load(f)
+	
+def make_assignment_file(sections: Dict[str,CourseSection], classrooms: Dict[str,Classroom], conflicts: List[Conflict]):
+	assignment_file = AssignmentFile(sections, classrooms, conflicts)
+	return assignment_file
 
 #....................................................................................
 if __name__ == '__main__':

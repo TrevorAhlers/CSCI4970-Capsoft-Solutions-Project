@@ -2,7 +2,7 @@
   <mat-card-title>Course List</mat-card-title>
   <mat-divider></mat-divider>
 
-  <div *ngIf="courses.length > 0" class="table-container">
+  <mat-card *ngIf="courses.length > 0" class="table-container">
     <table class="interactive-table">
       <thead>
         <tr>
@@ -21,6 +21,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+</mat-card>
+</mat-card>
 
 

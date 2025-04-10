@@ -53,3 +53,22 @@ def insert_or_update_user(
 	db.commit()
 	cursor.close()
 	db.close()
+
+
+def get_user_from_db(host: str, user: str, password: str, database: str, user_id: str):
+	db = mysql.connector.connect(
+		host=host,
+		user=user,
+		password=password,
+		database=database
+	)
+	cursor = db.cursor(dictionary=True)
+
+	query = "SELECT user_id, user_password FROM users WHERE user_id = %s"
+	cursor.execute(query, (user_id,))
+	result = cursor.fetchone()
+
+	cursor.close()
+	db.close()
+
+	return result
