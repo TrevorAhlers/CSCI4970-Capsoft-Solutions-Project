@@ -18,6 +18,26 @@ Each semester, the Classroom Coordinator receives a CSV file containing all cour
 1. Classroom Coordinators come and go, so our platform must cater to a diverse set of preferences and workflows to drive engagement and remain relevant to all users.
 2. The input spreadsheet is part of a standardized course-section scheduling system used by many colleges, and our output CSV will conform to this format.
 
+## RELEASE NOTES MILESTONE 3 (v0.3.31)
+
+This third major release of our project has a more polished experience for the user. Uploading a CSV into the platform will automatically bring the user to the section/list view, populate the data rows, and display all conflicts after automatic assignment was attempted.
+
+For our milestone 3 we had the goals of improving assignment logic, building out key interface components, login page redesign, registration page design, expanding conflict types, state management, authentication, and file management. We achieve many of these goals but we weren't able to complete authentication due to its dependency on a relational database in our production environment, whereas our project is still being developed locally. The backend has been transistioned to the production environment and the database is under construction.
+
+What we achieved: login page has been redesigned, a registration page has been designed, our section/list view of classes is mostly completed aside from column sorting and customization, conflict cards are populated into the conflict manager, assignment files now store information necessary to save progress (saving not yet implemented), performance improvements have been made to avoid re-processing of data.
+
+All updated code is in our main branch, and no additional branches need to be considered to use the program.
+
+Instructions for running locally:
+1. You may need to install dependencies listed in the previous release notes such as flask and pandas.
+2. Open a terminal in your ide, or command line interface, and run the application.py in the BackEnd directory of the project.
+3. Install NodeJS as necessary on your computer.
+4. Open a new terminal and navigate to our projects FrontEnd folder. Run commands: 'npm install' and 'ng add @angular/material'.
+5. Build and run the frontend with 'npx ng serve'.
+6. Click the link in the terminal to load the webpage on your local.
+7. Upload an input CSV file from the interface.
+8. Navigate to http://localhost:4200/data to view the results of the room assignments.
+
 ## RELEASE NOTES MILESTONE 2 (v0.2.28)
 
 This second major release of our project showcases a homepage design for our user interface for scheduling classes. The user can upload a CSV file and our automatic scheduler will attempt an assignment model based on first-generation scheduling logic.

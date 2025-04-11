@@ -1,24 +1,50 @@
-
-<div class="page">
+<div class="spacer layer1">
 	<div class="login-container">
-	  <body >
-		<h2  >Group 3's PKI Scheduler App</h2>
-	   
-	
-	
-	   <label class="email">Email </label>
-	   <input class="NUID_ID">
-  
-	   
-	   
-	  <button (click)="navigateToHome()">Login</button>
-	
-	
-	  </body>
+	  <mat-card class="login-mat_container">
+		<form [formGroup]="loginForm" (submit)="loginUser()">
+		<div class="title_login">
+		  <mat-card-title>Login</mat-card-title>
+		</div>
+		<br>
+		<br>
+		<mat-card-content>
+		
+			<div class="username_title">
+			  <p>Your Username</p>
+			</div>
+			<mat-form-field appearance="outline" class="username_box">
+			  <input type="text" matInput placeholder="Username" formControlName="username">
+			  <mat-error>
+				Please provide a valid username
+			  </mat-error>
+			</mat-form-field>
+		  
+			
+			<div class="password_title">
+				<p>Your Password</p>
+			</div>
+			<mat-form-field appearance="outline" class="password_box">
+			  <input type="password" matInput placeholder="Password" formControlName="password">
+			</mat-form-field>
+			  
 	  
+			  <div class="login-button">
+				<button mat-flat-button type="submit" (click)="navigateToHome()">Login</button>    
+			  </div>
+	
+			  
+
+
+
+	
+			
+		 
+	  
+		
+		</mat-card-content>
+	  </form>
+	  <a class="registration_link" [routerLink]="'/registration'">Don't have an account</a>
+	
+		</mat-card>
 	</div>
-	  
-  
-   </div>
-  
-	
+  </div>

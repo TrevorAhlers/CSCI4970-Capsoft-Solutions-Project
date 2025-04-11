@@ -1,37 +1,44 @@
-<div class="homepage-container">
-	<div class="home header"></div>
+<div class="layer1">
+	<div class="homepage-container">
+		<div class="home header"></div>
 
-	<div class="columns">
-		<div class="column left">
-			<app-profile></app-profile>
-			<app-details [selectedCourse]="selectedCourse"></app-details>
-			<app-file-manager></app-file-manager>
-		</div>
+		<div class="columns">
+			<div class="column left">
+				<app-profile></app-profile>
+				<app-details [selectedCourse]="selectedCourse"></app-details>
+				<app-file-manager></app-file-manager>
+			</div>
 
-		<div class="column center">
-			<select (change)="changeView($event)">
-				<option value="upload">Upload View</option>
-				<option value="listview">List View</option>
-				<option value="classview">Class View</option>
-			</select>
+			<div class="column center">
+				<select [(ngModel)]="selectedView" (change)="changeView($event)">
+					<option value="upload">Upload View</option>
+					<option value="listview">List View</option>
+					<option value="classview">Class View</option>
+				</select>
 
-			<div [ngSwitch]="selectedView">
-				<app-upload *ngSwitchCase="'upload'"></app-upload>
-				<app-section-view 
-					*ngSwitchCase="'listview'" 
-					(rowClicked)="onCourseSelected($event)">
-				</app-section-view>
-				<app-class-view *ngSwitchCase="'classview'"></app-class-view>
+				<div [ngSwitch]="selectedView">
+					<app-upload 
+						*ngSwitchCase="'upload'" 
+						(fileUploaded)="selectedView = 'listview'">
+					</app-upload>
+
+					<app-section-view 
+						*ngSwitchCase="'listview'" 
+						(rowClicked)="onCourseSelected($event)">
+					</app-section-view>
+
+					<app-class-view *ngSwitchCase="'classview'"></app-class-view>
+				</div>
+			</div>
+
+			<div class="column right">
+				<app-conflict-manager [clear]="selectedView === 'upload'"></app-conflict-manager>
 			</div>
 		</div>
 
-		<div class="column right">
-			<app-conflict-manager></app-conflict-manager>
+		<div class="home footer">
+			<img src="assets/logo_1.png" class="logo" alt="Logo" />
+			<p class="footer">2025</p>
 		</div>
-	</div>
-
-	<div class="home footer">
-		<img src="assets/logo_1.png" class="logo" alt="Logo" />
-		<p class="footer">2025</p>
 	</div>
 </div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // 👈 Add this
 import { HomeComponent } from './home.component';
 import { UploadComponent } from './view/upload/upload.component';
 import { ConflictManagerComponent } from './conflict-manager/conflict-manager.component';
@@ -28,6 +29,7 @@ import { ConflictCardComponent } from './conflict-manager/conflict-card.componen
 @NgModule({
 	imports: [
 		CommonModule,
+		FormsModule,
 		HttpClientModule,
 		MatCardModule,
 		MatButtonModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '@services/data.service';
 
@@ -7,7 +7,9 @@ import { DataService } from '@services/data.service';
 	templateUrl: './conflict-manager.component.html',
 	styleUrls: ['./conflict-manager.component.scss']
 })
-export class ConflictManagerComponent implements OnInit {
+export class ConflictManagerComponent implements OnInit, OnChanges {
+	@Input() clear = false;
+
 	activeConflicts: string[] = [];
 	ignoredConflicts: string[] = [];
 
@@ -20,7 +22,24 @@ export class ConflictManagerComponent implements OnInit {
 		this.loadConflicts();
 	}
 
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['clear']) {
+			const prev = changes['clear'].previousValue;
+			const curr = changes['clear'].currentValue;
+	
+			if (curr === true) {
+				this.activeConflicts = [];
+				this.ignoredConflicts = [];
+			}
+	
+			if (prev === true && curr === false) {
+				this.loadConflicts();
+			}
+		}
+	}
+
 	loadConflicts(): void {
+		if (this.clear) return; // skip loading if we’re in "clear" mode
 		this.http.get('/conflicts/all', { responseType: 'text' }).subscribe({
 			next: (data: string) => {
 				try {
