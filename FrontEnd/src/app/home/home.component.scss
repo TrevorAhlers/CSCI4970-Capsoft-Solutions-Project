@@ -66,6 +66,10 @@
 	flex: 0 0 20%;
 }
 
+.column.right > * {
+	flex: 1;
+	min-height: 30%;
+}
 
 
 .home.header {

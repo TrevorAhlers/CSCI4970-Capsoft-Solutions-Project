@@ -167,11 +167,11 @@ def details(id: str):
 
 
 
-@application.route('/conflicts/all', methods=['GET'])
-def conflicts_all():
+@application.route('/conflicts/active', methods=['GET'])
+def conflicts_active():
 	"""
 	Returns [Conflict] array to populate the conflict pane
-	for an AssignmentFile.
+	for an AssignmentFile. (active tab)
 
 	This is returned in a List so we can iterate over each
 	Conflict object to populate each conflict box component
@@ -179,13 +179,8 @@ def conflicts_all():
 	"""
 	assignment_file = load_assignment_file()
 	content_list = []
-
-	for conflict in assignment_file.conflicts:
-		if conflict.ignored:
-			continue
-
+	for conflict in assignment_file.active_conflicts:
 		title = '<h2>Conflict:</h2>'
-
 		if not conflict.conflict_message:
 			conflict_sections = ""
 			for section in conflict.sections:
@@ -195,38 +190,89 @@ def conflicts_all():
 		else:
 			msg = conflict.conflict_message or ''
 			full_conflict = title + f'<p>{msg}</p><br>'
+		content_list.append({
+			"id": conflict.id,
+			"content": full_conflict or '',
+			"ignored": False
+		})
+	print('application.py: /conflict/active')
+	return jsonify(content_list)
 
-		content_list.append(full_conflict or '')
 
-	print(f'application.py: /conflict/all')
+@application.route('/conflicts/ignored', methods=['GET'])
+def conflicts_ignored():
+	"""
+	Returns [Conflict] array to populate the conflict pane
+	for an AssignmentFile. (ignore tab)
+
+	This is returned in a List so we can iterate over each
+	Conflict object to populate each conflict box component
+	on the FrontEnd.
+	"""
+	assignment_file = load_assignment_file()
+	content_list = []
+	for conflict in assignment_file.ignored_conflicts:
+		title = '<h2>Conflict:</h2>'
+		if not conflict.conflict_message:
+			conflict_sections = ""
+			for section in conflict.sections:
+				conflict_sections += f'<p>{section.id or ""}: </p><br>'
+				conflict_sections += f'<p>{section.meeting_pattern or ""} </p><br>'
+			full_conflict = title + conflict_sections
+		else:
+			msg = conflict.conflict_message or ''
+			full_conflict = title + f'<p>{msg}</p><br>'
+		content_list.append({
+			"id": conflict.id,
+			"content": full_conflict or '',
+			"ignored": True
+		})
+	print('application.py: /conflict/ignored')
 	return jsonify(content_list)
 
 
 @application.route('/conflict/ignore/<id>', methods=['GET'])
 def conflict_ignore(id: str):
-	"""
-	Updates a Conflict object to have it's attribute "ignored"
-	set to True.
-	"""
 	assignment_file = load_assignment_file()
+	conflict_to_ignore = None
+
 	for conflict in assignment_file.conflicts:
 		if conflict.id == id:
 			conflict.ignored = True
-	save_assignment_file(assignment_file)
-	print(f'application.py: /conflict/ignore/{id}')
+			conflict_to_ignore = conflict
+			break
 
-@application.route('/conflict/unignore/<id>', methods=['GET'])
+	if conflict_to_ignore:
+		# Remove it from active_conflicts if present
+		if conflict_to_ignore in assignment_file.active_conflicts:
+			assignment_file.active_conflicts.remove(conflict_to_ignore)
+		# Add it to ignored_conflicts if not already
+		if conflict_to_ignore not in assignment_file.ignored_conflicts:
+			assignment_file.ignored_conflicts.append(conflict_to_ignore)
+
+	save_assignment_file(assignment_file)
+	return '', 200
+
+@application.route('/conflict/activate/<id>', methods=['GET'])
 def conflict_unignore(id: str):
-	"""
-	Updates a Conflict object to have it's attribute "ignored"
-	set to False.
-	"""
 	assignment_file = load_assignment_file()
+	conflict_to_unignore = None
+
 	for conflict in assignment_file.conflicts:
 		if conflict.id == id:
 			conflict.ignored = False
+			conflict_to_unignore = conflict
+			break
+
+	if conflict_to_unignore:
+		if conflict_to_unignore in assignment_file.ignored_conflicts:
+			assignment_file.ignored_conflicts.remove(conflict_to_unignore)
+		if conflict_to_unignore not in assignment_file.active_conflicts:
+			assignment_file.active_conflicts.append(conflict_to_unignore)
+
 	save_assignment_file(assignment_file)
-	print(f'application.py: /conflict/ignore/{id}')
+	return '', 200
+
 
 @application.route('/get-username')
 #@jwt_required()

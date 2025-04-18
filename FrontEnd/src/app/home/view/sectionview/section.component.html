@@ -1,19 +1,23 @@
 <mat-card class="listview" appearance="outlined">
 	<mat-card-title>Course List</mat-card-title>
 	<mat-divider></mat-divider>
-
+  
+	<!-- header --------------------------------------------------------- -->
 	<div class="row header-row">
-		<div *ngFor="let col of displayedColumns" class="cell header-cell">
-			{{ col }}
-		</div>
+	  <div *ngFor="let col of displayedColumns" class="cell header-cell">
+		{{ col }}
+	  </div>
 	</div>
-
+  
+	<!-- body ----------------------------------------------------------- -->
 	<div class="row-list-container">
-		<app-section-row
-			*ngFor="let row of filteredCourses.data"
-			[row]="row"
-			[columns]="displayedColumns"
-			(clicked)="handleRowClick($event)">
-		</app-section-row>
+	  <app-section-row
+		*ngFor="let row of filteredCourses.data"
+		[row]="row"
+		[columns]="displayedColumns"
+		[selected]="row.id === selectedId"
+		(clicked)="handleRowClick($event)"
+	  ></app-section-row>
 	</div>
-</mat-card>
+  </mat-card>
+  

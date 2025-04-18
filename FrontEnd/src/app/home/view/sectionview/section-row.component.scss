@@ -2,18 +2,23 @@
 	display: flex;
 	padding: 6px 0;
 	border-bottom: 1px solid #ddd;
-}
-.cell {
+  }
+
+  .cell {
 	flex: 1;
 	padding: 0 12px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
-}
-.header-row {
-	font-weight: bold;
-	border-bottom: 2px solid #000;
-}
-.row-hover:hover {
-	background-color: #f5f5f5;
-}
+  }
+  
+
+  .row-hover:not(.selected):hover {
+	background: #f5f5f5;
+  }
+
+  .selected,
+  .selected:hover {
+	background: #c5dafa;
+  }
+  

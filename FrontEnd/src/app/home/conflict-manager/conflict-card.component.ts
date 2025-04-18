@@ -6,10 +6,15 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 	styleUrls: ['./conflict-card.component.scss']
 })
 export class ConflictCardComponent {
-	@Input() content: string = '';
-	@Output() ignore = new EventEmitter<void>();
+	@Input() conflict!: { id: string; content: string; ignored: boolean };
+	@Output() ignore = new EventEmitter<string>();
+	@Output() restore = new EventEmitter<string>();
 
 	handleIgnore() {
-		this.ignore.emit();
+		this.ignore.emit(this.conflict.id);
+	}
+
+	handleRestore() {
+		this.restore.emit(this.conflict.id);
 	}
 }

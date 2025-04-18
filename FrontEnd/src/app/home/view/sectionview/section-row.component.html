@@ -1,5 +1,10 @@
-<div class="row row-hover" (click)="emitClick()" style="cursor: pointer;">
-	<div *ngFor="let col of columns" class="cell">
-		{{ row[col] }}
-	</div>
+<div
+  class="row row-hover"
+  [class.selected]="selected"
+  (click)="emitClick()"
+  style="cursor: pointer;"
+>
+  <div *ngFor="let col of columns" class="cell">
+    {{ row[col] }}
+  </div>
 </div>
