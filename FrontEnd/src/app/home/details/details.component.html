@@ -1,7 +1,67 @@
-<mat-card class="details" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title>Course Details</mat-card-title>
-  </mat-card-header>
-  <mat-divider></mat-divider>
-  <div *ngIf="courseDetailsHtml" class="courseDetailsHtml" [innerHTML]="courseDetailsHtml"></div>
-</mat-card>
+<div class="details_manager">
+
+  <mat-card-title class="details_title" style="text-align: center;">
+		Course Details
+	</mat-card-title>
+
+  <mat-card class="details_inner_box-card" appearance="outlined">
+    <mat-tab-group disablePagination="true" animationDuration="0ms">
+
+      <mat-tab label="Details">
+
+      </mat-tab>
+
+      <mat-tab label="Edit">
+
+        <div class="edit-scroll-container">
+          <div class="form">
+            <label for="inputBox"> Room: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput1" />
+
+            <label for="inputBox"> Meeting Pattern: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput2" />
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput3" />
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput4" />
+
+            <label for="inputBox"> Cross-listings: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput5" />
+
+            <label for="inputBox"> Maximum Enrollment: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput6"/>
+
+            <label for="inputBox"> Enrollment: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput7"/>
+
+            <label for="inputBox"> Comments: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput8"/>
+
+            <label for="inputBox"> Notes 1: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput9"/>
+
+            <label for="inputBox"> Notes 2: </label>
+            <input id="inputBox" type="text" class="text-box"
+            [(ngModel)]="userInput10"/>
+
+          </div>
+          
+        </div>
+        
+        <button mat-button class="add-class-button" > Add Class </button>
+
+      </mat-tab>
+
+    </mat-tab-group>
+
+    
+  </mat-card>
+  
+</div>

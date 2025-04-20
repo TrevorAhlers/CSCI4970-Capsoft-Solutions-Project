@@ -1,17 +1,98 @@
-.details {
-	padding: 1%;
+/*----------container---------------*/
+
+:host {
+	display: flex;
+	flex-direction: column;
 	background-color: #F8FAFC;
-	min-height: 41vh;
-	max-height: 41vh;
+	padding: 2% 0 1% 0;
+	box-sizing: border-box;
 	border-radius: 5px;
-	top: -39%;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-	overflow-y: auto;
-	overflow-x: auto;
+	/*height: 79vh;*/
 }
 
-.courseDetailsHtml {
-	padding-left: 3%;
-	padding-right: 3%;
-	padding-top: 3%;
+.details_title{
+	text-align: center;
+	font-weight: bold;
+}
+
+.details_inner_box-card {
+	height: 100%;
+	max-height: 40vh;
+	min-height: 40vh;
+	display: flex;
+	flex-direction: column;
+	//background-color: #D9EAFD;
+	box-sizing: border-box;
+	//overflow: scroll;
+}
+
+.add-class-button {
+	position: relative;
+	bottom: 4px;
+	right: 4px;
+	font-weight: 300;
+	font-size: 12px;
+	min-width: unset;
+	padding: 4px 8px;
+}
+ 
+ /* ----------- custom tab bar ------------------------------------------- */
+.tab-bar {
+	display: flex;
+	border-bottom: 1px solid #c2c2c2;
+}
+  
+.tab-bar button {
+	flex: 1 1 0;
+	border-radius: 0;
+	box-shadow: none;
+	background: #fff;          /* inactive tab */
+	color: #000;
+	font-weight: 500;
+	border-bottom: 3px solid transparent;
+	transition: background .2s;
+}
+  
+.tab-bar button:not(.active):hover {
+	background: #f3f3f3;
+}
+  
+.tab-bar button.active {
+	background: #cacaca;       /* active tab colour */
+	color: #000;               /* text stays black  */
+	font-weight: 600;
+	border-bottom-color: #1976d2;
+}
+
+/*-------------form----------------------*/
+.form {
+	margin: 0 auto;
+	width: 210px;
+}
+
+.form label {
+	display: inline-block;
+	text-align: right;
+	float: left;
+}
+
+.form input {
+	width: 160px;
+	display: inline-block;
+	text-align: left;
+	float: right;
+}
+
+/* ----------- content area --------------------------------------------- */
+
+.edit-scroll-container {
+	flex: none;
+	max-height: 78vh;
+	min-height: 78vh;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	//gap: 10px;
 }
