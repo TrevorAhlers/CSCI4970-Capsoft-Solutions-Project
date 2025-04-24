@@ -26,8 +26,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: 'src'
+          name: html-docs
+          path: docs/
           commit-message: 'update docs'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy to GitHub Pages
