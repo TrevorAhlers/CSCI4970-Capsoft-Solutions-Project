@@ -1,1 +1,33 @@
+<div class="class-grid">
+  <!-- Time Headers -->
+  <div class="header-row">
+    <div class="cell header">Day</div>
+    <div class="cell header" *ngFor="let time of timeSlots">{{ time }}</div>
+  </div>
 
+  <!-- Rows for each day -->
+  <div class="row" *ngFor="let day of daysOfWeek">
+    <div class="cell header">{{ day.key }}</div>
+
+    <ng-container *ngFor="let time of timeSlots">
+      <ng-container *ngIf="getClassAt(day.label, time) as meeting">
+        <ng-container *ngIf="isClassStart(meeting, time)">
+          <div 
+            class="cell" 
+            [style.gridColumn]="'span ' + getSlotSpan(meeting.startTime, meeting.endTime)">
+            <div class="class-card">
+              <strong>{{ meeting.name }}</strong><br />
+              {{ meeting.startTime }} - {{ meeting.endTime }}<br />
+              Room: {{ meeting.room }}<br />
+              Instructor: {{ meeting.instructor }}
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="!getClassAt(day.label, time)">
+        <div class="cell"></div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
