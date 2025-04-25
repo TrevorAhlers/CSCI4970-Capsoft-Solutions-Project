@@ -10,6 +10,9 @@ export class HomeComponent implements OnInit {
 	selectedCourse: any = null;
 	selectedView: string = 'upload';
 	private _selectedCourse: any = null;
+	showSidebar = true;
+
+
 
 	constructor(private dataService: DataService ) {}
 
@@ -46,5 +49,11 @@ export class HomeComponent implements OnInit {
 	}
 	savecourse() {
 		this.dataService.setCourse(this.selectedCourse);
+	  }
+
+
+
+	toggleSidebar(): void {
+		this.showSidebar = !this.showSidebar;
 	  }
 }
