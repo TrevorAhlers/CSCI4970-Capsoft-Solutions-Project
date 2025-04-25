@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '@services/data.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-upload',
@@ -18,7 +19,7 @@ export class UploadComponent {
 			const formData = new FormData();
 			formData.append('file', file, file.name);
 
-			this.http.post('/upload', formData).subscribe({
+			this.http.post(`${environment.apiBaseUrl}/upload`, formData).subscribe({
 				next: () => {
 					this.dataService.triggerRefresh();
 					this.dataService.triggerConflictRefresh();

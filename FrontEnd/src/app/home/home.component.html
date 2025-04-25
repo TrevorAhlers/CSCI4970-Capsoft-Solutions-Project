@@ -5,7 +5,10 @@
 		<div class="columns">
 			<div class="column left">
 				<app-profile></app-profile>
-				<app-details [selectedCourse]="selectedCourse"></app-details>
+				<app-details 
+					[selectedCourse]="selectedCourse" 
+					(saveClicked)="saveCourseChanges($event)">
+				</app-details>
 				<app-file-manager></app-file-manager>
 			</div>
 

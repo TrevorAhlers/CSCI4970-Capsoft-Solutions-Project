@@ -18,24 +18,50 @@ export class HomeComponent implements OnInit {
 		});
 	}
 
-	// Particular course is selected in the section view	
 	onCourseSelected(courseId: string): void {
 		console.log('Course selected in home:', courseId);
 		this.fetchCourseDetails(courseId);
 	}
 
-	// Details pane data fetch
 	fetchCourseDetails(courseId: string): void {
 		this.dataService.getCourseDetails(courseId).subscribe(
 			(data) => {
-				console.log('Course details fetched successfully:', data);
+				console.log('Course details fetched:', data);
 				this.selectedCourse = data;
+	
+				console.log('Fetching editable fields for:', courseId);
+				this.dataService.getEditableCourseData(courseId).subscribe(
+					(editData) => {
+						console.log('Edit data fetched:', editData);
+						this.selectedCourse.edit = editData;
+						this.selectedCourse = { ...this.selectedCourse };
+					},
+					(error) => {
+						console.error('Error fetching editable course data:', error);
+					}
+				);
 			},
 			(error) => {
 				console.error('Error fetching course details:', error);
 			}
 		);
 	}
+	
+	saveCourseChanges(updated: any): void {
+		console.log('Sending save data:', updated);
+		this.dataService.saveEditedCourseData(updated.id, updated).subscribe(
+			(res) => {
+				console.log('Save successful:', res);
+	
+				this.dataService.triggerRefresh();
+				this.dataService.triggerConflictRefresh();
+	
+				this.fetchCourseDetails(updated.id);
+			},
+			(err) => console.error('Save failed:', err)
+		);
+	}
+	
 
 	changeView(event: Event): void {
 		const view = (event.target as HTMLSelectElement).value;

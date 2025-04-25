@@ -6,7 +6,6 @@
 # variables like department_code. Logic in the data formatter relies on this
 # convention in the row_to_string() function.
 #
-# TODO: Make methods to clean data
 #
 #....................................................................................
 
@@ -49,21 +48,29 @@ class CourseSectionEnum(Enum):
 	NOTES1             = 'Notes#1'
 	NOTES2             = 'Notes#2'
 
+
 def lower(self):
 	return self.lower
-    
-def parse_rooms(room):
+
+def parse_rooms(room: str) -> List[str]:
 	if not room:
-			return []
+		return []
+
+	# Split on semicolons or commas, and normalize
+	parts = [part.strip() for part in room.replace(",", ";").split(";") if part.strip()]
 	output = []
-	if ';' in room:
-		rooms1 = room.split("; ")
-		for x in rooms1:
-			if x != 'Partially Online':
-				output.append(x)
-		return output
-	else:
-		return [room]
+
+	for part in parts:
+		if part.lower() == 'partially online':
+			continue
+
+		if part.isdigit() or part.lower().startswith("pki"):
+			number = ''.join(filter(str.isdigit, part))
+			output.append(f"Peter Kiewit Institute {number}")
+		else:
+			output.append(part)
+
+	return output
 
     
 def parse_meetings(line: str) -> List[Tuple[str, int, int]]:
@@ -102,7 +109,7 @@ def extract_room_numbers(rooms: List[str]) -> List[str]:
 	room_numbers = []
 	for r in rooms:
 		match = re.search(r'\d+', r)
-		room_numbers.append(match.group() if match else "TBD")
+		room_numbers.append(match.group() if match else "To Be Announced")
 	return room_numbers
 
 def time_to_str(minutes: int) -> str:
@@ -222,7 +229,7 @@ class CourseSection:
 		self._room = (
 			attributes.get(CourseSectionEnum.ROOM.value)
 			if "Peter Kiewit Institute" in str(attributes.get(CourseSectionEnum.ROOM.value, ""))
-			else "TBD")
+			else "To Be Announced")
 		self._session           = attributes[		CourseSectionEnum.SESSION.value]
 		self._campus            = attributes[		CourseSectionEnum.CAMPUS.value]
 		self._inst_method       = attributes[		CourseSectionEnum.INST_METHOD.value]
@@ -361,8 +368,13 @@ class CourseSection:
 		return self._rooms
 
 	@rooms.setter
-	def rooms(self, value: List) -> None:
-		self._rooms = value
+	def rooms(self, value) -> None:
+		if isinstance(value, str):
+			self._rooms = parse_rooms(value)
+		elif isinstance(value, list):
+			self._rooms = value
+		else:
+			raise TypeError("rooms must be a string or a list of strings")
 
 	def add_room(self, value: str) -> None:
 		self._rooms.append(value)

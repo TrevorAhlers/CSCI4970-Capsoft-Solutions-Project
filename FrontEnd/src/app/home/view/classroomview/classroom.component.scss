@@ -1,5 +1,5 @@
 .table-container {
-	max-height: 700px; // Or whatever fits your layout
+	max-height: 700px;
 	max-width: 100%;
 	overflow-y: auto;
 	overflow-x: auto;
@@ -8,7 +8,7 @@
   
   .interactive-table {
 	width: 100%;
-	min-width: 600px; // Optional, sets table minimum
+	min-width: 600px;
 	border-collapse: collapse;
   
 	th, td {

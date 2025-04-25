@@ -1,10 +1,14 @@
 <div
-  class="row row-hover"
-  [class.selected]="selected"
-  (click)="emitClick()"
-  style="cursor: pointer;"
+	class="row row-hover"
+	[class.selected]="selected"
+	(click)="emitClick()"
+	style="cursor: pointer;"
 >
-  <div *ngFor="let col of columns" class="cell">
-    {{ row[col] }}
-  </div>
+	<div
+		*ngFor="let col of columns"
+		class="cell"
+		[ngClass]="{ 'id': col === 'id' }"
+	>
+		{{ row[col] }}
+	</div>
 </div>

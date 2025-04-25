@@ -15,92 +15,78 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 	print(f"conflict_factory.py: {parse_count}/{len(conflicts)} were parse conflicts.")
 	return conflicts
 
-def build_time_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom]) -> List[Conflict]:
+def build_time_conflicts(
+		sections: Dict[str, CourseSection],
+		classrooms: Dict[str, Classroom]
+) -> List[Conflict]:
 
-	output_conflicts = []
-	conflict_exclusion = []
-	
-	for _, classroom in classrooms.items():
-		classroom_conflicts = classroom.find_conflicts()
+	output_conflicts: List[Conflict] = []
 
-		# conflict_array: [section_id, start_time, end_time]
-		for conflict_array in classroom_conflicts:
-			conflict_cluster = []   # List[CourseSection]
-			times = []              # [start, end]
-			current_window = None   # span of conflict time
-			
+	for classroom in classrooms.values():
+
+		# minute–level overlaps for this room
+		for overlap in classroom.find_conflicts():
+
+			conflict_cluster: List[CourseSection] = []
+			times: List[List[int]]                = []
+			win_start = win_end = None
+
 			i = 0
-			n = len(conflict_array)
-			while i < n:
-				section_id = conflict_array[i]
-				exclusion = conflict_exclusions_generator(sections[section_id], sections)
-				if exclusion not in conflict_exclusion:
-					conflict_exclusion += exclusion
-				if sections[section_id].crosslistings_cleaned:
-					for crosslisting in sections[section_id].crosslistings_cleaned:
-						conflict_exclusion += sections[section_id].crosslistings_cleaned
-					#print(section_id, "crosslist:",sections[section_id].crosslistings_cleaned)
-				if section_id in conflict_exclusion:
-					break
-
-				start_time = conflict_array[i+1]
-				end_time   = conflict_array[i+2]
+			while i < len(overlap):
+				sec_id, start, end = overlap[i], overlap[i + 1], overlap[i + 2]
 				i += 3
-				
 
-				# New cluster
+				# ignore only *remote-learning* exclusions
+				if sec_id in conflict_exclusions_generator(
+						sections[sec_id], sections):
+					continue
+
+				sec = sections[sec_id]
+
 				if not conflict_cluster:
-					conflict_cluster.append(sections[section_id])
-					times.append([start_time, end_time])
-					current_window = [start_time, end_time]
+					conflict_cluster.append(sec)
+					times.append([start, end])
+					win_start, win_end = start, end
+				elif start <= win_end + TIME_BETWEEN_CLASSES:
+					conflict_cluster.append(sec)
+					times.append([start, end])
+					win_start = min(win_start, start)
+					win_end   = max(win_end,   end)
 				else:
-					# Overlap? then add to conflict_cluster, add times and adjust conflict window
-					if start_time <= current_window[1] + TIME_BETWEEN_CLASSES:
-						conflict_cluster.append(sections[section_id])
-						times.append([start_time, end_time])
-						
-						current_window[0] = min(current_window[0], start_time)
-						current_window[1] = max(current_window[1], end_time)
+					add_conflict_if_unique(output_conflicts,
+											conflict_cluster, times,
+											[classroom.room])
+					conflict_cluster = [sec]
+					times            = [[start, end]]
+					win_start, win_end = start, end
 
-					# No overlap? then create conflict object
-					else:
-						# Create Conflict obj
-						add_conflict_if_unique(output_conflicts, conflict_cluster, times, [classroom.room])
-						
-						# New cluster
-						conflict_cluster = [sections[section_id]]
-						times = [[start_time, end_time]]
-						current_window = [start_time, end_time]
-			
-			# If we have identified overlapping/conflicting time slots then they'll be in
-			# the conflict cluster and we create a Conflict obj with all of them included.
+			# flush remainder
 			if conflict_cluster:
-				
-				add_conflict_if_unique(output_conflicts, conflict_cluster, times, [classroom.room], "")
+				add_conflict_if_unique(output_conflicts,
+										conflict_cluster, times,
+										[classroom.room])
 
-	output_conflicts = [
-		conflict
-		for conflict in output_conflicts
-		if conflict.conflict_message or conflict.section_count >= 2
+
+	def same_crosslist_group(cluster: List[CourseSection]) -> bool:
+		first = cluster[0]
+		group = set(first.crosslistings_cleaned)
+		return all(s.id in group for s in cluster)
+
+	filtered = [
+		c for c in output_conflicts
+		if (c.conflict_message or c.section_count >= 2)
+		and not same_crosslist_group(c.sections)
 	]
+	return filtered, len(filtered)
 
-	
 
-	filtered_conflicts = [
-		conflict
-		for conflict in output_conflicts
-		if conflict.section_count >= 2
-	]
-	output_conflicts = filtered_conflicts
-
-	return output_conflicts, len(output_conflicts)
 
 def build_parse_conflicts(sections: Dict[str,CourseSection], output_conflicts: List[Conflict]) -> List[Conflict]:
 	# We try to parse meeting times with their rooms. If we encounter uncertainty or failure
 	# we create a conflict object.
 	start_count = len(output_conflicts)
 	for sec_id, section in sections.items():
-		if section.rooms == ['TBD']:
+		if section.rooms == ['To Be Announced']:
 			continue
 
 		try:
@@ -108,13 +94,13 @@ def build_parse_conflicts(sections: Dict[str,CourseSection], output_conflicts: L
 
 			# If there's a warning for the user, due to uncertainty for room/meetings
 			# parsing, then we create a conflict object for them to ignore or fix.
-			if warn_msg and (section.rooms != ['TBD']):
+			if warn_msg and (section.rooms != ['To Be Announced']):
 				add_conflict_if_unique(output_conflicts, [section], [], section.rooms, warn_msg)
 
 		# Worst case scenario where we fail to parse entirely and we pass the error onto the
 		# user as a conflict object. Better than crashing for no reason...
 		except ValueError as e:
-			if (len(set(section.rooms)) == 1) and (section.rooms != ['TBD']):
+			if (len(set(section.rooms)) == 1) and (section.rooms != ['To Be Announced']):
 				add_conflict_if_unique(output_conflicts, [section], [], section.rooms, str(e))
 	return output_conflicts, len(output_conflicts) - start_count
 
@@ -142,22 +128,31 @@ def build_capacity_conflicts(sections: Dict[str,CourseSection], classrooms: Dict
 	return output_conflicts, len(output_conflicts) - start_count
 
 
-def add_conflict_if_unique(output_conflicts: List[Conflict], conflict_cluster: List[CourseSection],
-							times: List[List[int]], rooms: List[str], msg: str = "") -> List[Conflict]:
-	
-	# Canonical signature to compare all conflicts to detect duplicates
-	conflict_entries = sorted((sec.id, t[0], t[1]) for sec, t in zip(conflict_cluster, times))
-	rooms_signature = tuple(sorted(rooms))
-	conflict_signature = (tuple(conflict_entries), rooms_signature, msg)
-	new_conflict = Conflict(conflict_cluster, times, rooms, msg)
+def add_conflict_if_unique(
+        output_conflicts: List[Conflict],
+        conflict_cluster: List[CourseSection],
+        times: List[List[int]],
+        rooms: List[str],
+        msg: str = ""
+) -> List[Conflict]:
 
-	# Override the object's conflict id with our canonical signature
-	new_conflict._id = conflict_signature
+    # signature ignores minute values -> no duplicates across days
+    id_signature      = tuple(sorted(sec.id for sec in conflict_cluster))
+    rooms_signature   = tuple(sorted(rooms))
+    conflict_key      = (id_signature, rooms_signature, msg)
 
-	if not any(existing._id == new_conflict._id for existing in output_conflicts):
-		output_conflicts.append(new_conflict)
+    # look for an existing conflict with same signature
+    for existing in output_conflicts:
+        if getattr(existing, "_id", None) == conflict_key:
+            # merge additional time ranges
+            existing.times.extend(times)
+            return output_conflicts
 
-	return output_conflicts
+    # create new conflict object
+    new_conflict = Conflict(conflict_cluster, times.copy(), rooms, msg)
+    new_conflict._id = conflict_key
+    output_conflicts.append(new_conflict)
+    return output_conflicts
 
 # Remote learning classes are still assigned to rooms. We just need to know which other 
 # section its schedule mirrors. We can assign it to that matching section's room without 
@@ -175,7 +170,7 @@ def conflict_exclusions_generator(remote_section: CourseSection, sections: Dict[
 		print(f'remote_learning_conflict_avoidance: error')
 
 	try:
-		if remote_section.rooms == ['TBD']:
+		if remote_section.rooms == ['To Be Announced']:
 			conflict_exclusion_list.append(remote_section.id)
 
 	except:
