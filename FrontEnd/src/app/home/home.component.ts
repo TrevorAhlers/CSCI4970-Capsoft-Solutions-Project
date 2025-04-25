@@ -9,6 +9,8 @@ import { DataService } from '@services/data.service';
 export class HomeComponent implements OnInit {
 	selectedCourse: any = null;
 	selectedView: string = 'upload';
+	private _selectedCourse: any = null;
+	showSidebar = true;
 
 	constructor(private dataService: DataService) {}
 
@@ -35,6 +37,7 @@ export class HomeComponent implements OnInit {
 						console.log('Edit data fetched:', editData);
 						this.selectedCourse.edit = editData;
 						this.selectedCourse = { ...this.selectedCourse };
+						this.dataService.setCourse(data);
 					},
 					(error) => {
 						console.error('Error fetching editable course data:', error);
@@ -67,4 +70,13 @@ export class HomeComponent implements OnInit {
 		const view = (event.target as HTMLSelectElement).value;
 		this.selectedView = view;
 	}
+	savecourse() {
+		this.dataService.setCourse(this.selectedCourse);
+	  }
+
+
+
+	toggleSidebar(): void {
+		this.showSidebar = !this.showSidebar;
+	  }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // 👈 Add this
+import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
 import { UploadComponent } from './view/upload/upload.component';
 import { ConflictManagerComponent } from './conflict-manager/conflict-manager.component';
