@@ -8,6 +8,9 @@ interface ClassMeeting {
   startTime: string;
   endTime: string;
   instructor: string;
+  rawstartTime: string;
+  rawendTime: string;
+  rawMeetingText?: string;
 }
 
 @Component({
@@ -17,14 +20,16 @@ interface ClassMeeting {
 })
 export class ClassComponent implements OnInit {
   classMeetings: ClassMeeting[] = [];
-  rooms: string[] = [];
+
   timeSlots = [
-    '08:00', '09:00',
-    '10:00', '11:00',
-    '12:00', '13:00',
-    '14:00', '15:00',
-    '16:00', '17:00','18:00',"19:00"
-  ];
+    '08:00', '08:30', '09:00', '09:30',
+    '10:00', '10:30', '11:00', '11:30',
+    '12:00', '12:30', '13:00', '13:30',
+    '14:00', '14:30', '15:00', '15:30',
+    '16:00', '16:30', '17:00', '17:00',
+    '18:00', '18:30'
+    ];
+
   daysOfWeek = [
     { key: 'Mon', label: 'M' },
     { key: 'Tue', label: 'T' },
@@ -41,51 +46,65 @@ export class ClassComponent implements OnInit {
     if (copiedCourse?.content) {
       const extractedMeetings = this.extractMeetingsFromHtml(copiedCourse.content);
       this.classMeetings = extractedMeetings;
-      this.rooms = [...new Set(extractedMeetings.map(m => m.room))];
     }
   }
 
   extractMeetingsFromHtml(html: string): ClassMeeting[] {
+    const dayMap: { [key: string]: string } = {
+      M: 'Mon',
+      T: 'Tue',
+      W: 'Wed',
+      R: 'Thu',
+      F: 'Fri'
+    };
+
     const meetings: ClassMeeting[] = [];
 
     const scheduleMatch = html.match(/Schedule:\s*\[(.*?)\]/);
     const scheduleStr = scheduleMatch ? scheduleMatch[1] : '';
 
-    const scheduleEntries = Array.from(scheduleStr.matchAll(/\('(.*?)',\s*'(.*?)',\s*'(.*?)',\s*(\d+),\s*(\d+)\)/g));
+    const rawMeetingMatch = html.match(/Meetings:\s*(.*?)(<br>|<\/p>|\n|$)/i);
+    const rawMeetingText = rawMeetingMatch ? rawMeetingMatch[1].trim() : '';
+
+    const entries = Array.from(scheduleStr.matchAll(/\('(.*?)',\s*'(.*?)',\s*'(.*?)',\s*(\d+),\s*(\d+)\)/g));
     const courseName = this.extractField(html, 'Course');
     const instructor = this.extractField(html, 'Instructor');
-    const mergedMeetings: any[] = [];
+    const merged: any[] = [];
 
-    for (const match of scheduleEntries) {
+    for (const match of entries) {
       const [_, name, room, day, start, end] = match;
-
+      const dayKey = dayMap[day] ?? day;
       const startTime = this.convertMinutesToTime(+start);
       const endTime = this.convertMinutesToTime(+end);
+      const rawstartTime = start;
+      const rawendTime = end;
 
-      const existing = mergedMeetings.find(
-        (m) =>
-          m.name === (courseName || name) &&
-          m.room === room.trim() &&
-          m.startTime === startTime &&
-          m.endTime === endTime &&
-          m.instructor === instructor
+      const existing = merged.find(m =>
+        m.name === (courseName || name) &&
+        m.room === room &&
+        m.startTime === startTime &&
+        m.endTime === endTime &&
+        m.instructor === instructor
       );
 
       if (existing) {
-        existing.days.push(day);
+        existing.days.push(dayKey);
       } else {
-        mergedMeetings.push({
+        merged.push({
           name: courseName || name,
           room: room.trim(),
-          days: [day],
+          days: [dayKey],
           startTime,
           endTime,
           instructor,
+          rawstartTime,
+          rawendTime,
+          rawMeetingText 
         });
       }
     }
 
-    return mergedMeetings;
+    return merged;
   }
 
   extractField(html: string, label: string): string {
@@ -99,9 +118,9 @@ export class ClassComponent implements OnInit {
     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
   }
 
-  getClassAt(room: string, time: string, ): ClassMeeting | null {
+  getClassAt(dayKey: string, time: string): ClassMeeting | null {
     return this.classMeetings.find(meeting =>
-      meeting.room === room &&
+      meeting.days.includes(dayKey) &&
       time >= meeting.startTime &&
       time < meeting.endTime
     ) || null;
@@ -112,28 +131,23 @@ export class ClassComponent implements OnInit {
   }
 
   getSlotSpan(start: string, end: string): number {
-	const toMinutes = (t: string): number => {
-	  const [h, m] = t.split(':').map(Number);
-	  return (h * 60) + m;
-	};
-  
-	const startMinutes = toMinutes(start);
-	const endMinutes = toMinutes(end);
-	
-	
-	const spanInMinutes = endMinutes - startMinutes;
-	const span = Math.ceil((toMinutes(end) - toMinutes(start)) / 60);
-	return span;
-  }
+    const toMinutes = (t: string) => {
+      const [h, m] = t.split(':').map(Number);
+      return h * 60 + m;
+    };
+
+    const startMinutes = toMinutes(start);
+    const endMinutes = toMinutes(end);
+    let startSlotIndex = Math.floor(startMinutes / 60); 
+    const startFraction = startMinutes % 60;
   
 
-  formatTimeTo24Hour(time: number): string {
-    const hour = Math.floor(time / 100);
-    const minutes = time % 100;
-    const hours24 = hour < 12 ? hour : (hour === 12 ? hour : hour - 12);
-    const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
-    return `${hours24}:${minutesFormatted}`;
+    if (startFraction !== 0) {
+      startSlotIndex += 1; 
+    }
+
+    const duration = Math.ceil((endMinutes - startMinutes) / 60);
+    return duration;
   }
-  
-  
+
 }

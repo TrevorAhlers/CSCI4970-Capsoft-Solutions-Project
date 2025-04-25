@@ -64,6 +64,10 @@
 
 .column.right {
 	flex: 0 0 20%;
+	transition: width 0.3s ease, opacity 0.3s ease;
+	width: 300px;
+	min-width: 300px;
+	opacity: 1;
 }
 
 
@@ -102,3 +106,26 @@ p {
 	transform: translateX(-50%);
 	opacity: .5;
 }
+
+.column-toggle-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	position: relative;
+  }
+  
+  .collapse-toggle {
+	background-color: #ddd;
+	border: none;
+	padding: 4px 8px;
+	margin-bottom: 4px;
+	cursor: pointer;
+	font-size: 0.9rem;
+	border-radius: 4px;
+  }
+  .column.right.collapsed {
+	width: 0;
+	min-width: 0;
+	opacity: 0;
+	pointer-events: none;
+  }
