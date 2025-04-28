@@ -77,6 +77,89 @@
   <section id="application">
 <h1>Application<a class="headerlink" href="#application" title="Link to this heading"></a></h1>
 <p>This is main application</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">allowed_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Checks if the uploaded file is allowed (CSV format only).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): Name of the file being uploaded.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True if file is allowed, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">build_classrooms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sections</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Constructs classroom objects from CSV data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">build_conflicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sections</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classrooms</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Identifies scheduling conflicts based on assigned sections and classrooms.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">build_freq_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sections</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Builds a frequency map of room assignments from historical training data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">build_sections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Constructs course section objects from input CSV file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">course_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Retrieves course section data from a CSV file.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>JSON response containing course information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sections</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Exports updated course assignments to CSV.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>API endpoint that returns assigned course section data.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>JSON response containing course assignments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Index route that initializes and assigns sections to classrooms.
+Displays course information in HTML format.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: HTML page containing course assignments.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">application.</span></span><span class="sig-name descname"><span class="pre">upload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Handles file uploads, verifying CSV format, and saving the file.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>JSON response indicating success or failure.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

@@ -6,6 +6,18 @@ from Model.Conflict import Conflict
 TIME_BETWEEN_CLASSES = 5
 
 def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom]) -> List[Conflict]:
+	"""
+    Builds a list of conflicts based on time, capacity, and parsing issues.
+
+    This function combines time, capacity, and parsing conflicts into one list of Conflict objects.
+
+    Args:
+        sections (Dict[str, CourseSection]): A dictionary where keys are section IDs and values are CourseSection objects.
+        classrooms (Dict[str, Classroom]): A dictionary where keys are classroom IDs and values are Classroom objects.
+
+    Returns:
+        List[Conflict]: A list of Conflict objects that represent detected conflicts.
+    """
 	conflicts,time_count = build_time_conflicts(sections,classrooms)
 	conflicts,capacity_count = build_capacity_conflicts(sections,classrooms,conflicts)
 	conflicts,parse_count = build_parse_conflicts(sections,conflicts)
@@ -16,6 +28,19 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 	return conflicts
 
 def build_time_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom]) -> List[Conflict]:
+	"""
+    Identifies and builds conflicts related to class times.
+
+    This function checks for time overlaps between sections held in the same classroom, 
+    considering a buffer time between class schedules.
+
+    Args:
+        sections (Dict[str, CourseSection]): A dictionary where keys are section IDs and values are CourseSection objects.
+        classrooms (Dict[str, Classroom]): A dictionary where keys are classroom IDs and values are Classroom objects.
+
+    Returns:
+        List[Conflict]: A list of Conflict objects related to time conflicts.
+    """
 
 	output_conflicts = []
 	conflict_exclusion = []
@@ -96,6 +121,19 @@ def build_time_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[st
 	return output_conflicts, len(output_conflicts)
 
 def build_parse_conflicts(sections: Dict[str,CourseSection], output_conflicts: List[Conflict]) -> List[Conflict]:
+	"""
+    Identifies conflicts related to parsing meeting times or room assignments.
+
+    This function checks for errors or uncertainties when parsing the room assignments and meeting times for each section.
+    If any issues are found, a Conflict object is created.
+
+    Args:
+        sections (Dict[str, CourseSection]): A dictionary where keys are section IDs and values are CourseSection objects.
+        output_conflicts (List[Conflict]): The list of existing conflicts to which new parse-related conflicts will be added.
+
+    Returns:
+        List[Conflict]: The updated list of Conflict objects, including any newly added parsing conflicts.
+    """
 	# We try to parse meeting times with their rooms. If we encounter uncertainty or failure
 	# we create a conflict object.
 	start_count = len(output_conflicts)
@@ -119,6 +157,19 @@ def build_parse_conflicts(sections: Dict[str,CourseSection], output_conflicts: L
 	return output_conflicts, len(output_conflicts) - start_count
 
 def build_capacity_conflicts(sections: Dict[str,CourseSection], classrooms: Dict[str,Classroom], output_conflicts: List[Conflict]) -> List[Conflict]:
+	"""
+    Identifies conflicts related to class capacity.
+
+    This function checks if the enrollment exceeds the room's maximum capacity. If it does, a Conflict object is created.
+
+    Args:
+        sections (Dict[str, CourseSection]): A dictionary where keys are section IDs and values are CourseSection objects.
+        classrooms (Dict[str, Classroom]): A dictionary where keys are classroom IDs and values are Classroom objects.
+        output_conflicts (List[Conflict]): The list of existing conflicts to which new capacity-related conflicts will be added.
+
+    Returns:
+        List[Conflict]: The updated list of Conflict objects, including any newly added capacity conflicts.
+    """
 	start_count = len(output_conflicts)
 	for _,section in sections.items():
 		enrollment = 0
@@ -144,6 +195,22 @@ def build_capacity_conflicts(sections: Dict[str,CourseSection], classrooms: Dict
 
 def add_conflict_if_unique(output_conflicts: List[Conflict], conflict_cluster: List[CourseSection],
 							times: List[List[int]], rooms: List[str], msg: str = "") -> List[Conflict]:
+	"""
+    Adds a new Conflict object to the list if it doesn't already exist.
+
+    This function checks whether a conflict with the same signature already exists in the list of conflicts.
+    If not, it adds the new Conflict object to the list.
+
+    Args:
+        output_conflicts (List[Conflict]): The list of existing Conflict objects.
+        conflict_cluster (List[CourseSection]): The list of sections involved in the conflict.
+        times (List[List[int]]): The list of start and end times for the conflict.
+        rooms (List[str]): The list of rooms involved in the conflict.
+        msg (str, optional): A message describing the conflict. Defaults to an empty string.
+
+    Returns:
+        List[Conflict]: The updated list of Conflict objects, including the newly added one if it was unique.
+    """
 	
 	# Canonical signature to compare all conflicts to detect duplicates
 	conflict_entries = sorted((sec.id, t[0], t[1]) for sec, t in zip(conflict_cluster, times))
@@ -163,6 +230,18 @@ def add_conflict_if_unique(output_conflicts: List[Conflict], conflict_cluster: L
 # section its schedule mirrors. We can assign it to that matching section's room without 
 # conflict. So we suppress the conflict here.
 def conflict_exclusions_generator(remote_section: CourseSection, sections: Dict[str,CourseSection]) -> List:
+	"""
+    Generates a list of exclusions for remote learning sections.
+
+    If a section is marked as remote or has conflicting attributes (such as 'TBD' for rooms), it will be excluded from conflict checks.
+
+    Args:
+        remote_section (CourseSection): The section that is remote or has conflict exclusions.
+        sections (Dict[str, CourseSection]): A dictionary where keys are section IDs and values are CourseSection objects.
+
+    Returns:
+        List: A list of section IDs that should be excluded from conflict checks.
+    """
 
 	conflict_exclusion_list = []
 

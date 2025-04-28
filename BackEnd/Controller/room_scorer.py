@@ -25,6 +25,7 @@ float_headers = [
 ]
 
 def split_rooms(room):
+	
 	if not isinstance(room, str):
 		room = str(room) if pd.notna(room) else ""
 	if ';' in room:
@@ -38,6 +39,19 @@ import pandas as pd
 from typing import Dict, List
 
 def split_rooms(room):
+	"""
+    Splits a room string into a list of individual room values.
+
+    This function processes the room string by splitting it at semicolons (`;`) and excluding any 
+    rooms marked as 'Partially Online'. If the room string is empty or None, it returns an empty list.
+
+    Args:
+        room (str): A string containing room information, potentially with multiple room values
+                    separated by semicolons.
+
+    Returns:
+        List[str]: A list of room names. If the room string is empty or None, an empty list is returned.
+    """
 	if not isinstance(room, str):
 		room = str(room) if pd.notna(room) else ""
 	if ';' in room:
@@ -46,6 +60,22 @@ def split_rooms(room):
 
 
 def map_assignment_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
+	"""
+    Maps the frequency of room assignments for each course-section across multiple files.
+
+    This function processes multiple CSV files containing course-section information and assigns
+    scores (frequencies) to each room where a course-section was assigned. It counts how often each 
+    room was assigned for each course-section and stores this data in a dictionary.
+
+    Args:
+        filenames (List[str]): A list of CSV file names to process. Each file contains course-section data.
+
+    Returns:
+        Dict[str, Dict[str, int]]: A nested dictionary where the first key is the unique course-section 
+                                    identifier (subject code, catalog number, and section number),
+                                    and the second key is the room name. The value is the frequency of
+                                    assignments for that room and course-section.
+    """
 	output_map: Dict[str, Dict[str, int]] = {}
 
 	for filename in filenames:
@@ -75,4 +105,16 @@ def map_assignment_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
 
 
 def make_int_str(attribute: str) -> str:
+	"""
+    Converts a string representing a float (ending in .0) to an integer string.
+
+    If the input string represents a floating-point number with a ".0" suffix, it removes the 
+    ".0" and returns the integer part as a string. If there is no ".0", it simply returns the original string.
+
+    Args:
+        attribute (str): The string to be processed, potentially representing a float.
+
+    Returns:
+        str: The processed string, which is either the original string or a string without ".0".
+    """
 	return attribute[:-2] if attribute.endswith(".0") else attribute

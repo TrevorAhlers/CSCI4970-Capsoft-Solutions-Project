@@ -47,7 +47,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Model.html">Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="Utils.html">Utils</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Classroom_Factory Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Classroom_Factory Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Utils.classroom_factory.build_classrooms"><code class="docutils literal notranslate"><span class="pre">build_classrooms()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -80,6 +83,27 @@
   <section id="classroom-factory-module">
 <h1>Classroom_Factory Module<a class="headerlink" href="#classroom-factory-module" title="Link to this heading"></a></h1>
 <p>This module instantiates classroom object.</p>
+<dl class="py function" id="module-Utils.classroom_factory">
+<dt class="sig sig-object py" id="Utils.classroom_factory.build_classrooms">
+<span class="sig-prename descclassname"><span class="pre">Utils.classroom_factory.</span></span><span class="sig-name descname"><span class="pre">build_classrooms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="CourseSection.html#Model.CourseSection.CourseSection" title="Model.CourseSection.CourseSection"><span class="pre">CourseSection</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="Classroom.html#Model.Classroom.Classroom" title="Model.Classroom.Classroom"><span class="pre">Classroom</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Utils.classroom_factory.build_classrooms" title="Link to this definition"></a></dt>
+<dd><p>Builds a dictionary of Classroom objects from a CSV file and integrates course section assignments.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): The path to the CSV file containing classroom data.
+sections (Dict[str, CourseSection]): A dictionary of CourseSection objects representing scheduled courses.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Dict[str, Classroom]: A dictionary mapping room numbers to Classroom objects.</p>
+</dd>
+<dt>Functionality:</dt><dd><ul class="simple">
+<li><p>Reads classroom data from a CSV file.</p></li>
+<li><p>Instantiates Classroom objects and assigns default values for missing attributes.</p></li>
+<li><p>Adds missing classrooms from the course section data.</p></li>
+<li><p>Associates sections with classrooms based on room assignments.</p></li>
+<li><p>Prints the total number of classroom objects created.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 

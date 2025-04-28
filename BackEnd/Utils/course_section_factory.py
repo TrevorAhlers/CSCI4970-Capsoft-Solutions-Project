@@ -42,6 +42,20 @@ float_headers = [
 # objects. Each entry is keyed by "Catalog Number-Section #", for example "1030-1".
 #....................................................................................
 def build_course_sections(filename: str) -> Dict[str, CourseSection]:
+	"""
+    Reads the input CSV file, processes the rows, and creates a dictionary of CourseSection objects.
+
+    Each CourseSection object is created from the data in the CSV file, and the dictionary is
+    keyed by a unique identifier formed by concatenating the "Catalog Number" and "Section #" fields.
+
+    Args:
+        filename (str): The path to the CSV file containing the course section data.
+
+    Returns:
+        Dict[str, CourseSection]: A dictionary where the keys are strings of the format
+        "Catalog Number-Section #" (e.g., "1030-1"), and the values
+        are CourseSection objects containing the course section data.
+    """
 	df = pd.read_csv(filename, skiprows=2, header=0)
 	course_sections: Dict[str, CourseSection] = {}
 
@@ -92,6 +106,15 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 # 	Removes trailing ".0" if it exists in the attribute 
 #....................................................................................
 def make_int_str(attribute: str) -> str:
+	"""
+    Removes the trailing ".0" from a string if it exists, effectively converting it to an integer string.
+
+    Args:
+        attribute (str): The input string, which may end with ".0".
+
+    Returns:
+        str: The string with ".0" removed if it was present.
+    """
 	if attribute.endswith(".0"):
 		attribute = attribute[:-2]
 		return attribute
@@ -103,6 +126,20 @@ def make_int_str(attribute: str) -> str:
 # 	Reads the CSV to find all attribute strings
 #....................................................................................
 def get_headers(filename: str, defaults: Optional[Dict[int, str]] = None) -> List[str]:
+	"""
+    Reads the CSV file and returns the column headers. If any columns are empty, they are replaced with default names.
+
+    Args:
+        filename (str): The path to the CSV file containing the course section data.
+        defaults (Optional[Dict[int, str]]): A dictionary of default names for columns that are empty. The keys are
+        column indices, and the values are the default names.
+
+    Returns:
+        List[str]: A list of column names (headers) found in the CSV file.
+    
+    Raises:
+        FileNotFoundError: If the CSV file cannot be found.
+    """
 
 	try:
 		df = pd.read_csv(filename, skiprows=2, header=0)
@@ -123,6 +160,17 @@ def get_headers(filename: str, defaults: Optional[Dict[int, str]] = None) -> Lis
 #	by exploring all crosslistings of the crosslistings to get a full list.
 #....................................................................................
 def finalize_all_crosslistings(sections: Dict[str, CourseSection]) -> None:
+	"""
+    Resolves crosslistings for all sections by exploring the crosslistings of crosslisted sections.
+
+    This function ensures that all crosslistings are accounted for, even if some sections have incomplete
+    crosslisting information. The crosslistings are expanded to include all relevant crosslistings, and
+    duplicates are removed.
+
+    Args:
+        sections (Dict[str, CourseSection]): A dictionary of CourseSection objects, keyed by their unique
+        identifier (e.g., "1030-1").
+    """
 	for sec_id, section in sections.items():
 		expanded = set()
 		stack = list(section.crosslistings_cleaned)

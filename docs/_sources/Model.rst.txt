@@ -12,4 +12,6 @@ Model
    Classroom
    Conflict
    CourseSection
+   User
+   WorkspaceState
    
