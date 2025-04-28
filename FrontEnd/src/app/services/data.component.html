@@ -1,24 +1,18 @@
-<div class="profile_box">
-  
-    <img class="user_pic" src="/assets/Capture.JPG" alt="profile-pic" >
-    <p class="Account"> Guest User</p>
-    <button class="back_home_button" (click)="navigateToHome()">Sign off</button>
-  
+<h1>"HI"</h1>
+<mat-card class="listview" appearance="outlined">
+  <mat-divider></mat-divider>
+  <div *ngIf="courses.length > 0;">
+    <table>
+      <thead>
+        <tr>
+          <th *ngFor="let key of courses[0] | keyvalue">{{ key.key }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of courses">
+          <td *ngFor="let key of course | keyvalue">{{ key.value }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
-
-  <div class="resizable-box">
-    <div *ngIf="courses.length > 0;">
-      <table>
-        <thead>
-          <tr>
-            <th *ngFor="let key of courses[0] | keyvalue">{{ key.key }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let course of courses">
-            <td *ngFor="let key of course | keyvalue">{{ key.value }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+</mat-card>

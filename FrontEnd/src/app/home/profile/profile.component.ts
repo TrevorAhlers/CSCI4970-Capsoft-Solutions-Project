@@ -1,42 +1,37 @@
 import { Component } from '@angular/core';
-import { DataService } from '@services/data.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
+	selector: 'app-profile',
+	templateUrl: './profile.component.html',
+	styleUrls: ['./profile.component.scss']
 })
-
 export class ProfileComponent {
+	profileImage: string = "Capture.png";
 
-  data: any;
-  profileImage:string = "Capture.png"
- 
-  
-  constructor(private dataService: DataService, private router:Router) {}
+	constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    // Fetch data from the Flask backend
-    this.dataService.getData().subscribe({
-      next: (response: any) => {
-        this.data = response;
-      },
-      error: (err: any) => {
-        console.error('Error fetching data:', err);
-      }
-    });
-  }
+	navigateToData() {
+		this.router.navigate(['/data']);
+	}
 
-  navigateToData() {
-    this.router.navigate(['/data']);
-  }
+	navigateToHome() {
+		this.router.navigate(['/home']);
+	}
 
-  navigateToHome() {
-    this.router.navigate(['/home']);
-  }
+	navigateToLogin() {
+		this.router.navigateByUrl('/login');
+	}
 
-  navigateToLogin() {
-    this.router.navigateByUrl('/login');
-  }
+	downloadCsv(): void {
+		const link = document.createElement('a');
+		link.href = `${environment.apiBaseUrl}/api/download`;
+		link.download = 'room_assignments.csv';
+		link.click();
+	}
+
+	saveChanges(): void {
+		console.log('Save button clicked — implement logic here.');
+	}
 }

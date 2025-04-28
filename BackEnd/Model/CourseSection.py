@@ -54,6 +54,7 @@ def lower(self):
     
 def parse_rooms(room):
 	"""Parse a string representing room(s) and return a list of room(s) as strings."""
+	"""Parse a string representing room(s) and return a list of room(s) as strings."""
 	if not room:
 			return []
 	output = []
@@ -68,6 +69,7 @@ def parse_rooms(room):
 
     
 def parse_meetings(line: str) -> List[Tuple[str, int, int]]:
+	"""Parse meeting patterns and return a list of tuples with day, start time, and end time."""
 	"""Parse meeting patterns and return a list of tuples with day, start time, and end time."""
 	meetings = []
 	for chunk in line.split(';'):
@@ -87,6 +89,7 @@ def parse_meetings(line: str) -> List[Tuple[str, int, int]]:
 
 def parse_time(timestr: str) -> int:
 	"""Convert time string (e.g., '3pm') to minutes since midnight."""
+	"""Convert time string (e.g., '3pm') to minutes since midnight."""
 	match = re.match(r'(\d{1,2})(?::(\d{2}))?(am|pm)', timestr.strip().lower())
 	if not match:
 		return 0
@@ -101,6 +104,7 @@ def parse_time(timestr: str) -> int:
 
 def extract_room_numbers(rooms: List[str]) -> List[str]:
 	"""Extract room numbers from a list of rooms."""
+	"""Extract room numbers from a list of rooms."""
 	if not rooms:
 		return []
 	room_numbers = []
@@ -110,6 +114,7 @@ def extract_room_numbers(rooms: List[str]) -> List[str]:
 	return room_numbers
 
 def time_to_str(minutes: int) -> str:
+		"""Convert minutes since midnight into a 12-hour time format (e.g., '3:00pm')."""
 		"""Convert minutes since midnight into a 12-hour time format (e.g., '3:00pm')."""
 		hour = minutes // 60
 		minute = minutes % 60
@@ -124,6 +129,7 @@ def time_to_str(minutes: int) -> str:
 		return f"{hour}:{minute:02}{ampm}"
 
 def update_meetings(self, value: List[Tuple[str, str, str, int, int]]) -> None:
+	"""Update the meeting schedule and room information for a course section."""
 	"""Update the meeting schedule and room information for a course section."""
 	self._parsed_meetings = value
 	if not value:
@@ -147,6 +153,7 @@ def combine_section_info(
 	section_id: str,
 	meeting_times: List[Tuple[str, int, int]],
 	rooms: List[str]) -> Tuple[List[Tuple[str, str, str, int, int]], str]:
+	"""Combine meeting times and rooms into a structured schedule."""
 	"""Combine meeting times and rooms into a structured schedule."""
 	results = []
 	warning = ""
@@ -228,6 +235,7 @@ def combine_section_info(
 
 def parse_crosslistings(text):
 	"""Extract and clean cross-listings from a given text string."""
+	"""Extract and clean cross-listings from a given text string."""
 	pattern = r"\b([A-Za-z]{3,5}(?:[\s-]\d{1,4}[A-Za-z]?)-)0*(\d{1,3})\b"
 	matches = re.findall(pattern, text)
 	section_ids = [m[0] + m[1] for m in matches]
@@ -235,7 +243,9 @@ def parse_crosslistings(text):
 
 class CourseSection:
 	"""Class representing a course section with detailed attributes and methods for processing."""
+	"""Class representing a course section with detailed attributes and methods for processing."""
 	def __init__(self, attributes: Dict[str, str]) -> None:
+		"""Initialize a CourseSection object with attributes provided in the dictionary."""
 		"""Initialize a CourseSection object with attributes provided in the dictionary."""
 		self._department_code   = attributes[		CourseSectionEnum.DEPARTMENT_CODE.value]
 		self._subject_code      = attributes[		CourseSectionEnum.SUBJECT_CODE.value]
@@ -291,20 +301,24 @@ class CourseSection:
 	@property
 	def warning(self) -> str:
 		"""Return the warning associated with this course section."""
+		"""Return the warning associated with this course section."""
 		return self._warning
 
 	@warning.setter
 	def warning(self, value: str) -> None:
+		"""Set a new warning for this course section."""
 		"""Set a new warning for this course section."""
 		self._warning = value 
 
 	@property
 	def crosslistings_cleaned(self) -> List:
 		"""Return cleaned cross-listings for this course section."""
+		"""Return cleaned cross-listings for this course section."""
 		return self._crosslistings_cleaned
 
 	@crosslistings_cleaned.setter
 	def crosslistings_cleaned(self, value: List) -> None:
+		"""Set cleaned cross-listings for this course section."""
 		"""Set cleaned cross-listings for this course section."""
 		self._crosslistings_cleaned = value 
 

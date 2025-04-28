@@ -29,6 +29,18 @@ def parse_time(timestr: str) -> int:
         int: The equivalent time in minutes since midnight.
     """
 
+
+	"""
+    Converts a time string like '9am' or '10:30pm' into the number of minutes 
+    from midnight (0..1439).
+    
+    Args:
+        timestr (str): Time string in the format 'H:MMam/pm' or 'Ham/pm'.
+    
+    Returns:
+        int: The equivalent time in minutes since midnight.
+    """
+
 	match = re.match(r'(\d{1,2})(?::(\d{2}))?(am|pm)', timestr.strip().lower())
 	if not match:
 		return 0
@@ -47,6 +59,18 @@ def parse_time(timestr: str) -> int:
 #	For example: [('M', 900, 975), ('W', 900, 975), ('F', 510, 620)].
 #....................................................................................
 def parse_meeting_line(line: str) -> List[Tuple[str, int, int]]:
+
+	"""
+    Parses a string of course meeting times and returns a list of (day, start, end) 
+    tuples with the corresponding start and end times in minutes.
+
+    Args:
+        line (str): A string representing meeting days and times (e.g. 'MW 3pm-4:15pm; F 8:30am-10:20am').
+
+    Returns:
+        List[Tuple[str, int, int]]: A list of tuples representing each meeting's day and time in minutes.
+    """
+
 
 	"""
     Parses a string of course meeting times and returns a list of (day, start, end) 
@@ -87,12 +111,28 @@ def make_int_str(attribute: str) -> str:
         str: The integer string if the attribute ends with '.0', otherwise returns the original string.
     """
 
+
+	"""
+    Converts a string attribute to an integer string if it ends with '.0'.
+    
+    Args:
+        attribute (str): The attribute to check and convert.
+    
+    Returns:
+        str: The integer string if the attribute ends with '.0', otherwise returns the original string.
+    """
+
 	if attribute.endswith(".0"):
 		attribute = attribute[:-2]
 		return attribute
 	return attribute
 
 class ClassroomEnum(Enum):
+
+	"""
+    Enum class for classroom attributes used for data mapping.
+    """
+
 
 	"""
     Enum class for classroom attributes used for data mapping.
@@ -112,7 +152,21 @@ class Classroom:
     and finding scheduling conflicts based on its weekly availability.
     """
 
+
+	"""
+    A class representing a classroom with its attributes and schedule. It supports adding courses
+    and finding scheduling conflicts based on its weekly availability.
+    """
+
 	def __init__(self, attributes: Dict[str, str]) -> None:
+
+		"""
+        Initializes a Classroom object with the given attributes.
+        
+        Args:
+            attributes (Dict[str, str]): A dictionary containing classroom attributes.
+        """
+
 
 		"""
         Initializes a Classroom object with the given attributes.
@@ -143,9 +197,23 @@ class Classroom:
             List: The list of course sections assigned to the classroom.
         """
 
+
+		"""
+        Gets the list of course sections assigned to this classroom.
+        
+        Returns:
+            List: The list of course sections assigned to the classroom.
+        """
+
 		return self._sections
 	
 	def add_section(self, value: CourseSection) -> None:
+		"""
+        Adds a course section to the classroom.
+        
+        Args:
+            value (CourseSection): The course section to add.
+        """
 		"""
         Adds a course section to the classroom.
         
@@ -162,10 +230,22 @@ class Classroom:
         Args:
             value (List): The list of course sections.
         """
+		"""
+        Sets the list of course sections for the classroom.
+        
+        Args:
+            value (List): The list of course sections.
+        """
 		self._sections = value
 
 	@property
 	def room(self) -> str:
+		"""
+        Gets the classroom room number.
+        
+        Returns:
+            str: The classroom room number.
+        """
 		"""
         Gets the classroom room number.
         
@@ -182,10 +262,22 @@ class Classroom:
         Args:
             value (str): The room number to set.
         """
+		"""
+        Sets the classroom room number.
+        
+        Args:
+            value (str): The room number to set.
+        """
 		self._room = value
 
 	@property
 	def seats(self) -> str:
+		"""
+        Gets the number of seats in the classroom.
+        
+        Returns:
+            str: The number of seats in the classroom.
+        """
 		"""
         Gets the number of seats in the classroom.
         
@@ -202,10 +294,22 @@ class Classroom:
         Args:
             value (str): The number of seats to set.
         """
+		"""
+        Sets the number of seats in the classroom.
+        
+        Args:
+            value (str): The number of seats to set.
+        """
 		self._seats = value
 
 	@property
 	def displays(self) -> str:
+		"""
+        Gets the number of displays in the classroom.
+        
+        Returns:
+            str: The number of displays in the classroom.
+        """
 		"""
         Gets the number of displays in the classroom.
         
@@ -222,10 +326,22 @@ class Classroom:
         Args:
             value (str): The number of displays to set.
         """
+		"""
+        Sets the number of displays in the classroom.
+        
+        Args:
+            value (str): The number of displays to set.
+        """
 		self._displays = value
 
 	@property
 	def computer_count(self) -> str:
+		"""
+        Gets the number of computers in the classroom.
+        
+        Returns:
+            str: The number of computers in the classroom.
+        """
 		"""
         Gets the number of computers in the classroom.
         
@@ -242,10 +358,22 @@ class Classroom:
         Args:
             value (str): The number of computers to set.
         """
+		"""
+        Sets the number of computers in the classroom.
+        
+        Args:
+            value (str): The number of computers to set.
+        """
 		self._computer_count = value
 
 	@property
 	def info_and_connectivity(self) -> str:
+		"""
+        Gets the information and connectivity details for the classroom.
+        
+        Returns:
+            str: The information and connectivity details.
+        """
 		"""
         Gets the information and connectivity details for the classroom.
         
@@ -262,6 +390,12 @@ class Classroom:
         Args:
             value (str): The information and connectivity details to set.
         """
+		"""
+        Sets the information and connectivity details for the classroom.
+        
+        Args:
+            value (str): The information and connectivity details to set.
+        """
 		self._info_and_connectivity = value
 
 #....................................................................................
@@ -269,6 +403,15 @@ class Classroom:
 # 	# Occupies minutes [start_slot, end_slot) in the _minute_schedule.
 #....................................................................................
 	def add_course_section(self, course_id: str, room: str, start_slot: int, end_slot: int) -> None:
+		"""
+        Adds a course section to the classroom's minute schedule.
+        
+        Args:
+            course_id (str): The unique identifier for the course.
+            room (str): The room where the course will be held.
+            start_slot (int): The starting minute of the course.
+            end_slot (int): The ending minute of the course.
+        """
 		"""
         Adds a course section to the classroom's minute schedule.
         
@@ -293,6 +436,12 @@ class Classroom:
         Args:
             course_id (str): The unique identifier for the course to remove.
         """
+		"""
+        Removes a course section from the classroom's schedule.
+        
+        Args:
+            course_id (str): The unique identifier for the course to remove.
+        """
 		for minute_list in self._minute_schedule:
 			while course_id in minute_list:
 				minute_list.remove(course_id)
@@ -303,6 +452,14 @@ class Classroom:
 #	'MW 3pm-4:15pm; F 8:30am-10:20am') and adds it to this room's schedule.
 #....................................................................................
 	def add_course_section_object(self, course_section_object: CourseSection) -> None:
+
+		"""
+        Parses the course section object and adds it to the classroom's schedule.
+        
+        Args:
+            course_section_object (CourseSection): The course section object to add.
+        """
+		
 
 		"""
         Parses the course section object and adds it to the classroom's schedule.
@@ -327,6 +484,13 @@ class Classroom:
 	def gather_intervals(self) -> List[Tuple[str, int, int]]:
 		# Scans the minute_schedule to produce a list of (course_id, start_min, end_min).
 		# For example, if a course occupies minutes 540..560, we store (course_id, 540, 560).
+
+		"""
+        Gathers all course schedule intervals from the classroom's minute schedule.
+        
+        Returns:
+            List[Tuple[str, int, int]]: A list of tuples containing course ID and the time intervals.
+        """
 
 		"""
         Gathers all course schedule intervals from the classroom's minute schedule.
@@ -367,6 +531,13 @@ class Classroom:
 # Return interval overlaps as conflicts
 #....................................................................................
 	def find_conflicts(self) -> List[Tuple[str, int, int, str, int, int]]:
+		"""
+        Finds conflicts between courses by checking overlapping time intervals.
+        
+        Returns:
+            List[Tuple[str, int, int, str, int, int]]: A list of conflicts, where each conflict
+            contains two overlapping course intervals.
+        """
 		"""
         Finds conflicts between courses by checking overlapping time intervals.
         

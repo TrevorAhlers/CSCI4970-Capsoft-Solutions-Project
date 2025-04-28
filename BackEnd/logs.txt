@@ -1,0 +1,4 @@
+Retrieving logs...
+Logs were saved to I:\Alternate Desktop\School\CSCI4970\CSCI4970-Capstone\CSCI4970-Capsoft-Solutions-Project\BackEnd\.elasticbeanstalk\logs\250424_171016
+Logs were saved to I:\Alternate Desktop\School\CSCI4970\CSCI4970-Capstone\CSCI4970-Capsoft-Solutions-Project\BackEnd\.elasticbeanstalk\logs\250424_171016
+Updated symlink at I:\Alternate Desktop\School\CSCI4970\CSCI4970-Capstone\CSCI4970-Capsoft-Solutions-Project\BackEnd\.elasticbeanstalk\logs\latest

@@ -1,6 +1,53 @@
 <mat-card class="details" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>File details</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-  </mat-card>
+	<mat-card-header>
+		<mat-card-title>Course</mat-card-title>
+	</mat-card-header>
+
+	<mat-divider></mat-divider>
+
+	<!-- Tabs -->
+	<div class="tab-bar">
+		<button mat-flat-button color="primary" [class.active]="tab === 0" (click)="switchTab(0)">Details</button>
+		<button mat-flat-button color="primary" [class.active]="tab === 1" (click)="switchTab(1)">Edit</button>
+	</div>
+
+	<!-- Content -->
+	<div class="tab-content">
+		<!-- COURSE DETAILS TAB -->
+		<div *ngIf="tab === 0" class="scroll-area">
+			<div class="courseDetailsHtml">
+				<div *ngFor="let item of courseData">
+					<strong>{{ item.label }}:</strong> {{ item.value }}
+				</div>
+			</div>
+		</div>
+		
+
+		<!-- EDIT TAB -->
+		<div *ngIf="tab === 1" class="scroll-area edit-form">
+			<label>Room(s):</label>
+			<input type="text" [(ngModel)]="userInput.room" />
+			<p style="font-size: 0.75rem; color: gray;">(ex: Peter Kiewit Institute 248; Peter Kiewit Institute 176)</p>
+
+			<label>Meeting Pattern:</label>
+			<input type="text" [(ngModel)]="userInput.meeting1" />
+			<p style="font-size: 0.75rem; color: gray;">(ex: MW 10:30am-11:45am; F 8:30am-9:25am)</p>
+
+			<label>Cross-listings:</label>
+			<input type="text" [(ngModel)]="userInput.crossListings" />
+
+			<label>Maximum Enrollment:</label>
+			<input type="text" [(ngModel)]="userInput.maxEnrollment" />
+
+			<label>Enrollment:</label>
+			<input type="text" [(ngModel)]="userInput.enrollment" />
+
+			<label>Comments:</label>
+			<input type="text" [(ngModel)]="userInput.comments" />
+
+			<div style="margin-top: 1rem;">
+				<button mat-stroked-button color="primary" (click)="save()">Save Changes</button>
+			</div>
+		</div>
+	</div>
+</mat-card>

@@ -77,22 +77,69 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 		# for the course_sections dictionary
 		catalog_sub_str = row_data.get("Subject Code", "")
 		catalog_num_str = row_data.get("Catalog Number", "")
-		section_str = row_data.get("Section #", "")
+		section_str     = row_data.get("Section #", "")
+		term            = row_data.get("Term", "")
+		term_code       = row_data.get("Term Code", "")
+		dept_code       = row_data.get("Department Code", "")
+		course          = row_data.get("Course", "")
+		title           = row_data.get("Course Title", "")
+		title_topic     = row_data.get("Title/Topic", "")
+		meeting_pattern = row_data.get("Meeting Pattern", "")
+		instructor      = row_data.get("Instructor", "")
+		room            = row_data.get("Room", "")
+		status          = row_data.get("Status", "")
+		session         = row_data.get("Session", "")
+		campus          = row_data.get("Campus", "")
+		inst_method     = row_data.get("Inst. Method", "")
+		integ_partner   = row_data.get("Integ. Partner", "")
+		schedule_print  = row_data.get("Schedule Print", "")
+		consent         = row_data.get("Consent", "")
+		credit_min      = row_data.get("Credit Hrs Min", "")
+		credit_hrs      = row_data.get("Credit Hrs", "")
+		grade_mode      = row_data.get("Grade Mode", "")
+		attributes      = row_data.get("Attributes", "")
+		course_attrs    = row_data.get("Course Attributes", "")
+		room_attrs      = row_data.get("Room Attributes", "")
+		enrollment      = row_data.get("Enrollment", "")
+		max_enroll      = row_data.get("Maximum Enrollment", "")
+		prior_enroll    = row_data.get("Prior Enrollment", "")
+		proj_enroll     = row_data.get("Projected Enrollment", "")
+		wait_cap        = row_data.get("Wait Cap", "")
+		rm_cap_req      = row_data.get("Rm Cap Request", "")
+		cross_list      = row_data.get("Cross-listings", "")
+		cross_max       = row_data.get("Cross-list Maximum", "")
+		cross_proj      = row_data.get("Cross-list Projected", "")
+		cross_wait_cap  = row_data.get("Cross-list Wait Cap", "")
+		cross_rm_req    = row_data.get("Cross-list Rm Cap Request", "")
+		link_to         = row_data.get("Link To", "")
+		comments        = row_data.get("Comments", "")
+		notes1          = row_data.get("Notes#1", "")
+		notes2          = row_data.get("Notes#2", "")
+
+
 		key = f"{catalog_sub_str} {catalog_num_str}-{section_str}"
 
+		# EXCLUSION LOGIC — use raw values here, not CourseSection object
 		if len(key) > 1:
+			if session in {'UNO 5-6 Weeks', 'Three Week'}:
+				continue
+			if inst_method in {'Totally Online', 'Off Campus'}:
+				continue
+			if room in {'Fully Online', 'Totally Online'}:
+				continue
+			if any(sub in room for sub in {'CPACS', 'Off Campus', 'Mammel', 'Durham'}):
+				continue
+			if meeting_pattern == 'Does Not Meet':
+				continue
+
 			cs = CourseSection(row_data)
-			# EXCLUSION LOGIC PROTOTYPE
-			if (cs.session != 'UNO 5-6 Weeks') and (cs.session != 'Three Week'):
-				if (cs.inst_method != "Totally Online") and (cs.inst_method != "Off Campus"):
-					course_sections[key] = cs
+			course_sections[key] = cs
 
 	finalize_all_crosslistings(course_sections)
 
 	filtered_sections = {}
 
 	for key1,section1 in course_sections.items():
-		print(section1.id)
 		if len(section1.id) > 5:
 			filtered_sections[key1] = section1
 

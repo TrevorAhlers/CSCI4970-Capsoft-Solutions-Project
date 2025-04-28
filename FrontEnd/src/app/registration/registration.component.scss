@@ -1,0 +1,56 @@
+:host {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.spacer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.layer1 {
+	background-image: url('/assets/layered-waves-haikei.svg');
+}
+
+.login-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 200px;
+}
+
+.login-mat_container {
+	padding: 40px;
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+	width: 500px;
+	text-align: center;
+}
+
+mat-form-field {
+	width: 100%;
+	margin: 10px 0;
+}
+
+button {
+	margin-top: 20px;
+	padding: 12px 24px;
+	font-size: 18px;
+	font-weight: bold;
+	background-color: lightblue;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	width: 100%;
+}

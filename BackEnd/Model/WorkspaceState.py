@@ -1,8 +1,8 @@
 from enum import Enum
 import re
 from typing import Dict, List, Tuple
-#from Model.CourseSection import CourseSection, CourseSectionEnum
-#from Model.Classroom import Classroom, ClassroomEnum
+
+
 
 class WorkspaceStateEnum(Enum):
 	VIEW                            = 'View'
@@ -17,6 +17,7 @@ class WorkspaceStateEnum(Enum):
 	RIGHT_PANE                      = 'Right Pane'
 	CONFLICTS                       = 'Conflicts List'
 	IGNORES                         = 'Ignore List'
+
 
 class WorkspaceState:
 	"""

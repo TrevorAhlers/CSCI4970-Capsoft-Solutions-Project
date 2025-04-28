@@ -14,6 +14,11 @@ activate the virtual environment (notice your terminal is now using the venv)
     pip install flask
     pip install pandas
     pip install flask-cors
+	pip install flask_jwt_extended
+	pip install mysql-connector-python
+
+
+	MAKE SURE YOU UPDATE THE REQUIREMENTS.TXT BY TYPING COMMAND INTO VENV: pip freeze > requirements.txt
 
     (then type deactivate to get out of the venv)
 

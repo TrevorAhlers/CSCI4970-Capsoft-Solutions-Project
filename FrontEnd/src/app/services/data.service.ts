@@ -1,20 +1,50 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root',
 })
 export class DataService {
-  private apiUrl = 'http://localhost:5000/api/data'; // Flask port 5000 request
+	private refreshTrigger = new Subject<void>();
+	refresh$ = this.refreshTrigger.asObservable();
+	private _selectedCourse: any = null;
 
-  constructor(private http: HttpClient) {}
+	private conflictRefreshTrigger = new Subject<void>();
+	conflictRefresh$ = this.conflictRefreshTrigger.asObservable();
 
-  getCourses(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
-  }
+	constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
-  }
+	getCourses(): Observable<any> {
+		return this.http.get<any>(`${environment.apiBaseUrl}/api/data`);
+	}
+
+	getCourseDetails(courseId: string): Observable<any> {
+		return this.http.get<any>(`${environment.apiBaseUrl}/details/${courseId}`);
+	}
+
+	getEditableCourseData(courseId: string): Observable<any> {
+		return this.http.get<any>(`${environment.apiBaseUrl}/edit/${courseId}`);
+	}
+
+	saveEditedCourseData(courseId: string, data: any): Observable<any> {
+		return this.http.post<any>(`${environment.apiBaseUrl}/edit/save/${courseId}`, data);
+	}
+
+	triggerRefresh(): void {
+		this.refreshTrigger.next();
+	}
+
+	triggerConflictRefresh(): void {
+		this.conflictRefreshTrigger.next();
+	}
+
+	setCourse(course: any) {
+		this._selectedCourse = course;
+	  }
+	
+	  getCourse(): any {
+		return this._selectedCourse;
+	  }
 }

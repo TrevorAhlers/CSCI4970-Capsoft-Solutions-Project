@@ -66,19 +66,21 @@ def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[
 
 	for _,section in sections.items():
 		for section_room in section.rooms:
-			if section_room not in classroom_keys and section_room != 'TBD':
+			if section_room not in classroom_keys and section_room != 'To Be Announced':
 				row_data = {
 					"Room Number": section_room,
 					"Seats": "N/A",
 					"Displays": "N/A",
 					"Computer Count": "N/A",
-					"Information and Connectivity": "N/A"
+					"Information and Connectivity": "N/A",
+					"Assigned": True,
 				}
 				classrooms[section_room] = Classroom(row_data)
 
+
 	for _, section in sections.items():
 		for section_room in section.rooms:
-			if section_room in classrooms and section_room != 'TBD':
+			if section_room in classrooms and section_room != 'To Be Announced':
 				classrooms[section_room].add_course_section_object(section)
 
 	print(f"classroom_factory.py: Built {len(classrooms)} Classroom objects.")

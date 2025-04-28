@@ -12,6 +12,9 @@ I. EB SETUP:
 {
 command used to init EB setup:
 eb init -p python-3.11 app-name
+ex) eb init -p python-3.11 Capstone-4970
+(can also use "eb init --interactive" don't use codecommit if prompted)
+^This is good if it's making your server us-west-2 or something you dont want. We are using us-east-1.
 
 app-name will be Capstone-4970
 
@@ -32,7 +35,7 @@ II. TO TAKE EVERYTHING OFFLINE AND AVOID USAGE CHARGES:
 {
 1. go to project folder and then back-end directory
     cd "I:\Alternate Desktop\School\CSCI4970\CSCI4970-Capstone\CSCI4970-Capsoft-Solutions-Project\Back-end"
-    cd "<project directory>\CSCI4970-Capsoft-Solutions-Project\Back-end"
+    cd "<project directory>\CSCI4970-Capsoft-Solutions-Project\BackEnd"
 2. terminate instance
     eb terminate dev-env
 }

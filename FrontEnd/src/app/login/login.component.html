@@ -1,25 +1,44 @@
+<div class="spacer layer1">
+	<div class="login-container">
+		<mat-card class="login-mat_container">
 
- <div class="page">
-  <div class="login-container">
-    <body >
-      <h2  >Group 3's PKI Scheduler App</h2>
-     
-  
-  
-     <label class="email">Email </label>
-     <input class="NUID_ID">
+			<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+				<div class="title_login">
+					<mat-card-title>Login</mat-card-title>
+				</div>
 
-     
-     
-    <button (click)="navigateToHome()">Login</button>
-  
-  
-    </body>
-    
-  </div>
-    
+				<mat-card-content>
 
- </div>
+					<!-- username -->
+					<p class="username_title">Your Username</p>
+					<mat-form-field appearance="outline" class="username_box">
+						<input matInput placeholder="Username" formControlName="username">
+						<mat-error *ngIf="loginForm.get('username')?.invalid">
+							Please provide a valid username
+						</mat-error>
+					</mat-form-field>
 
-  
+					<!-- password -->
+					<p class="password_title">Your Password</p>
+					<mat-form-field appearance="outline" class="password_box">
+						<input type="password" matInput placeholder="Password" formControlName="password">
+					</mat-form-field>
 
+					<!-- submit -->
+					<div class="login-button">
+						<button mat-flat-button color="primary" type="submit"
+								[disabled]="loginForm.invalid">
+							Login
+						</button>
+					</div>
+
+				</mat-card-content>
+			</form>
+
+			<a class="registration_link" (click)="navigateToRegistration()">
+				Don't have an account?
+			</a>
+
+		</mat-card>
+	</div>
+</div>

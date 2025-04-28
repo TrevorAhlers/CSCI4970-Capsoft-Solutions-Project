@@ -1,0 +1,51 @@
+.scroll-wrapper {
+	width: 100%;
+	overflow-x: auto;
+	font-family: monospace;
+}
+
+mat-card.listview {
+	min-width: max-content;
+	max-width: 100%;
+}
+
+.row-list-container {
+	max-height: 81vh;
+	overflow-y: auto;
+}
+
+.row,
+.header-row {
+	display: flex;
+	width: max-content;
+	align-items: center;
+}
+
+.cell,
+.header-cell {
+	white-space: pre;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 6px 4px;
+	border-bottom: 1px solid #ddd;
+	font-family: monospace;
+}
+
+.header-row {
+	font-weight: bold;
+	border-bottom: 2px solid #000;
+	background: #f0f0f0;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+:host ::ng-deep .cell,
+:host ::ng-deep .header-cell {
+	width: 30ch;
+}
+
+:host ::ng-deep .cell.id,
+:host ::ng-deep .header-cell.id {
+	width: 30ch;
+}
