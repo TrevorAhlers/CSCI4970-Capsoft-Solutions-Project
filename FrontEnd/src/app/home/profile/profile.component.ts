@@ -32,6 +32,9 @@ export class ProfileComponent {
 	}
 
 	saveChanges(): void {
-		console.log('Save button clicked — implement logic here.');
+		const link = document.createElement('a')
+		link.href      = `${environment.apiBaseUrl}/api/change-log`
+		link.download  = 'change_log.txt'
+		link.click()
 	}
 }
