@@ -1,14 +1,18 @@
-# .ebignore
 **/*
 !.elasticbeanstalk/
 !.elasticbeanstalk/config.yml
 !requirements.txt
 !application.py
 !Procfile
-!Utils/**
-!Controller/**
-!Model/**
+
+!Utils/**/*.py
+!Controller/**/*.py
+!Model/**/*.py
 !Files/**
+
+!static/**
+!templates/**
+
 !*.html
 !*.js
 !*.json

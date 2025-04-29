@@ -1,20 +1,24 @@
 <mat-card class="profile" appearance="outlined">
 	<div class="user-container">
-	
-	  <img mat-card-avatar class="user-pic" src="/assets/Capture.JPG" alt="profile-pic">
-	  
-	  <div class ="username">
-	  <h1 class="header">Guest User</h1>
-	  <a class="log-out" (click)="navigateToLogin()">Log Out</a>
+		<img mat-card-avatar class="user-pic" src="/assets/Capture.JPG" alt="profile-pic">
+
+		<div class="username">
+			<h1 class="header">Guest User</h1>
+			<a class="log-out" (click)="navigateToLogin()">Log Out</a>
+		</div>
 	</div>
-  
-	</div>
+
 	<mat-divider></mat-divider>
-	
-		<div class="button-container">
-		<button class="export_button">
-		  <mat-icon>download</mat-icon>
-				  <p class="p export">Export</p>
+
+	<div class="button-row">
+		<button class="action-button" (click)="downloadCsv()">
+			<mat-icon>download</mat-icon>
+			<p class="p export">Export</p>
 		</button>
-	  </div>
-  </mat-card>
+
+		<button class="action-button" (click)="saveChanges()">
+			<mat-icon>save</mat-icon>
+			<p class="p export">Save</p>
+		</button>
+	</div>
+</mat-card>

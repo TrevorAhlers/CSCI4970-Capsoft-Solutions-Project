@@ -1,4 +1,6 @@
 <mat-card class="conflict-card" appearance="outlined" style="margin: 10px; position: relative;">
-	<button mat-button class="ignore-button" (click)="handleIgnore()">Ignore</button>
-	<mat-card-content [innerHTML]="content"></mat-card-content>
+	<button *ngIf="!conflict.ignored" mat-button class="ignore-button" (click)="handleIgnore($event)">Ignore</button>
+	<button *ngIf="conflict.ignored" mat-button class="ignore-button" (click)="handleRestore($event)">Restore</button>
+
+	<mat-card-content [innerHTML]="conflict.content"></mat-card-content>
 </mat-card>

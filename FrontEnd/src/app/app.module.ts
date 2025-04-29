@@ -28,6 +28,9 @@ import { MatCardTitle } from '@angular/material/card';
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor }   from './auth.interceptor';
+
 
 
 const routes: Routes = [
@@ -68,6 +71,7 @@ const routes: Routes = [
 	exports:[RouterModule],
 	bootstrap: [AppComponent],
 	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 		provideAnimationsAsync(),
 		provideAnimationsAsync('noop')
 	],

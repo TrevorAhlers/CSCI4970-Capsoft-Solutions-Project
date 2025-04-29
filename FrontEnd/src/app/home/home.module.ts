@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // 👈 Add this
+import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
 import { UploadComponent } from './view/upload/upload.component';
 import { ConflictManagerComponent } from './conflict-manager/conflict-manager.component';
@@ -25,6 +25,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ConflictCardComponent } from './conflict-manager/conflict-card.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ColumnSelectorDialogComponent } from './view/sectionview/column-selector-dialog.component';
 
 @NgModule({
 	imports: [
@@ -41,6 +43,7 @@ import { ConflictCardComponent } from './conflict-manager/conflict-card.componen
 		MatSortModule,
 		MatFormFieldModule,
 		MatInputModule,
+		MatCheckboxModule
 	],
 	declarations: [
 		HomeComponent,
@@ -52,7 +55,8 @@ import { ConflictCardComponent } from './conflict-manager/conflict-card.componen
 		SectionComponent,
 		SectionRowComponent,
 		ClassComponent,
-		ConflictCardComponent
+		ConflictCardComponent,
+		ColumnSelectorDialogComponent
 	],
 	exports: [
 		HomeComponent

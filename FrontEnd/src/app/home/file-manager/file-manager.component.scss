@@ -1,9 +1,37 @@
+:host {
+	flex: 1 1 0;
+	height: 100%;
+}
+
 .file-manager{
-    padding: 1%;
-    background-color: #F8FAFC;
-    min-height: 95%;
-    max-height: 95%;
-    top: 5%;
-    border-radius: 5px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+	padding:1%;
+	background:#F8FAFC;
+	height:100%;
+	border-radius:5px;
+	box-shadow:4px 4px 10px rgba(0,0,0,.2);
+	display:flex;
+	flex-direction:column;
+}
+
+.file-list{
+	flex:1 1 auto;
+	overflow-y:auto;
+	display:flex;
+	flex-direction:column;
+}
+
+.file-list button{
+	justify-content:flex-start;
+	text-transform:none;
+}
+
+.file-list button.selected{
+	font-weight:bold;
+}
+
+.empty{
+	text-align:center;
+	padding-top:1rem;
+	font-style:italic;
+	color:#666;
 }

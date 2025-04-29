@@ -1,8 +1,50 @@
 {
-	"/api": { "target": "http://localhost:5000", "secure": false },
-	"/conflicts": { "target": "http://localhost:5000", "secure": false },
-	"/upload": { "target": "http://localhost:5000", "secure": false },
-	"/details": { "target": "http://localhost:5000", "secure": false },
-	"/registration": { "target": "http://localhost:5000", "secure": false }
-  }
-  
+	"/api": {
+		"target": "http://localhost:5000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	},
+
+	"/conflict/**": {
+		"target": "http://localhost:5000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	},
+
+	"/conflicts/**": {
+		"target": "http://localhost:5000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	},
+
+	"/upload": {
+		"target": "http://localhost:5000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	},
+
+	"/details": {
+		"target": "http://localhost:5000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	},
+
+	"/edit/**": {
+		"target": "http://localhost:5000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	},
+
+	"/registration": {
+		"target": "http://localhost:5000",
+		"secure": false,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	}
+}
