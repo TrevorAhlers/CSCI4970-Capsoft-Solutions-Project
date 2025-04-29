@@ -2,23 +2,26 @@
 	display: flex;
 	padding: 6px 0;
 	border-bottom: 1px solid #ddd;
-  }
+}
 
-  .cell {
-	flex: 1;
-	padding: 0 12px;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+.cell {
+	white-space: pre;
 	overflow: hidden;
-  }
-  
+	text-overflow: ellipsis;
+	padding: 6px 4px;
+	font-family: monospace;
+	width: 30ch;
+}
 
-  .row-hover:not(.selected):hover {
+.cell.id {
+	width: 30ch;
+}
+
+.row-hover:not(.selected):hover {
 	background: #f5f5f5;
-  }
+}
 
-  .selected,
-  .selected:hover {
+.selected,
+.selected:hover {
 	background: #c5dafa;
-  }
-  
+}

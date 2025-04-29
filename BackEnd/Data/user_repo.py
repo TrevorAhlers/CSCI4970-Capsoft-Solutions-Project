@@ -1,74 +1,81 @@
-import mysql.connector
-import json
+import mysql.connector, json
+from contextlib import contextmanager
+from Model.User import User
 
-def create_user_table_if_not_exists(host: str, user: str, password: str, database: str) -> None:
-	db = mysql.connector.connect(
-		host=host,
-		user=user,
-		password=password,
-		database=database
-	)
-	cursor = db.cursor()
+DB_CONFIG = {
+	'host': 'app-db-1.c6zkyqugocxt.us-east-1.rds.amazonaws.com',
+	'user': 'capsoftdb',
+	'password': 'csci4970',
+	'database': 'maindb'
+}
 
-	create_table_query = """
-	CREATE TABLE IF NOT EXISTS users (
-		user_id VARCHAR(255) PRIMARY KEY,
-		user_password VARCHAR(255) NOT NULL,
-		workspace_state JSON
-	)
+@contextmanager
+def _con():
+	con = mysql.connector.connect(**DB_CONFIG)
+	try:
+		yield con
+	finally:
+		con.close()
+
+def init_db():
+	with _con() as con:
+		con.cursor().execute("""
+			CREATE TABLE IF NOT EXISTS users(
+				id  VARCHAR(255) PRIMARY KEY,
+				obj JSON         NOT NULL
+			)
+		""")
+		con.commit()
+
+def _dump(u: User) -> str:
 	"""
-	cursor.execute(create_table_query)
-	db.commit()
-	cursor.close()
-	db.close()
+	Create the JSON payload stored in the `obj` column.
 
-
-def insert_or_update_user(
-	host: str,
-	user: str,
-	password: str,
-	database: str,
-	user_id: str,
-	user_password: str,
-	workspace_state_obj
-) -> None:
-	db = mysql.connector.connect(
-		host=host,
-		user=user,
-		password=password,
-		database=database
-	)
-	cursor = db.cursor()
-
-	workspace_state_json = json.dumps(workspace_state_obj)
-
-	insert_query = """
-	INSERT INTO users (user_id, user_password, workspace_state)
-	VALUES (%s, %s, CAST(%s AS JSON))
-	ON DUPLICATE KEY UPDATE
-		user_password = VALUES(user_password),
-		workspace_state = VALUES(workspace_state)
+	* id column (written elsewhere) is "username:email"
+	* inside JSON we keep them separate:
+	    { "user_id": "username",
+	      "email"  : "username@example.com",
+	      "user_password": "…",
+	      "workspace_state": {...} }
 	"""
-	cursor.execute(insert_query, (user_id, user_password, workspace_state_json))
-	db.commit()
-	cursor.close()
-	db.close()
+	ws = {}
+	if hasattr(u.workspace_state, 'to_json'):
+		try:	ws = u.workspace_state.to_json()
+		except Exception:	pass
 
+	# split the id that came in as "username:email"
+	username, email = (u.user_id.split(':', 1) + [''])[:2]
 
-def get_user_from_db(host: str, user: str, password: str, database: str, user_id: str):
-	db = mysql.connector.connect(
-		host=host,
-		user=user,
-		password=password,
-		database=database
-	)
-	cursor = db.cursor(dictionary=True)
+	return json.dumps({
+		"user_id":       username,
+		"email":         email,
+		"user_password": u.user_password,
+		"workspace_state": ws
+	})
 
-	query = "SELECT user_id, user_password FROM users WHERE user_id = %s"
-	cursor.execute(query, (user_id,))
-	result = cursor.fetchone()
+def upsert(user: User):
+	with _con() as con:
+		con.cursor().execute("""
+			INSERT INTO users(id,obj)
+			VALUES (%s,%s)
+			ON DUPLICATE KEY UPDATE obj = VALUES(obj)
+		""", (user.user_id, _dump(user)))
+		con.commit()
 
-	cursor.close()
-	db.close()
+def fetch_one(uid: str) -> dict|None:
+	with _con() as con:
+		cur = con.cursor()
+		cur.execute("SELECT obj FROM users WHERE id = %s", (uid,))
+		row = cur.fetchone()
+		return json.loads(row[0]) if row else None
 
-	return result
+def get_by_username(username: str) -> dict|None:
+	"""
+	Return the JSON row whose id starts with 'username:'.
+	If duplicates ever exist we return the first.
+	"""
+	with _con() as con:
+		cur = con.cursor()
+		cur.execute("SELECT obj FROM users WHERE id LIKE %s LIMIT 1", (f"{username}:%",))
+		row = cur.fetchone()
+		return json.loads(row[0]) if row else None

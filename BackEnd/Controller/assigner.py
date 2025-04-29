@@ -18,14 +18,14 @@ def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, Cou
 	print(f'assigned count 1: {assigned_count1}')
 	print(f'assigned count 2: {assigned_count2}')
 	print(f'===========================')
-	# You can return nothing or just the assigned count if desired
+	
 	return assigned_count
 
 
 def assign_sections_to_rooms(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection]) -> None:
 	for section_key, section_obj in sections.items():
 		room_names = section_obj.rooms
-		if not room_names or "TBD" in room_names:
+		if not room_names or "To Be Announced" in room_names:
 			continue
 
 		for room_name in room_names:
@@ -66,7 +66,7 @@ def assign_via_frequency_map_department(classrooms: Dict[str, Classroom], sectio
 	for room_key, classroom in classrooms.items():
 		room = classroom.room
 		for section_key, section in sections.items():
-			if section.rooms != ['TBD']:
+			if section.rooms != ['To Be Announced']:
 				continue
 			if room not in section.room_freq:
 				continue
@@ -97,7 +97,7 @@ def assign_via_frequency_map_department(classrooms: Dict[str, Classroom], sectio
 					print(f'assigner.py: Could not assign {section.id} to {best_candidate_room}. Conflicts: {len(conflicts)}')
 					continue
 
-				if section.rooms == ['TBD']:
+				if section.rooms == ['To Be Announced']:
 					section.rooms = [best_candidate_room]
 					section.room = room_str_maker(section)
 				else:
@@ -115,7 +115,7 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 	for room_key, classroom in classrooms.items():
 		room = classroom.room
 		for section_key, section in sections.items():
-			if section.rooms != ['TBD']:
+			if section.rooms != ['To Be Announced']:
 				continue
 			if room not in section.room_freq:
 				continue
@@ -141,7 +141,7 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 					print(f'assigner.py: Could not assign {section.id} to {best_candidate_room}. Conflicts: {len(conflicts)}')
 					continue
 
-				if section.rooms == ['TBD']:
+				if section.rooms == ['To Be Announced']:
 					section.rooms = [best_candidate_room]
 					section.room = room_str_maker(section)
 				else:
@@ -185,6 +185,6 @@ def room_str_maker(section: CourseSection):
 def print_assignment_stats(sections: Dict[str, CourseSection]) -> int:
 	count = 0
 	for _, section in sections.items():
-		if section.rooms != ['TBD']:
+		if section.rooms != ['To Be Announced']:
 			count += 1
 	return count

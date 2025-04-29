@@ -1,17 +1,62 @@
+:host {
+	flex: 1 1 auto;
+	height: 100%;
+	min-height: 0;
+	overflow: hidden;
+}
+
 .details {
 	padding: 1%;
 	background-color: #F8FAFC;
-	min-height: 41vh;
-	max-height: 41vh;
+	height: 100%;
 	border-radius: 5px;
-	top: -39%;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-	overflow-y: auto;
-	overflow-x: auto;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 }
 
-.courseDetailsHtml {
-	padding-left: 3%;
-	padding-right: 3%;
-	padding-top: 3%;
+.tab-bar {
+	display: flex;
+	border-bottom: 1px solid #c2c2c2;
+}
+
+.tab-bar button {
+	flex: 1 1 0;
+	border-radius: 0;
+	box-shadow: none;
+	background: #fff;
+	color: #000;
+	font-weight: 500;
+	border-bottom: 3px solid transparent;
+}
+
+.tab-bar button:not(.active):hover {
+	background: #f3f3f3;
+}
+
+.tab-bar button.active {
+	background: #cacaca;
+	color: #000;
+	font-weight: 600;
+	border-bottom-color: #1976d2;
+}
+
+.tab-content {
+	flex: 1 1 auto;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.scroll-area {
+	flex: 1;
+	overflow-y: auto;
+	min-height: 0;
+}
+
+.edit-form {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }

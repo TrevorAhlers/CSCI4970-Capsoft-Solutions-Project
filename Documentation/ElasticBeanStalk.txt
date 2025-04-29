@@ -35,7 +35,7 @@ II. TO TAKE EVERYTHING OFFLINE AND AVOID USAGE CHARGES:
 {
 1. go to project folder and then back-end directory
     cd "I:\Alternate Desktop\School\CSCI4970\CSCI4970-Capstone\CSCI4970-Capsoft-Solutions-Project\Back-end"
-    cd "<project directory>\CSCI4970-Capsoft-Solutions-Project\Back-end"
+    cd "<project directory>\CSCI4970-Capsoft-Solutions-Project\BackEnd"
 2. terminate instance
     eb terminate dev-env
 }

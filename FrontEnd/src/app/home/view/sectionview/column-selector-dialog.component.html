@@ -1,0 +1,15 @@
+<h2 style="margin-top: 16px; margin-left: 12px">Select Columns</h2>
+
+<div class="checkbox-grid">
+	<mat-checkbox
+		*ngFor="let col of data.allColumns"
+		[checked]="isChecked(col)"
+		(change)="toggleColumn(col)">
+		{{ col }}
+	</mat-checkbox>
+</div>
+
+<div style="margin-top: 16px; margin-left: 12px; margin-bottom: 16px;">
+	<button mat-button (click)="cancel()" style="margin-right: 12px;">Cancel</button>
+	<button mat-raised-button color="primary" (click)="save()">Save</button>
+</div>

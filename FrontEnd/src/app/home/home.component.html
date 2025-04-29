@@ -5,7 +5,10 @@
 		<div class="columns">
 			<div class="column left">
 				<app-profile></app-profile>
-				<app-details [selectedCourse]="selectedCourse"></app-details>
+				<app-details 
+					[selectedCourse]="selectedCourse" 
+					(saveClicked)="saveCourseChanges($event)">
+				</app-details>
 				<app-file-manager></app-file-manager>
 			</div>
 
@@ -31,6 +34,7 @@
 				</div>
 			</div>
 
+<<<<<<< HEAD
 			<!-- Wrapped Right Column with Toggle Button -->
 			<div class="column-toggle-wrapper">
 				<button class="collapse-toggle" (click)="toggleSidebar()">
@@ -40,6 +44,17 @@
 				<div class="column right" [ngClass]="{ 'collapsed': !showSidebar }">
 					<app-conflict-manager [clear]="selectedView === 'upload'"></app-conflict-manager>
 				</div>
+=======
+			<!-- Wrapped Right Column with Toggle Button
+			<div class="column-toggle-wrapper">
+				<button class="collapse-toggle" (click)="toggleSidebar()">
+					{{ showSidebar ? '⮜ Hide' : '⮞ Show' }}
+				</button> -->
+
+
+			<div class="column right">
+				<app-conflict-manager [clear]="selectedView === 'upload'"></app-conflict-manager>
+>>>>>>> dev-tyler
 			</div>
 		</div>
 

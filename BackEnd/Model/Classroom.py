@@ -163,13 +163,21 @@ class Classroom:
 	def info_and_connectivity(self, value: str) -> None:
 		self._info_and_connectivity = value
 
+	@property
+	def schedule(self) -> List[List[str]]:
+		return self._minute_schedule
+
+	@schedule.setter
+	def schedule(self, value: List[List[str]]) -> None:
+		self._minute_schedule = value
+
 #....................................................................................
 #####################################################################################
 # 	# Occupies minutes [start_slot, end_slot) in the _minute_schedule.
 #....................................................................................
 	def add_course_section(self, course_id: str, room: str, start_slot: int, end_slot: int) -> None:
 		for minute in range(start_slot, end_slot):
-			if room != ['TBD']:
+			if room != ['To Be Announced']:
 				self._minute_schedule[minute].append(course_id)
 
 #....................................................................................
@@ -206,34 +214,27 @@ class Classroom:
 # Convert minute-based schedule to intervals
 #....................................................................................
 	def gather_intervals(self) -> List[Tuple[str, int, int]]:
-		# Scans the minute_schedule to produce a list of (course_id, start_min, end_min).
-		# For example, if a course occupies minutes 540..560, we store (course_id, 540, 560).
-
 		intervals: List[Tuple[str, int, int]] = []
-		# Collect all distinct course IDs
+
 		all_courses = set()
 		for minute_list in self._minute_schedule:
 			all_courses.update(minute_list)
 
-		# For each course, walk the 0..1439 range and build intervals
 		for cid in all_courses:
 			in_block = False
 			block_start = 0
-			for minute in range(1440):
+
+			for minute in range(7 * 1440):
 				if cid in self._minute_schedule[minute]:
 					if not in_block:
-						# start a block
 						in_block = True
 						block_start = minute
 				else:
 					if in_block:
-						# close the block
-						intervals.append([cid, block_start, minute])
+						intervals.append((cid, block_start, minute))
 						in_block = False
-			# if we end the day still in a block
 			if in_block:
-				intervals.append((cid, block_start, 1440))
-
+				intervals.append((cid, block_start, 7 * 1440))
 		return intervals
 
 #....................................................................................

@@ -1,7 +1,20 @@
 <mat-card class="file-manager" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title>Files</mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    
-  </mat-card>
+	<mat-card-header>
+		<mat-card-title>Files</mat-card-title>
+	</mat-card-header>
+	<mat-divider></mat-divider>
+
+	<div class="file-list" *ngIf="files.length">
+		<button
+			mat-button
+			*ngFor="let f of files"
+			[class.selected]="f.id === selectedId"
+			(click)="loadFile(f.id)">
+			{{ f.filename }}
+		</button>
+	</div>
+
+	<div class="empty" *ngIf="!files.length">
+		No files saved.
+	</div>
+</mat-card>

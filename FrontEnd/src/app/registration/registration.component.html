@@ -1,7 +1,11 @@
 <div class="spacer layer1">
 	<div class="login-container">
 		<mat-card class="login-mat_container">
+<<<<<<< HEAD
 			<form [formGroup]="createAnAccount" (submit)="createAccount()">
+=======
+			<form [formGroup]="createAnAccount" (ngSubmit)="createUser()">
+>>>>>>> dev-tyler
 				<div class="title_login">
 					<mat-card-title>Create Account</mat-card-title>
 				</div>
@@ -57,7 +61,13 @@
 					
 					</mat-form-field>
 
-					<button mat-flat-button color="primary" type="submit" (click)="createAccount()">Create Account</button>
+					
+					<button mat-flat-button
+					color="primary"
+					type="submit"
+					[disabled]="createAnAccount.invalid || createAnAccount.value.password !== createAnAccount.value.confirm_password">
+					Create Account
+					</button>
 
 				</mat-card-content>
 			</form>

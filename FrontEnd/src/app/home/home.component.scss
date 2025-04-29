@@ -13,8 +13,6 @@
 	flex: 1;
 }
 
-
-
 .fixed-select {
 	position: fixed;
 	top: 0;
@@ -24,43 +22,45 @@
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	z-index: 1000; 
-  }
+	z-index: 1000;
+}
 
 .columns {
 	display: flex;
 	flex: 1;
-	gap: .75%;
-	padding-left: .5%;
-    padding-right: .5%;
-    padding-top: 0%;
-    padding-bottom: 0%;
+	gap: 0.75%;
+	padding-left: 0.5%;
+	padding-right: 0.5%;
+	padding-top: 0%;
+	padding-bottom: 0%;
 }
 
 .column {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
-	//box-sizing: border-box;
 }
 
 .column.left {
 	flex: 0 0 20%;
 }
 
-.column.left > * {
-	flex: 1;
-	min-height: 30%;
+.column.left > *:nth-child(1) {
+	flex: 0 0 18%;
 }
 
+.column.left > *:nth-child(2) {
+	flex: 0 0 50%;
+}
 
+.column.left > *:nth-child(2) {
+	flex: 0 0 47%;
+}
 
 .column.center {
-	flex: 1;
-	flex: 0% 0 59%;
+	flex: 1 1 auto;
+	min-width: 0;
 }
-
-
 
 .column.right {
 	flex: 0 0 20%;
@@ -75,7 +75,6 @@
 	min-height: 30%;
 }
 
-
 .home.header {
 	flex: 0 0 5%;
 	background-color: transparent;
@@ -83,7 +82,7 @@
 
 .home.footer {
 	flex: 0 0 5vh;
-	background-color:#9AA6B2;
+	background-color: #9AA6B2;
 }
 
 p.footer {
@@ -91,22 +90,21 @@ p.footer {
 	height: 15%;
 	top: 50%;
 	left: 49.4%;
-	//transform: translateY(-50%) translateX(-50%);
 	position: relative;
 	font-size: small;
-	//transform: translateX(-50%);
 }
 
 p {
 	font-size: 10px;
 }
 
-.logo{
+.logo {
 	height: 15%;
 	top: 50%;
 	left: 50%;
 	transform: translateY(-50%) translateX(-50%);
 	position: relative;
+<<<<<<< HEAD
 	transform: translateX(-50%);
 	opacity: .5;
 }
@@ -133,3 +131,7 @@ p {
 	opacity: 0;
 	pointer-events: none;
   }
+=======
+	opacity: 0.5;
+}
+>>>>>>> dev-tyler
