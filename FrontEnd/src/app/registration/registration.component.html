@@ -10,22 +10,51 @@
 
 					<mat-form-field appearance="outline">
 						<mat-label>Username</mat-label>
-						<input type="text" matInput placeholder="Username" formControlName="username" />
+						<input type="text" matInput placeholder="Username" formControlName="username" minlength="5" />
+						<mat-error *ngIf= "createAnAccount.controls.username.errors?.['required']">
+							<strong>Username Required</strong>
+						</mat-error>
+						<mat-error *ngIf="createAnAccount.get('username')?.errors?.['minlength']">
+							<strong>Username must be at least 5 characters long</strong>
+						</mat-error>
+						  
 					</mat-form-field>
+
+					
+					
 
 					<mat-form-field appearance="outline">
 						<mat-label>Email</mat-label>
 						<input type="email" matInput placeholder="Email" formControlName="email" />
+						<mat-error *ngIf= "createAnAccount.controls.email.errors?.['required']">
+							<strong>Email Required</strong>
+						</mat-error>
+						<mat-error *ngIf="createAnAccount.get('email')?.invalid && createAnAccount.get('email')?.touched">
+							<strong>{{ emailCustomErrorMsg() }}</strong>
+						  </mat-error>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Password</mat-label>
 						<input type="password" matInput placeholder="Password" formControlName="password" />
+						<mat-error *ngIf= "createAnAccount.controls.password.errors?.['required']">
+							<strong>Password Required</strong>
+						</mat-error>
+						<mat-error *ngIf="createAnAccount.get('password')?.invalid && createAnAccount.get('password')?.touched">
+							<strong>{{ passwordCustomErrorMessages() }}</strong>
+						  </mat-error>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Confirm Password</mat-label>
 						<input type="password" matInput placeholder="Confirm Password" formControlName="confirm_password" />
+						<mat-error *ngIf= "createAnAccount.controls.confirm_password.errors?.['required']">
+							<strong>Password Required</strong>
+						</mat-error>
+						<mat-error *ngIf="createAnAccount.get('confirm_password')?.invalid && createAnAccount.get('confirm_password')?.touched">
+							<strong>{{ passwordCustomErrorMessages2() }}</strong>
+						  </mat-error>
+					
 					</mat-form-field>
 
 					
