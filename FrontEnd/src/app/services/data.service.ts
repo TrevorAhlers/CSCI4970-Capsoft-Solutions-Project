@@ -7,9 +7,9 @@ import { environment } from 'src/environments/environment';
 	providedIn: 'root',
 })
 export class DataService {
-	private refreshTrigger = new Subject<void>();
-	refresh$ = this.refreshTrigger.asObservable();
-	private _selectedCourse: any = null;
+  private refreshTrigger = new Subject<void>();
+  refresh$ = this.refreshTrigger.asObservable();
+  private _selectedCourse: any = null;
 
 	private conflictRefreshTrigger = new Subject<void>();
 	conflictRefresh$ = this.conflictRefreshTrigger.asObservable();
@@ -28,23 +28,14 @@ export class DataService {
 		return this.http.get<any>(`${environment.apiBaseUrl}/edit/${courseId}`);
 	}
 
-	saveEditedCourseData(courseId: string, data: any): Observable<any> {
-		return this.http.post<any>(`${environment.apiBaseUrl}/edit/save/${courseId}`, data);
-	}
+  triggerConflictRefresh(): void {
+    this.conflictRefreshTrigger.next();
+  }
+  setCourse(course: any) {
+    this._selectedCourse = course;
+  }
 
-	triggerRefresh(): void {
-		this.refreshTrigger.next();
-	}
-
-	triggerConflictRefresh(): void {
-		this.conflictRefreshTrigger.next();
-	}
-
-	setCourse(course: any) {
-		this._selectedCourse = course;
-	  }
-	
-	  getCourse(): any {
-		return this._selectedCourse;
-	  }
+  getCourse(): any {
+    return this._selectedCourse;
+  }
 }
