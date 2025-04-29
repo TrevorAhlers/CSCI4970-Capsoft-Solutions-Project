@@ -31,8 +31,15 @@
 				</div>
 			</div>
 
-			<div class="column right">
-				<app-conflict-manager [clear]="selectedView === 'upload'"></app-conflict-manager>
+			<!-- Wrapped Right Column with Toggle Button -->
+			<div class="column-toggle-wrapper">
+				<button class="collapse-toggle" (click)="toggleSidebar()">
+					{{ showSidebar ? '⮜ Hide' : '⮞ Show' }}
+				</button>
+
+				<div class="column right" [ngClass]="{ 'collapsed': !showSidebar }">
+					<app-conflict-manager [clear]="selectedView === 'upload'"></app-conflict-manager>
+				</div>
 			</div>
 		</div>
 

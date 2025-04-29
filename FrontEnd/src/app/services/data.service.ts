@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 export class DataService {
   private refreshTrigger = new Subject<void>();
   refresh$ = this.refreshTrigger.asObservable();
+  private _selectedCourse: any = null;
 
   private conflictRefreshTrigger = new Subject<void>();
   conflictRefresh$ = this.conflictRefreshTrigger.asObservable();
@@ -28,5 +29,12 @@ export class DataService {
 
   triggerConflictRefresh(): void {
     this.conflictRefreshTrigger.next();
+  }
+  setCourse(course: any) {
+    this._selectedCourse = course;
+  }
+
+  getCourse(): any {
+    return this._selectedCourse;
   }
 }

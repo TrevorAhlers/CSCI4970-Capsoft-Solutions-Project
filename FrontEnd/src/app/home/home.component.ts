@@ -9,8 +9,12 @@ import { DataService } from '@services/data.service';
 export class HomeComponent implements OnInit {
 	selectedCourse: any = null;
 	selectedView: string = 'upload';
+	private _selectedCourse: any = null;
+	showSidebar = true;
 
-	constructor(private dataService: DataService) {}
+
+
+	constructor(private dataService: DataService ) {}
 
 	ngOnInit(): void {
 		this.dataService.getCourses().subscribe((data) => {
@@ -30,10 +34,12 @@ export class HomeComponent implements OnInit {
 			(data) => {
 				console.log('Course details fetched successfully:', data);
 				this.selectedCourse = data;
+				this.dataService.setCourse(data);
 			},
 			(error) => {
 				console.error('Error fetching course details:', error);
 			}
+
 		);
 	}
 
@@ -41,4 +47,13 @@ export class HomeComponent implements OnInit {
 		const view = (event.target as HTMLSelectElement).value;
 		this.selectedView = view;
 	}
+	savecourse() {
+		this.dataService.setCourse(this.selectedCourse);
+	  }
+
+
+
+	toggleSidebar(): void {
+		this.showSidebar = !this.showSidebar;
+	  }
 }
