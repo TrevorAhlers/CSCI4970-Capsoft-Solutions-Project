@@ -8,6 +8,9 @@
 #....................................................................................
 
 # Local
+from copy import deepcopy
+import datetime
+from zoneinfo import ZoneInfo
 from Model.CourseSection import CourseSection, CourseSectionEnum, combine_section_info, parse_meetings, parse_rooms, extract_room_numbers
 from Model.Classroom import Classroom, ClassroomEnum
 from Model.Conflict import Conflict
@@ -39,6 +42,12 @@ user_repo.init_db()
 
 
 import json
+
+#....................................................................................
+# Globals
+
+BASELINE_FILE	= 'baseline_sections.pkl'
+CHANGELOG_FILE	= 'change_log.txt'
 
 DB_CONFIG = {
 	'host': 'app-db-1.c6zkyqugocxt.us-east-1.rds.amazonaws.com',
@@ -105,23 +114,48 @@ def register():
 		application.logger.exception(exc)
 		return jsonify({'msg': 'DB error'}), 500
 
+@application.route('/api/change-log', methods=['GET'])
+def download_change_log():
+	af		= load_assignment_file()
+	changes	= diff_sections(af.sections)
 
+	now_ct	= datetime.now(ZoneInfo('America/Chicago'))
+	ts		= now_ct.strftime('%B %d, %Y  %I:%M %p')
 
-@application.route('/api/login', methods=['POST'])
-def login():
-	data     = request.get_json(force=True) or {}
-	username = data.get('username') or data.get('user_id')
-	password = data.get('password') or data.get('user_password')
+	lines	= [
+		'PKI Scheduler Change Log',
+		ts,
+		'',
+	]
 
-	if not all([username, password]):
-		return jsonify(msg='Missing fields'), 400
+	if not changes:
+		lines.append('No changes have been made from the original input CSV file.')
+	else:
+		for item in changes:
+			lines.append(f"{item['id']}:")
+			for k, v in item.items():
+				if k == 'id':
+					continue
+				lines.append(f"\t{k}: {v[0]}    ->    {v[1]}")
+			lines.append('')
 
-	row = user_repo.get_by_username(username)
-	if row is None or row.get('user_password') != password:
-		return jsonify(msg='Bad credentials'), 401
+	lines.append('Capsoft 2025')
+	text	= '\n'.join(lines)
 
-	access = create_access_token(identity=row['user_id'])
-	return jsonify(token=access), 200
+	base_dir	= os.path.dirname(__file__)
+	out_dir		= os.path.join(base_dir, 'Files', 'Exports')
+	os.makedirs(out_dir, exist_ok=True)
+	path		= os.path.join(out_dir, 'change_log.txt')
+
+	with open(path, 'w', encoding='utf-8') as f:
+		f.write(text)
+
+	return send_file(
+		path,
+		as_attachment=True,
+		download_name='change_log.txt',
+		mimetype='text/plain'
+	)
 
 
 
@@ -577,10 +611,16 @@ def build_conflicts(sections, classrooms):
 
 def export(sections):
 	base_dir = os.path.dirname(__file__)
-	input_csv_file = os.path.join(base_dir, 'Files', INPUT_CSV)
-	output_csv_file = os.path.join(base_dir, 'Files', 'Exports', OUTPUT_CSV)
-	conflict_instantiation_list = exporter.update_csv_with_room(input_csv_file, output_csv_file, sections)
-	return conflict_instantiation_list
+	input_csv_file = os.path.join(base_dir, application.config['UPLOAD_FOLDER'], INPUT_CSV)
+
+	output_dir		= os.path.join(base_dir, 'Files', 'Exports')
+	os.makedirs(output_dir, exist_ok=True)
+	output_csv_file	= os.path.join(output_dir, OUTPUT_CSV)
+
+	for sec in sections.values():
+		sec.rooms = parse_rooms(sec.room)
+
+	return exporter.update_csv_with_room(input_csv_file, output_csv_file, sections)
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in application.config['ALLOWED_EXTENSIONS']
@@ -687,6 +727,43 @@ def preserve_ignored_conflicts(old_conflicts: List[Conflict], new_conflicts: Lis
 			c.ignored = True
 
 	return new_conflicts
+
+def save_baseline(sections):
+	if os.path.exists(BASELINE_FILE):
+		return
+	with open(BASELINE_FILE, 'wb') as f:
+		pickle.dump({k: deepcopy(v.__dict__) for k, v in sections.items()}, f)
+
+def load_baseline():
+	try:
+		with open(BASELINE_FILE, 'rb') as f:
+			return pickle.load(f)
+	except FileNotFoundError:
+		return {}
+	
+def diff_sections(sections):
+	baseline	= load_baseline()
+	changes		= []
+	for sid, sec in sections.items():
+		if sid not in baseline:
+			continue
+		orig	= baseline[sid]
+		diffs	= {}
+		def check(attr, pretty=None, transform=lambda x: x):
+			a, b	= transform(orig[attr]), transform(getattr(sec, attr))
+			if a != b:
+				diffs[pretty or attr] = [a, b]
+		check('rooms',	'Rooms',	list)
+		check('meeting_pattern',	'Meeting Pattern')
+		check('instructor',	'Instructor')
+		check('max_enrollment',	'Max Enrollment')
+		check('enrollment',	'Enrollment')
+		check('comments',	'Comments')
+		check('notes1',	'Notes 1')
+		check('notes2',	'Notes 2')
+		if diffs:
+			changes.append({ 'id': sid, **diffs })
+	return changes
 
 #....................................................................................
 # DB Stuff

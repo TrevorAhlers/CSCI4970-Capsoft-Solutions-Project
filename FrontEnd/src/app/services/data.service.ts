@@ -42,9 +42,13 @@ export class DataService {
 
 	setCourse(course: any) {
 		this._selectedCourse = course;
-	  }
+	}
 	
-	  getCourse(): any {
-		return this._selectedCourse;
-	  }
+	getCourse(): any {
+	return this._selectedCourse;
+	}
+
+	getChangeLog(): Observable<string> {
+	return this.http.get(`${environment.apiBaseUrl}/api/change-log`, { responseType: 'text' })
+	}
 }
