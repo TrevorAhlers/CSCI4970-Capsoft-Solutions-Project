@@ -5,6 +5,11 @@
 	height: 100vh;
 }
 
+:host ::ng-deep .register-mat.mat-mdc-unelevated-button.mat-primary:not([disabled]) {
+	--mdc-filled-button-container-color:#001220;
+	--mdc-filled-button-label-text-color:#fff;
+}
+
 .spacer {
 	display: flex;
 	justify-content: center;
@@ -20,11 +25,31 @@
 	background-image: url('/assets/layered-waves-haikei.svg');
 }
 
+
+.uno-logo-bg {
+	position: absolute;
+	left:20px;
+	top:20px;
+	z-index: 1;
+	width: 5vh;
+}
+
 .login-container {
+	position: absolute;
+	z-index: 2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 200px;
+}
+
+.logo-bg {
+	position: relative;
+	align-items: center;
+	margin-top: -45vh;
+	opacity: .80;
+	pointer-events: none;
+	z-index: 1;
+	width: clamp(50vh, 100vmin, 110vh);
 }
 
 .login-mat_container {

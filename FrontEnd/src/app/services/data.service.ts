@@ -42,9 +42,19 @@ export class DataService {
 
 	setCourse(course: any) {
 		this._selectedCourse = course;
-	  }
+	}
 	
-	  getCourse(): any {
-		return this._selectedCourse;
-	  }
+	getCourse(): any {
+	return this._selectedCourse;
+	}
+
+	getChangeLog(): Observable<string> {
+	return this.http.get(`${environment.apiBaseUrl}/api/change-log`, { responseType: 'text' })
+	}
+
+	getCurrentUsername(): Observable<{ username:string }> {
+		return this.http.get<{ username:string }>(
+			`${environment.apiBaseUrl}/api/current-user`
+		);
+	}
 }
