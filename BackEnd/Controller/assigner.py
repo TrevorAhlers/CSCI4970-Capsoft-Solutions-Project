@@ -168,66 +168,70 @@ def assign_via_special_requirements(sections: Dict[str, CourseSection],
 	Sections that cannot be safely assigned will remain unassigned.
 	"""
 
+	assigned_count = 0
+
 	def room_has_all_features(room: Classroom, required_keywords: List[str]) -> bool:
-		# Return True if every keyword is found in the room’s connectivity / display text.
+		"""Return True if every keyword is found in the room’s connectivity/display text."""
 		text = f"{room.displays} {room.info_and_connectivity}".lower()
 		return all(kw.lower() in text for kw in required_keywords)
-
-	assigned_count = 0
 
 	for section in sections.values():
 		if section.rooms != ["To Be Announced"]:
 			continue
 
-		# ------------  derive requirements  ----------------
-		req_seats      = to_int(section.rm_cap_request) \
+		# requirements
+		req_seats     = to_int(section.rm_cap_request) \
 							or to_int(section.max_enrollment) \
 							or to_int(section.enrollment)
-
-		req_displays   = 1 if "projector" in section.attributes.lower() \
+		req_displays  = 1 if "projector" in section.attributes.lower() \
 							or "projector" in section.course_attributes.lower() else 0
+		req_computers = 1 if section.section_type.lower() in ("laboratory", "lab") else 0
 
-		req_computers  = 1 if section.section_type.lower() in ("laboratory", "lab") else 0
-
-		# keyword parsing
-		req_features   = []
+		# parse extra feature keywords
+		req_features = []
 		if "hdmi" in section.comments.lower():
 			req_features.append("hdmi")
 
-		# ------------  gather viable single-room candidates  ------------
+		# ---------- single‐room candidates ----------
 		candidates: List[Classroom] = []
 		for room in classrooms.values():
-			if to_int(room.seats)            < req_seats:     continue
-			if to_int(room.displays)         < req_displays:  continue
-			if to_int(room.computer_count)   < req_computers: continue
-			if not room_has_all_features(room, req_features):  continue
-			if room.find_conflicts():                    continue
+			if to_int(room.seats)          < req_seats:     continue
+			if to_int(room.displays)       < req_displays:  continue
+			if to_int(room.computer_count) < req_computers: continue
+			if not room_has_all_features(room, req_features): continue
+			if room.find_conflicts(): continue
 			candidates.append(room)
 
-		# small-first fit (lowest surplus seats) to avoid hogging big rooms
+		# first-fit smallest surplus
 		candidates.sort(key=lambda r: to_int(r.seats) - req_seats)
-
 		if candidates:
-			commit_assignment(section, [candidates[0]])
+			commit_assignment(section, candidates[0])
 			assigned_count += 1
 			continue
 
-		# conservative two-room fallback
+		# --------- two‐room fallback ---------
 		if getattr(section, "allows_multi_room", False):
-			free_pairs: List[Tuple[Classroom, Classroom]] = []
-			for i, r1 in enumerate(classrooms.values()):
-				for r2 in list(classrooms.values())[i + 1:]:
-					if r1 == r2:continue
-					if r1.find_conflicts() or r2.find_conflicts():continue
-					if to_int(r1.seats) + to_int(r2.seats) < req_seats:continue
-					if not (room_has_all_features(r1, req_features) and
-							room_has_all_features(r2, req_features)):continue
-					free_pairs.append((r1, r2))
-			if free_pairs:
-				# pick the best pair of rooms
-				best = min(free_pairs,
-							key=lambda p: (to_int(p[0].seats) + to_int(p[1].seats)) - req_seats)
-				commit_assignment(section, list(best))
+			best_pair = None
+			best_surplus = None
+			room_list = list(classrooms.values())
+
+			for i in range(len(room_list)):
+				for j in range(i + 1, len(room_list)):
+					r1, r2 = room_list[i], room_list[j]
+					if r1.find_conflicts() or r2.find_conflicts(): continue
+					if to_int(r1.seats) + to_int(r2.seats) < req_seats: continue
+					if not (room_has_all_features(r1, req_features)
+							and room_has_all_features(r2, req_features)):
+						continue
+
+					surplus = (to_int(r1.seats) + to_int(r2.seats)) - req_seats
+					if best_pair is None or surplus < best_surplus:
+						best_pair = (r1, r2)
+						best_surplus = surplus
+
+			if best_pair:
+				for rm in best_pair:
+					commit_assignment(section, rm)
 				assigned_count += 1
 
 	return assigned_count

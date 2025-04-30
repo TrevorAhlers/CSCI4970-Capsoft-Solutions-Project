@@ -1,22 +1,28 @@
 <mat-card class="profile" appearance="outlined">
 	<div class="user-container">
-		<img mat-card-avatar class="user-pic" src="/assets/uno_profile_pic.png" alt="profile-pic">
-
-		<div class="username">
-			<h1 class="header">{{username}}</h1>
-			<a class="log-out" (click)="navigateToLogin()">Log Out</a>
-		</div>
+	  <img
+		mat-card-avatar
+		class="user-pic"
+		src="/assets/uno_profile_pic.png"
+		alt="profile-pic"
+	  />
+  
+	  <div class="username">
+		<h1 class="header">{{username}}</h1>
+		<a class="log-out" (click)="navigateToLogin()">Log Out</a>
+	  </div>
 	</div>
-
+  
 	<mat-divider></mat-divider>
-
+  
 	<div class="button-row">
-		<button class="action-button" (click)="downloadCsv()">
-			<p class="p export">Export</p>
-		</button>
-
-		<button class="action-button" (click)="saveChanges()">
-			<p class="p export">Change Log</p>
-		</button>
+	  <button class="action-button" (click)="downloadCsv()">
+		<p class="p export" style="white-space: nowrap;">Export</p>
+	  </button>
+  
+	  <button class="action-button" (click)="saveChanges()">
+		<p class="p export" style="white-space: nowrap;">Change Log</p>
+	  </button>
 	</div>
-</mat-card>
+  </mat-card>
+  

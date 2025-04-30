@@ -1,8 +1,583 @@
 PKI Scheduler Change Log
-April 30, 2025  02:23 AM
+April 30, 2025  04:45 PM
 
 ****************************************
-No changes have been made from the original input CSV file.
+AREN 1030-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 248
+
+AREN 1030-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 248
+
+AREN 3030-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 279
+
+AREN 3030-3:
+	Room: To Be Announced    ->    Peter Kiewit Institute 279
+
+AREN 3070-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 261
+
+AREN 3100-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+AREN 3220-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 130
+
+AREN 4040-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 248
+
+AREN 4150-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 155
+
+AREN 4250-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 130
+
+AREN 4300-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 155
+
+AREN 4940-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 248
+
+AREN 8000-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+AREN 8080-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 157
+
+AREN 8110-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 279
+
+AREN 8120-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 260
+
+AREN 8150-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+AREN 8220-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 130
+
+AREN 8220-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 130
+
+AREN 8306-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+AREN 8510-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+AREN 8800-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+AREN 8920-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+AREN 8920-5:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+AREN 8940-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 153
+
+AREN 8940-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 155
+
+AREN 8940-3:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+AREN 9970-8:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+BIOI 1000-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+BIOI 2000-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 157
+
+BIOI 4890-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+BIOI 4980-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+BMI 8000-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 261
+
+BMI 8400-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+BMI 8896-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIST 1300-860:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+CIST 1600-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+CIST 2100-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+CIST 2100-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+CIST 2500-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+CIST 3000-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 157
+
+CIST 3000-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 157
+
+CIST 3110-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+CIVE 102-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+CIVE 102-3:
+	Room: To Be Announced    ->    Peter Kiewit Institute 248
+
+CIVE 334-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+CIVE 334-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 334-3:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 334-4:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 352-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+CIVE 361-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+CIVE 378-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+CIVE 378-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 378-3:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 378-4:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 385-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 419-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 420-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 432-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 434-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 454-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 459-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 463-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 161
+
+CIVE 463-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 472-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 491-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 160
+
+CIVE 491-821:
+	Room: To Be Announced    ->    Peter Kiewit Institute 116
+
+CIVE 491-822:
+	Room: To Be Announced    ->    Peter Kiewit Institute 164
+
+CIVE 819-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 249
+
+CIVE 823-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 119
+
+CIVE 829-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 829-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 119
+
+CIVE 834-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 160
+
+CIVE 834-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 119
+
+CIVE 839-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 839-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 119
+
+CIVE 847-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 150
+
+CIVE 847-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 119
+
+CIVE 849-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 249
+
+CIVE 849-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 123
+
+CIVE 854-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 854-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 123
+
+CIVE 859-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 123
+
+CIVE 863-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 123
+
+CIVE 864-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 123
+
+CIVE 872-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 123
+
+CIVE 891-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 891-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 891-5:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 891-7:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 891-9:
+	Room: To Be Announced    ->    Peter Kiewit Institute 249
+
+CIVE 891-821:
+	Room: To Be Announced    ->    Peter Kiewit Institute 123
+
+CIVE 891-822:
+	Room: To Be Announced    ->    Peter Kiewit Institute 126
+
+CIVE 891-823:
+	Room: To Be Announced    ->    Peter Kiewit Institute 126
+
+CIVE 891-824:
+	Room: To Be Announced    ->    Peter Kiewit Institute 126
+
+CIVE 891-825:
+	Room: To Be Announced    ->    Peter Kiewit Institute 126
+
+CIVE 891-827:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 891-828:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 891-829:
+	Room: To Be Announced    ->    Peter Kiewit Institute 127
+
+CIVE 990M-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 128
+
+CIVE 991-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 149
+
+CIVE 991-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 128
+
+CNST 415-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 150
+
+CNST 415-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 128
+
+CNST 811-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+CNST 815-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 352
+
+CNST 815-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 352
+
+CNST 880-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+CONE 417-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 145
+
+CONE 417-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 128
+
+CONE 489-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 150
+
+CONE 817-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+CONE 817-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 128
+
+CONE 898-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+CONE 898-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 130
+
+CSCI 1200-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 276
+
+CSCI 1204-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+CSCI 2030-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 256
+
+CSCI 3320-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+CSCI 3450-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 260
+
+CSCI 3550-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 153
+
+CSCI 3710-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+CSCI 4260-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+CSCI 4350-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 153
+
+CSCI 4350-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 276
+
+CSCI 4380-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+CSCI 4450-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 263
+
+CSCI 4500-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 260
+
+CSCI 4830-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 276
+
+CSCI 8050-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 153
+
+CSCI 8366-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 276
+
+CSCI 8456-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 153
+
+CSCI 8626-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+CSCI 8760-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+CSCI 8836-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 368
+
+CYBR 3450-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 368
+
+CYBR 3600-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 361
+
+CYBR 4360-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 361
+
+CYBR 8456-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+ECEN 103-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 261
+
+ECEN 106-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+ECEN 106-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+ECEN 123-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 158
+
+ECEN 194-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 256
+
+ECEN 213-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 256
+
+ECEN 222-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 261
+
+ECEN 225-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+ECEN 325-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 157
+
+ECEN 453-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 108
+
+ECEN 461-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+ECEN 461-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 150
+
+ECEN 463-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 270
+
+ECEN 468-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 150
+
+ECEN 468-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 146
+
+ECEN 488-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 150
+
+ECEN 491-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 259
+
+ECEN 491-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 252
+
+ECEN 491-3:
+	Room: To Be Announced    ->    Peter Kiewit Institute 259
+
+ECEN 491-4:
+	Room: To Be Announced    ->    Peter Kiewit Institute 270
+
+ECEN 491-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 146
+
+ECEN 498-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 250
+
+ECEN 498-821:
+	Room: To Be Announced    ->    Peter Kiewit Institute 250
+
+ECEN 833-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 368
+
+ECEN 861-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 350
+
+ECEN 861-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 350
+
+ECEN 863-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 368
+
+ECEN 868-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 368
+
+ECEN 868-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 146
+
+ECEN 891-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 368
+
+ECEN 891-2:
+	Room: To Be Announced    ->    Peter Kiewit Institute 368
+
+ECEN 891-3:
+	Room: To Be Announced    ->    Peter Kiewit Institute 391A
+
+ECEN 891-4:
+	Room: To Be Announced    ->    Peter Kiewit Institute 145
+
+ECEN 891-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 145
+
+ECEN 898-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 256
+
+ECEN 898-821:
+	Room: To Be Announced    ->    Peter Kiewit Institute 151
+
+ENGR 20-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 274
+
+ENVE 410-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 151
+
+ENVE 9900-820:
+	Room: To Be Announced    ->    Peter Kiewit Institute 151
+
+HONR 3040-99:
+	Room: To Be Announced    ->    Peter Kiewit Institute 151
+
+ISQA 3400-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 157
+
+ISQA 3900-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 260
+
+ISQA 4000-860:
+	Room: To Be Announced    ->    Peter Kiewit Institute 151
+
+ISQA 4120-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 157
+
+ISQA 4160-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 151
+
+ISQA 4200-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 256
+
+ISQA 8380-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 260
+
+ISQA 8950-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 278
+
+ITIN 1110-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 269
+
+ITIN 2990-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 269
+
+ITIN 4000-860:
+	Room: To Be Announced    ->    Peter Kiewit Institute 269
+
+ITIN 4440-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 269
+
+ITIN 8220-1:
+	Room: To Be Announced    ->    Peter Kiewit Institute 350
+
 ****************************************
 
 Capsoft 2025
