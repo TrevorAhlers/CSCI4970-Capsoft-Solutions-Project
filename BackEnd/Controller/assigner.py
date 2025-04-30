@@ -1,7 +1,8 @@
 import re
 from typing import Dict
 from Model.Classroom import Classroom
-from Model.CourseSection import CourseSection
+from Model.CourseSection import CourseSection, combine_section_info
+from typing import List, Tuple
 
 global count
 
@@ -11,12 +12,14 @@ def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, Cou
 	assign_sections_to_rooms(classrooms, sections)
 	assigned_count1 = assign_via_frequency_map_department(classrooms, sections)
 	assigned_count2 = assign_via_frequency_map(classrooms, sections)
-	assigned_count = assigned_count1+assigned_count2
+	assigned_count3 = assign_via_special_requirements(sections, classrooms)
+	assigned_count = assigned_count1+assigned_count2+assigned_count3
 	print(f'```````````````````````````')
 	print(f'assigner.py: Automatically assigned {assigned_count}/{len(sections)} sections to rooms.')
 	print(f'assigner.py: Total rooms assigned: {print_assignment_stats(sections)}/{len(sections)}.')
 	print(f'assigned count 1: {assigned_count1}')
 	print(f'assigned count 2: {assigned_count2}')
+	print(f'assigned count 3: {assigned_count3}')
 	print(f'===========================')
 	
 	return assigned_count
@@ -153,6 +156,83 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 
 	return assigned_count
 
+def assign_via_special_requirements(sections: Dict[str, CourseSection],
+									classrooms: Dict[str, Classroom]) -> int:
+	"""
+	Assign remaining unassigned course sections to available classrooms using a conservative strategy.
+
+	Only assigns a section to a classroom if:
+		- The classroom meets or exceeds all of the section's known requirements (seats, displays, computers, connectivity, etc.)
+		- Assigning the section to that classroom causes no scheduling conflicts
+	It will try to find a single suitable room for each unassigned section. If none is found and the section can be split across multiple rooms, it will attempt a multi-room assignment (all chosen rooms must be free and meet requirements).
+	Sections that cannot be safely assigned will remain unassigned.
+	"""
+
+	def room_has_all_features(room: Classroom, required_keywords: List[str]) -> bool:
+		# Return True if every keyword is found in the room’s connectivity / display text.
+		text = f"{room.displays} {room.info_and_connectivity}".lower()
+		return all(kw.lower() in text for kw in required_keywords)
+
+	assigned_count = 0
+
+	for section in sections.values():
+		if section.rooms != ["To Be Announced"]:
+			continue
+
+		# ------------  derive requirements  ----------------
+		req_seats      = to_int(section.rm_cap_request) \
+							or to_int(section.max_enrollment) \
+							or to_int(section.enrollment)
+
+		req_displays   = 1 if "projector" in section.attributes.lower() \
+							or "projector" in section.course_attributes.lower() else 0
+
+		req_computers  = 1 if section.section_type.lower() in ("laboratory", "lab") else 0
+
+		# keyword parsing
+		req_features   = []
+		if "hdmi" in section.comments.lower():
+			req_features.append("hdmi")
+
+		# ------------  gather viable single-room candidates  ------------
+		candidates: List[Classroom] = []
+		for room in classrooms.values():
+			if to_int(room.seats)            < req_seats:     continue
+			if to_int(room.displays)         < req_displays:  continue
+			if to_int(room.computer_count)   < req_computers: continue
+			if not room_has_all_features(room, req_features):  continue
+			if room.find_conflicts():                    continue
+			candidates.append(room)
+
+		# small-first fit (lowest surplus seats) to avoid hogging big rooms
+		candidates.sort(key=lambda r: to_int(r.seats) - req_seats)
+
+		if candidates:
+			commit_assignment(section, [candidates[0]])
+			assigned_count += 1
+			continue
+
+		# conservative two-room fallback
+		if getattr(section, "allows_multi_room", False):
+			free_pairs: List[Tuple[Classroom, Classroom]] = []
+			for i, r1 in enumerate(classrooms.values()):
+				for r2 in list(classrooms.values())[i + 1:]:
+					if r1 == r2:continue
+					if r1.find_conflicts() or r2.find_conflicts():continue
+					if to_int(r1.seats) + to_int(r2.seats) < req_seats:continue
+					if not (room_has_all_features(r1, req_features) and
+							room_has_all_features(r2, req_features)):continue
+					free_pairs.append((r1, r2))
+			if free_pairs:
+				# pick the best pair of rooms
+				best = min(free_pairs,
+							key=lambda p: (to_int(p[0].seats) + to_int(p[1].seats)) - req_seats)
+				commit_assignment(section, list(best))
+				assigned_count += 1
+
+	return assigned_count
+
+
 
 def find_max_frequency(frequency_map: Dict[str, int]):
 	sorted_items = sorted(frequency_map.items(), key=lambda x: x[1], reverse=True)
@@ -188,3 +268,24 @@ def print_assignment_stats(sections: Dict[str, CourseSection]) -> int:
 		if section.rooms != ['To Be Announced']:
 			count += 1
 	return count
+
+def commit_assignment(section: CourseSection, classroom: Classroom):
+	classroom.add_course_section_object(section)
+	if section.rooms == ['To Be Announced']:
+		section.rooms = [classroom.room]
+	else:
+		section.add_room(classroom.room)
+	section.room = room_str_maker(section)
+
+def room_has_all_features(room: Classroom, needed: set[str]) -> bool:
+	if not needed:
+		return True
+	room_text = f"{room.displays} {room.info_and_connectivity}".lower()
+	return all(feature.lower() in room_text for feature in needed)
+
+def to_int(x: str | int | None) -> int:
+	if isinstance(x, int):
+		return x
+	if isinstance(x, str) and x.strip().isdigit():
+		return int(x)
+	return 0

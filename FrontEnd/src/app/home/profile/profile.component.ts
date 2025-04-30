@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 	styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
+	@Input() username: string = 'Guest User';
 	profileImage: string = "Capture.png";
 
 	constructor(private router: Router) {}
@@ -37,4 +38,6 @@ export class ProfileComponent {
 		link.download  = 'change_log.txt'
 		link.click()
 	}
+
+	
 }

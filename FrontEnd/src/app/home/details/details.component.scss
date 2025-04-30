@@ -7,7 +7,7 @@
 
 .details {
 	padding: 1%;
-	background-color: #F8FAFC;
+	background-color:#dde7f0;
 	height: 100%;
 	border-radius: 5px;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
@@ -25,21 +25,21 @@
 	flex: 1 1 0;
 	border-radius: 0;
 	box-shadow: none;
-	background: #fff;
-	color: #000;
+	background: #fa7268;
+	color: white;
 	font-weight: 500;
 	border-bottom: 3px solid transparent;
 }
 
 .tab-bar button:not(.active):hover {
-	background: #f3f3f3;
+	background: #0b2438;
 }
 
 .tab-bar button.active {
-	background: #cacaca;
-	color: #000;
+	background: #001220;
+	color: white;
 	font-weight: 600;
-	border-bottom-color: #1976d2;
+	border-bottom-color: #ef5f67;
 }
 
 .tab-content {
@@ -59,4 +59,27 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
+}
+
+.action-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5em;
+	flex: 1;
+	box-sizing: border-box;
+	text-align: center;
+	background-color: #ef5f67;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-weight: bolder;
+}
+
+.wave-pic {
+	position:absolute;
+	width: 100%;
+	bottom: 0px;
+	opacity: .4;
+	left: 0px;
 }

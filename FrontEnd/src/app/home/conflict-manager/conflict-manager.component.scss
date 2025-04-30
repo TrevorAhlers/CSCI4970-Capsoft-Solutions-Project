@@ -1,7 +1,7 @@
 :host {
 	display: flex;
 	flex-direction: column;
-	background: #F8FAFC;
+	background: #dde7f0;
 	padding: 2% 0 1%;
 	border-radius: 5px;
 	box-shadow: 4px 4px 10px rgba(0,0,0,.2);
@@ -15,37 +15,37 @@
   }
   
   .conflict_inner_box-card {
-	max-height: 86vh;
-	min-height: 86vh;
+	max-height: 89vh;
+	min-height: 89vh;
 	display: flex;
 	flex-direction: column;
   }
   
   .tab-bar {
 	display: flex;
-	border-bottom: 1px solid #c2c2c2;
+	border-bottom: 1px solid #222e38;
   }
   
   .tab-bar button {
 	flex: 1 1 0;
 	border-radius: 0;
 	box-shadow: none;
-	background: #fff;
-	color: #000;
+	background: #fa7268;
+	color: white;
 	font-weight: 500;
 	border-bottom: 3px solid transparent;
 	transition: background .2s;
   }
   
   .tab-bar button:not(.active):hover {
-	background: #f3f3f3;
+	background: #0b2438;
   }
   
   .tab-bar button.active {
-	background: #cacaca;
-	color: #000;
+	background: #001220;
+	color: white;
 	font-weight: 600;
-	border-bottom-color: #1976d2;
+	border-bottom-color: #ef5f67;
   }
   
   /* content area  */
@@ -54,6 +54,7 @@
 	min-height: 0;
 	display: flex;
 	flex-direction: column;
+	background-color: #dde7f0;
   }
   
   .scroll-area {
@@ -68,3 +69,10 @@
 	color: #555;
   }
   
+  .wave-pic {
+	position:absolute;
+	width: 100%;
+	bottom: -6px;
+	opacity: .4;
+	left: 0px;
+}

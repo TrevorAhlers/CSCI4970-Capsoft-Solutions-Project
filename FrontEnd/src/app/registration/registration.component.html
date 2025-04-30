@@ -1,4 +1,6 @@
 <div class="spacer layer1">
+	<img src="/assets/uno_logo.png" alt="UNO logo" class="uno-logo-bg">
+	<img src="/assets/pki_logo.png" alt="PKI logo" class="logo-bg">
 	<div class="login-container">
 		<mat-card class="login-mat_container">
 			<form [formGroup]="createAnAccount" (ngSubmit)="createUser()">
@@ -32,10 +34,12 @@
 					<button mat-flat-button
 					color="primary"
 					type="submit"
+					class="register-mat"
 					[disabled]="createAnAccount.invalid || createAnAccount.value.password !== createAnAccount.value.confirm_password">
 					Create Account
 					</button>
 
+					
 				</mat-card-content>
 			</form>
 		</mat-card>

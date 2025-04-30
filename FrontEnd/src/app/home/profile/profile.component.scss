@@ -6,7 +6,7 @@
 .profile {
 	min-height: 17.5vh;
 	max-height: 17.5vh;
-	background-color: #F8FAFC;
+	background-color: #dde7f0;
 	border-radius: 5px;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -61,7 +61,7 @@
 	width: 100%;
 	box-sizing: border-box;
 	text-align: center;
-	background-color: #b3c1cf;
+	background-color: #ef5f67;
 }
 
 .button-container {
@@ -104,9 +104,11 @@
 	flex: 1;
 	box-sizing: border-box;
 	text-align: center;
-	background-color: #b3c1cf;
+	background-color: #ef5f67;
+	color: white;
 	border: none;
 	cursor: pointer;
+	font-weight: bolder;
 }
 
 .p.export {
