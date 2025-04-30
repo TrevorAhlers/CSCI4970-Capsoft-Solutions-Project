@@ -56,6 +56,14 @@ DB_CONFIG = {
 	'database': 'maindb'
 }
 
+FALLBACK_USER = {'username': 'admin', 'password': 'password'}
+DB_AVAILABLE  = True
+try:
+	user_repo.init_db()
+except Exception as e:
+	print('[DB INIT FAILURE]', e)
+	DB_AVAILABLE = False
+
 try:
 	af_db.init_db()
 except Exception as e:
@@ -119,7 +127,7 @@ def download_change_log():
 	af		= load_assignment_file()
 	changes	= diff_sections(af.sections)
 
-	now_ct	= datetime.now(ZoneInfo('America/Chicago'))
+	now_ct	= datetime.datetime.now(ZoneInfo('America/Chicago'))
 	ts		= now_ct.strftime('%B %d, %Y  %I:%M %p')
 
 	lines	= [
@@ -156,6 +164,32 @@ def download_change_log():
 		download_name='change_log.txt',
 		mimetype='text/plain'
 	)
+
+@application.route('/api/login', methods=['POST'])
+def login():
+	data      = request.get_json(force=True) or {}
+	username  = data.get('username') or data.get('user_id')
+	password  = data.get('password') or data.get('user_password')
+
+	if not username or not password:
+		return jsonify(msg='Missing fields'), 400
+
+	# 1️⃣  try normal DB lookup
+	row = None
+	try:
+		row = user_repo.get_by_username(username)
+	except Exception as e:
+		print('[DB READ FAILURE]', e)
+
+	if row and row.get('user_password') == password:
+		access = create_access_token(identity=row['user_id'])
+		return jsonify(token=access), 200
+
+	if username == 'admin' and password == 'password':
+		access = create_access_token(identity='dev-admin')
+		return jsonify(token=access), 200
+
+	return jsonify(msg='Bad credentials'), 401
 
 
 
