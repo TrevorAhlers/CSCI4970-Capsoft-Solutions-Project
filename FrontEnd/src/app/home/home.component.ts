@@ -12,9 +12,7 @@ export class HomeComponent implements OnInit {
 	private _selectedCourse: any = null;
 	showSidebar = true;
 
-
-
-	constructor(private dataService: DataService ) {}
+	constructor(private dataService: DataService) {}
 
 	ngOnInit(): void {
 		this.dataService.getCourses().subscribe((data) => {
@@ -32,12 +30,23 @@ export class HomeComponent implements OnInit {
 			(data) => {
 				console.log('Course details fetched:', data);
 				this.selectedCourse = data;
-				this.dataService.setCourse(data);
+	
+				console.log('Fetching editable fields for:', courseId);
+				this.dataService.getEditableCourseData(courseId).subscribe(
+					(editData) => {
+						console.log('Edit data fetched:', editData);
+						this.selectedCourse.edit = editData;
+						this.selectedCourse = { ...this.selectedCourse };
+						this.dataService.setCourse(data);
+					},
+					(error) => {
+						console.error('Error fetching editable course data:', error);
+					}
+				);
 			},
 			(error) => {
 				console.error('Error fetching course details:', error);
 			}
-
 		);
 	}
 	

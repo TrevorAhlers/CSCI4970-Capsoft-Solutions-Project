@@ -104,29 +104,5 @@ p {
 	left: 50%;
 	transform: translateY(-50%) translateX(-50%);
 	position: relative;
-	transform: translateX(-50%);
-	opacity: .5;
+	opacity: 0.5;
 }
-
-.column-toggle-wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	position: relative;
-  }
-  
-  .collapse-toggle {
-	background-color: #ddd;
-	border: none;
-	padding: 4px 8px;
-	margin-bottom: 4px;
-	cursor: pointer;
-	font-size: 0.9rem;
-	border-radius: 4px;
-  }
-  .column.right.collapsed {
-	width: 0;
-	min-width: 0;
-	opacity: 0;
-	pointer-events: none;
-  }

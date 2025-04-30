@@ -7,12 +7,9 @@ import { environment } from 'src/environments/environment';
 	providedIn: 'root',
 })
 export class DataService {
-  private refreshTrigger = new Subject<void>();
-  refresh$ = this.refreshTrigger.asObservable();
-  private _selectedCourse: any = null;
-
-
-
+	private refreshTrigger = new Subject<void>();
+	refresh$ = this.refreshTrigger.asObservable();
+	private _selectedCourse: any = null;
 
 	private conflictRefreshTrigger = new Subject<void>();
 	conflictRefresh$ = this.conflictRefreshTrigger.asObservable();
@@ -30,8 +27,6 @@ export class DataService {
 	getEditableCourseData(courseId: string): Observable<any> {
 		return this.http.get<any>(`${environment.apiBaseUrl}/edit/${courseId}`);
 	}
-
-
 
 	saveEditedCourseData(courseId: string, data: any): Observable<any> {
 		return this.http.post<any>(`${environment.apiBaseUrl}/edit/save/${courseId}`, data);
@@ -56,5 +51,4 @@ export class DataService {
 	getChangeLog(): Observable<string> {
 	return this.http.get(`${environment.apiBaseUrl}/api/change-log`, { responseType: 'text' })
 	}
-
 }
