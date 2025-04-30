@@ -457,6 +457,7 @@ def upload():
 		preserved_conflicts = preserve_ignored_conflicts(old_conflicts, new_conflicts)
 		assignment_file = AssignmentFile(sections, classrooms, preserved_conflicts)
 		save_assignment_file(assignment_file)
+		save_baseline(assignment_file.sections)
 
 		print('application.py: /upload')
 		return jsonify({"message": "File uploaded and memory updated", "filename": file.filename})
@@ -465,6 +466,10 @@ def upload():
 	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
 
+@application.route('/home', methods=['GET'])
+@jwt_required()
+def home():
+	pass
 
 
 @application.route('/api/columns', methods=['GET'])
@@ -762,10 +767,13 @@ def preserve_ignored_conflicts(old_conflicts: List[Conflict], new_conflicts: Lis
 
 	return new_conflicts
 
-def save_baseline(sections):
+def save_baseline(sections: Dict[str,CourseSection]):
 	if os.path.exists(BASELINE_FILE):
 		return
 	with open(BASELINE_FILE, 'wb') as f:
+		for sec in sections.values():
+			if not hasattr(sec, 'rooms'):
+				sec.rooms = parse_rooms(sec.rooms)
 		pickle.dump({k: deepcopy(v.__dict__) for k, v in sections.items()}, f)
 
 def load_baseline():
@@ -773,6 +781,7 @@ def load_baseline():
 		with open(BASELINE_FILE, 'rb') as f:
 			return pickle.load(f)
 	except FileNotFoundError:
+		print("NO BASELINE FOUND")
 		return {}
 	
 def diff_sections(sections):
@@ -784,9 +793,16 @@ def diff_sections(sections):
 		orig	= baseline[sid]
 		diffs	= {}
 		def check(attr, pretty=None, transform=lambda x: x):
-			a, b	= transform(orig[attr]), transform(getattr(sec, attr))
-			if a != b:
-				diffs[pretty or attr] = [a, b]
+			old = None
+			if orig.get(attr):
+				old = transform(orig.get(attr))
+			new = transform(getattr(sec, attr, None))
+
+			if old != new:
+				diffs[pretty or attr] = [old, new]
+
+		diffs = {}
+
 		check('rooms',	'Rooms',	list)
 		check('meeting_pattern',	'Meeting Pattern')
 		check('instructor',	'Instructor')
@@ -797,6 +813,7 @@ def diff_sections(sections):
 		check('notes2',	'Notes 2')
 		if diffs:
 			changes.append({ 'id': sid, **diffs })
+
 	return changes
 
 #....................................................................................

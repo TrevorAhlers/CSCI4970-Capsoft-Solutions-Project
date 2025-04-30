@@ -1,12 +1,19 @@
 
+.trevor-container {
+	width: 100%;
+	display: flexbox;
+	
+	// max-height: 74vh;
+}
+
 .class-grid {
 	display: grid;
 	grid-template-rows: auto ;
 	font-family: Arial, sans-serif;
 	border: 1px solid #ccc;
 	align-items: center;
-	
 	white-space: wrap;
+	
 	
   }
   
@@ -19,7 +26,7 @@
   .row {
 	display: grid;
 	grid-template-columns: 150px repeat(22, 1fr);
-	height: calc((100vh - 40px) / 5);
+	height: calc((100vh - 15vh) / 5);
   }
   
   .cell {
@@ -27,8 +34,6 @@
 	padding: 6px;
 	min-height: 2vh;
 	white-space: nowrap;
-
-	
   }
   
   .cell.header {
@@ -44,7 +49,6 @@
   .class-card {
     background-color: #cce5ff;
     border-left: 4px solid #004085;
-	
 	overflow-x: auto;
     border-radius: 4px;
     font-size: 0.9rem;
