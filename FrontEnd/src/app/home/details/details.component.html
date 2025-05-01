@@ -9,6 +9,7 @@
 	<div class="tab-bar">
 		<button mat-flat-button color="primary" [class.active]="tab === 0" (click)="switchTab(0)">Details</button>
 		<button mat-flat-button color="primary" [class.active]="tab === 1" (click)="switchTab(1)">Edit</button>
+		
 	</div>
 
 	<!-- Content -->
@@ -20,6 +21,7 @@
 					<strong>{{ item.label }}:</strong> {{ item.value }}
 				</div>
 			</div>
+			<img class="wave-pic" src="/assets/wave1.png">
 		</div>
 		
 
@@ -46,8 +48,9 @@
 			<input type="text" [(ngModel)]="userInput.comments" />
 
 			<div style="margin-top: 1rem;">
-				<button mat-stroked-button color="primary" (click)="save()">Save Changes</button>
+				<button class="action-button" (click)="save()">Save Changes</button>
 			</div>
+			<img class="wave-pic" src="/assets/wave1.png">
 		</div>
 	</div>
 </mat-card>

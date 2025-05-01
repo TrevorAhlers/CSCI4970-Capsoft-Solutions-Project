@@ -4,12 +4,11 @@
 
 		<div class="columns">
 			<div class="column left">
-				<app-profile></app-profile>
+				<app-profile [username]="username"></app-profile>
 				<app-details 
 					[selectedCourse]="selectedCourse" 
 					(saveClicked)="saveCourseChanges($event)">
 				</app-details>
-				<app-file-manager></app-file-manager>
 			</div>
 
 			<div class="column center">
@@ -34,21 +33,16 @@
 				</div>
 			</div>
 
-			<!-- Wrapped Right Column with Toggle Button
+			<!-- Wrapped Right Column with Toggle Button -->
 			<div class="column-toggle-wrapper">
 				<button class="collapse-toggle" (click)="toggleSidebar()">
-					{{ showSidebar ? '⮜ Hide' : '⮞ Show' }}
-				</button> -->
+					{{ showSidebar ? ' ⮞ Hide' : ' ⮜ Show' }}
+				</button>
 
 
-			<div class="column right">
+			<div class="column right" [ngClass]="{ 'collapsed': !showSidebar }">
 				<app-conflict-manager [clear]="selectedView === 'upload'"></app-conflict-manager>
-			</div>
-		</div>
-
-		<div class="home footer">
-			<img src="assets/logo_1.png" class="logo" alt="Logo" />
-			<p class="footer">2025</p>
+            </div>
 		</div>
 	</div>
 </div>

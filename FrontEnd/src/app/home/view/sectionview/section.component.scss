@@ -10,7 +10,7 @@ mat-card.listview {
 }
 
 .row-list-container {
-	max-height: 81vh;
+	max-height: 80vh;
 	overflow-y: auto;
 }
 
@@ -34,7 +34,7 @@ mat-card.listview {
 .header-row {
 	font-weight: bold;
 	border-bottom: 2px solid #000;
-	background: #f0f0f0;
+	background: #f77e76;
 	position: sticky;
 	top: 0;
 	z-index: 1;
@@ -49,3 +49,23 @@ mat-card.listview {
 :host ::ng-deep .header-cell.id {
 	width: 30ch;
 }
+
+
+.column-btn.mat-mdc-outlined-button{
+	color:white !important;
+	background-color: #001220;
+	border:1px solid #001220 !important;
+}
+
+.toolbar {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.5rem 0;
+  }
+  
+  .search-field {
+	flex: 1;
+	max-width: 50%;
+  }
+  

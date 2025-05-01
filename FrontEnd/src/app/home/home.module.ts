@@ -27,6 +27,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ConflictCardComponent } from './conflict-manager/conflict-card.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColumnSelectorDialogComponent } from './view/sectionview/column-selector-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
 	imports: [
@@ -43,7 +44,9 @@ import { ColumnSelectorDialogComponent } from './view/sectionview/column-selecto
 		MatSortModule,
 		MatFormFieldModule,
 		MatInputModule,
-		MatCheckboxModule
+		MatCheckboxModule,
+		MatProgressSpinnerModule,
+		
 	],
 	declarations: [
 		HomeComponent,
@@ -62,8 +65,6 @@ import { ColumnSelectorDialogComponent } from './view/sectionview/column-selecto
 		HomeComponent
 	],
 	providers: [
-		provideAnimationsAsync(),
-		provideAnimationsAsync('noop')
 	],
 	schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
