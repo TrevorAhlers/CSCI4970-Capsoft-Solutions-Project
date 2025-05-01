@@ -40,7 +40,7 @@ describe('Login Form', () => {
     cy.url({ timeout: 5000 }).should('include', '/home');
 
   
-    // ✅ Assert token is stored
+    //  Assert token is stored
     cy.window().then((win) => {
       expect(win.localStorage.getItem('jwt')).to.not.be.null;
     });
