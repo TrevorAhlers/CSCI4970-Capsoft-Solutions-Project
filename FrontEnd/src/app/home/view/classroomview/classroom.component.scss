@@ -26,11 +26,7 @@
   .row {
 	display: grid;
 	grid-template-columns: 150px repeat(22, 1fr);
-<<<<<<< HEAD
-	height: calc((87.5vh) / 5);
-=======
 	height: calc((100vh - 15vh) / 5);
->>>>>>> parent of fb3c1f4 (-visual design overhaul with minimal css adjustments)
   }
   
   .cell {
