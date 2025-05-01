@@ -7,8 +7,13 @@
 
 .details {
 	padding: 1%;
+<<<<<<< HEAD
 	background-color:#dde7f0;
 	height: 74vh;
+=======
+	background-color: #F8FAFC;
+	height: 100%;
+>>>>>>> parent of fb3c1f4 (-visual design overhaul with minimal css adjustments)
 	border-radius: 5px;
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 	display: flex;
@@ -25,21 +30,21 @@
 	flex: 1 1 0;
 	border-radius: 0;
 	box-shadow: none;
-	background: #fa7268;
-	color: white;
+	background: #fff;
+	color: #000;
 	font-weight: 500;
 	border-bottom: 3px solid transparent;
 }
 
 .tab-bar button:not(.active):hover {
-	background: #0b2438;
+	background: #f3f3f3;
 }
 
 .tab-bar button.active {
-	background: #001220;
-	color: white;
+	background: #cacaca;
+	color: #000;
 	font-weight: 600;
-	border-bottom-color: #ef5f67;
+	border-bottom-color: #1976d2;
 }
 
 .tab-content {
@@ -59,27 +64,4 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-}
-
-.action-button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 0.5em;
-	flex: 1;
-	box-sizing: border-box;
-	text-align: center;
-	background-color: #ef5f67;
-	color: white;
-	border: none;
-	cursor: pointer;
-	font-weight: bolder;
-}
-
-.wave-pic {
-	position:absolute;
-	width: 100%;
-	bottom: 0px;
-	opacity: .4;
-	left: 0px;
 }

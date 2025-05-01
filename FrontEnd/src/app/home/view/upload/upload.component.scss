@@ -2,13 +2,17 @@
 	display: flexbox;
 	align-items: center;
 	padding: 4%;
-	background-color: #dde7f0;
+	background-color: #F8FAFC;
 	//width: 100%;
 	border-radius: 5px;
+<<<<<<< HEAD
 	max-height: 90.5vh;
 	min-height: 90.5vh;
+=======
+	max-height: 83vh;
+	min-height: 90vh;
+>>>>>>> parent of fb3c1f4 (-visual design overhaul with minimal css adjustments)
 	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-	position: relative;
 	
 }
 
@@ -48,25 +52,3 @@
 	margin-left: 5%;
 
 }
-
-.spinner-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: rgba(255,255,255,0.7);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 10;
-  }
-  
-  .upload-pic.dimmed,
-  .file input:disabled {
-	opacity: 0.5;
-  }
-
-  :host ::ng-deep .mat-progress-spinner .mat-progress-spinner-path {
-	stroke: #ef5f67 !important;
-  }

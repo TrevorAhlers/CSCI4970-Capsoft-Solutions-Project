@@ -5,11 +5,14 @@
 	height: 100vh;
 }
 
+<<<<<<< HEAD
 :host ::ng-deep .register-mat.mat-mdc-filled-button.mat-primary:not([disabled]) {
 	background:#001220;
 	color:#dde7f0;
 }
 
+=======
+>>>>>>> parent of fb3c1f4 (-visual design overhaul with minimal css adjustments)
 .spacer {
 	display: flex;
 	justify-content: center;
@@ -25,42 +28,11 @@
 	background-image: url('/assets/layered-waves-haikei.svg');
 }
 
-.spacer {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100vw;
-	height: 100vh;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
-}
-
-.logo-bg {
-	position: relative;
-	align-items: center;
-	margin-top: -45vh;
-	opacity: .80;
-	pointer-events: none;
-	z-index: 1;
-	width: clamp(50vh, 100vmin, 110vh);
-}
-
-.uno-logo-bg {
-	position: absolute;
-	left:20px;
-	top:20px;
-	z-index: 1;
-	width: 5vh;
-}
-
 .login-container {
-	position: absolute;
-	z-index: 2;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 200px;
 }
 
 .login-mat_container {
@@ -95,5 +67,4 @@ button {
 	display: block;
 	margin-top: 20px;
 	text-align: center;
-	cursor: pointer;
 }

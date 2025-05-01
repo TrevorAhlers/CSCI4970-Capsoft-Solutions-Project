@@ -1,54 +1,27 @@
-<!-- section.component.html -->
 <div class="scroll-wrapper">
 	<mat-card class="listview" appearance="outlined">
-	  <mat-card-title>Course List</mat-card-title>
-	  <mat-divider></mat-divider>
-  
-	  <div class="toolbar">
-		<button mat-stroked-button class="column-btn" (click)="openColumnSelector()">
-		  Choose Columns
-		</button>
-		<mat-form-field appearance="outline" class="search-field">
-		  <mat-label>Search courses</mat-label>
-		  <input
-			matInput
-			placeholder="Type to filter…"
-			[(ngModel)]="searchTerm"
-			(ngModelChange)="applyFilter($event)"
-		  />
-		  <button
-			matSuffix
-			mat-icon-button
-			*ngIf="searchTerm"
-			(click)="searchTerm=''; applyFilter('')"
-			aria-label="Clear"
-		  >
-			<mat-icon>close</mat-icon>
-		  </button>
-		</mat-form-field>
-	  </div>
-  
-	  <!-- header -->
-	  <div class="header-row">
-		<div
-		  *ngFor="let col of displayedColumns"
-		  class="header-cell"
-		  [ngClass]="{ 'id': col === 'id' }"
-		>
-		  {{ col }}
-		</div>
-	  </div>
-  
-	  <!-- body -->
-	  <div class="row-list-container">
+		<mat-card-title>Course List</mat-card-title>
+		<mat-divider></mat-divider>
+		<button mat-stroked-button (click)="openColumnSelector()">Choose Columns</button>
+
+	<!-- header -->
+	<div class="header-row">
+	<div
+		*ngFor="let col of displayedColumns"
+		class="header-cell"
+		[ngClass]="{ 'id': col === 'id' }"
+	>
+		{{ col }}
+	</div>
+</div>
+
+	<!-- body -->
+	<div class="row-list-container">
 		<app-section-row
-		  *ngFor="let row of filteredCourses.filteredData"
-		  [row]="row"
-		  [columns]="displayedColumns"
-		  [selected]="row.id === selectedId"
-		  (clicked)="handleRowClick($event)"
+			*ngFor="let row of filteredCourses.data"
+			[row]="row"
+			[columns]="displayedColumns"
+			[selected]="row.id === selectedId"
+			(clicked)="handleRowClick($event)"
 		></app-section-row>
-	  </div>
-	</mat-card>
-  </div>
-  
+	</div>
