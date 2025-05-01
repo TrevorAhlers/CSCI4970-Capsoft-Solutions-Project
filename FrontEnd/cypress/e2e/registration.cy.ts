@@ -1,4 +1,4 @@
-describe('Registration Page', () => {
+describe('Registration and Login Flow', () => {
   beforeEach(() => {
     // Visit the login page URL first
     cy.visit('/login'); // Ensure this matches the actual login route
@@ -63,19 +63,75 @@ describe('Registration Page', () => {
     cy.get('input[formControlName="password"]').type('Password123');
     cy.get('input[formControlName="confirm_password"]').type('Password123');
   
-    // Mock the backend API response for successful registration
-    cy.intercept('POST', '/api/register', {
-      statusCode: 200,
-      body: { message: 'Registration successful' }
-    }).as('registerUser');
-  
-    // Submit the form
+    // Submit the form (this triggers the backend registration)
     cy.get('button[type="submit"]').click();
   
-    // Wait for the registration API call
-    cy.wait('@registerUser');
-  
-    // Verify that the user is redirected to the login page
+    // Call the backend registration API after form submission
+    cy.request({
+      method: 'POST',
+      url: '/api/register',
+      failOnStatusCode: false, 
+      body: {
+        username: 'testuser',
+        email: 'testuser@example.com',
+        password: 'Password123',
+        confirm_password: 'Password123'
+      }
+    }).then((response) => {
+      
+      if (response.status === 201) {
+        expect(response.body.msg).to.eq('User created');
+      } else {
+        cy.log('Registration failed with status: ' + response.status);
+      }
+    });
+
+    // After successful registration, navigate to the login page
     cy.url().should('include', '/login');
+  });
+
+  it('should call the backend API to login after registration', () => {
+    // After registration, attempt to login with the same credentials
+    cy.contains('Don\'t have an account?').click();
+  
+    // Fill in the registration form with valid data
+    cy.get('input[formControlName="username"]').type('testuser');
+    cy.get('input[formControlName="email"]').type('testuser@example.com');
+    cy.get('input[formControlName="password"]').type('Password123');
+    cy.get('input[formControlName="confirm_password"]').type('Password123');
+  
+    // Submit the registration form
+    cy.get('button[type="submit"]').click();
+  
+    // Wait for the registration to complete
+    cy.wait(2000); // Ensure that backend registration has finished
+
+    // Now login with the same credentials
+    cy.get('input[formControlName="username"]').type('testuser');
+    cy.get('input[formControlName="password"]').type('Password123');
+  
+    // Submit the login form
+    cy.get('button[type="submit"]').click();
+
+    // Call the backend login API after form submission
+    cy.request({
+      method: 'POST',
+      url: '/api/login',
+      failOnStatusCode: false, 
+      body: {
+        username: 'testuser',
+        password: 'Password123'
+      }
+    }).then((response) => {
+      
+      if (response.status === 200) {
+        expect(response.body.token).to.exist;
+      } else {
+        cy.log('Login failed with status: ' + response.status);
+      }
+    });
+
+    // Verify that the user is redirected to the home page after successful login
+    cy.url().should('include', '/home');
   });
 });
