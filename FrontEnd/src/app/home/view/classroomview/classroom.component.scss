@@ -13,8 +13,6 @@
 	border: 1px solid #ccc;
 	align-items: center;
 	white-space: wrap;
-	background-color: #f5bdb9;;
-	border-radius: 5px;
 	
 	
   }
@@ -28,7 +26,7 @@
   .row {
 	display: grid;
 	grid-template-columns: 150px repeat(22, 1fr);
-	height: calc((87.5vh) / 5);
+	height: calc((100vh - 15vh) / 5);
   }
   
   .cell {

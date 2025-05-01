@@ -4,7 +4,7 @@
 
 		<div class="columns">
 			<div class="column left">
-				<app-profile [username]="username"></app-profile>
+				<app-profile></app-profile>
 				<app-details 
 					[selectedCourse]="selectedCourse" 
 					(saveClicked)="saveCourseChanges($event)">
@@ -36,7 +36,11 @@
 			<!-- Wrapped Right Column with Toggle Button -->
 			<div class="column-toggle-wrapper">
 				<button class="collapse-toggle" (click)="toggleSidebar()">
+<<<<<<< HEAD
 					{{ showSidebar ? '⮞' : '⮜' }}
+=======
+					{{ showSidebar ? '⮜ Hide' : '⮞ Show' }}
+>>>>>>> parent of fb3c1f4 (-visual design overhaul with minimal css adjustments)
 				</button>
 
 

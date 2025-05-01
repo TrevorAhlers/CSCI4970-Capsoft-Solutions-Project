@@ -28,7 +28,7 @@ import os
 from flask_cors import CORS, cross_origin
 import pickle # serialize
 from typing import Dict, List
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, verify_jwt_in_request
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from urllib.parse import unquote
 
 from Model.User import User
@@ -101,10 +101,6 @@ application.config['ALLOWED_EXTENSIONS'] = {'csv'}
 def index():
 	return 'OK', 200
 
-@application.route('/api/current-user', methods=['GET'])
-def current_user():
-	return jsonify({"username": current_username()})
-
 @application.route('/api/register', methods=['POST'])
 def register():
 	data     = request.get_json(force=True) or {}
@@ -138,7 +134,6 @@ def download_change_log():
 		'PKI Scheduler Change Log',
 		ts,
 		'',
-		'****************************************'
 	]
 
 	if not changes:
@@ -152,10 +147,7 @@ def download_change_log():
 				lines.append(f"\t{k}: {v[0]}    ->    {v[1]}")
 			lines.append('')
 
-	lines.append('****************************************')
-	lines.append('')
 	lines.append('Capsoft 2025')
-	lines.append('****************************************')
 	text	= '\n'.join(lines)
 
 	base_dir	= os.path.dirname(__file__)
@@ -422,126 +414,56 @@ def course_info():
 @application.route('/upload', methods=['POST'])
 def upload():
 	print(f'[ROUTE HIT] /upload')
-	# make sure we save into the BackEnd/uploads folder, not whatever cwd happens to be
-	base_dir     = os.path.dirname(__file__)
-	upload_dir   = os.path.join(base_dir, application.config['UPLOAD_FOLDER'])
-	if not os.path.exists(upload_dir):
-		os.makedirs(upload_dir)
+	if not os.path.exists(application.config['UPLOAD_FOLDER']):
+		os.makedirs(application.config['UPLOAD_FOLDER'])  
 
 	if 'file' not in request.files:
 		return jsonify({"message": "No file part"}), 400
 
 	file = request.files['file']
+
 	if file.filename == '':
 		return jsonify({"message": "No selected file"}), 400
 
 	if file and allowed_file(file.filename):
-		# save into BackEnd/uploads
-		save_path = os.path.join(upload_dir, file.filename)
-		file.save(save_path)
+		filename = os.path.join(application.config['UPLOAD_FOLDER'], file.filename)
+		file.save(filename)
 
 		global INPUT_CSV
 		INPUT_CSV = file.filename
 
-		# ----------------------------------------------------------------
-		# snapshot the raw sections before auto-assignment
-		# ----------------------------------------------------------------
-		sections_for_baseline = build_sections()
-		for sec in sections_for_baseline.values():
-			sec.parsed_meetings = parse_meetings(sec.meeting_pattern)
-			sec.rooms           = parse_rooms(sec.room)
-			sec.room_numbers    = extract_room_numbers(sec.rooms)
-		save_baseline(sections_for_baseline)
-
-		# preserve any user-ignored conflicts
 		try:
-			old_af       = load_assignment_file()
+			old_af = load_assignment_file()
 			old_conflicts = old_af.conflicts
 		except Exception:
 			old_conflicts = []
 
-		# build & auto-assign into rooms
 		sections, classrooms, new_conflicts = build_all()
-
-		# rebuild each section’s schedule
+		
 		for sec in sections.values():
 			sec.parsed_meetings = parse_meetings(sec.meeting_pattern)
-			sec.rooms           = parse_rooms(sec.room)
-			sec.room_numbers    = extract_room_numbers(sec.rooms)
-			sec.schedule, sec.warning = combine_section_info(
-				sec.id, sec.parsed_meetings, sec.rooms
-			)
+			sec.rooms = parse_rooms(sec.room)
+			sec.room_numbers = extract_room_numbers(sec.rooms)
+			sec.schedule, sec.warning = combine_section_info(sec.id, sec.parsed_meetings, sec.rooms)
 
-		# clear + re-populate each classroom’s minute schedule
-		for cr in classrooms.values():
-			cr.schedule = [[] for _ in range(7 * 1440)]
+		for classroom in classrooms.values():
+			classroom.schedule = [[] for _ in range(7 * 1440)]
+
 		for sec in sections.values():
 			for (_, room_name, _, _, _) in sec.schedule:
 				if room_name in classrooms:
 					classrooms[room_name].add_course_section_object(sec)
 
-		# stitch back ignored conflicts & persist
-		preserved       = preserve_ignored_conflicts(old_conflicts, new_conflicts)
-		assignment_file = AssignmentFile(sections, classrooms, preserved)
+		preserved_conflicts = preserve_ignored_conflicts(old_conflicts, new_conflicts)
+		assignment_file = AssignmentFile(sections, classrooms, preserved_conflicts)
 		save_assignment_file(assignment_file)
+		save_baseline(assignment_file.sections)
 
 		print('application.py: /upload')
-		return jsonify({
-			"message":  "File uploaded and memory updated",
-			"filename": file.filename
-		})
+		return jsonify({"message": "File uploaded and memory updated", "filename": file.filename})
 
-	print('application.py: /upload — invalid extension')
-	return jsonify({
-		"message": "Invalid file format. Only CSV files are allowed."
-	}), 400
-
-
-@application.route('/api/search', methods=['GET'])
-def search_sections():
-	"""
-	Search course sections by keyword across given columns.
-
-	Query params:
-		keyword:   the term to search for (case-insensitive)
-		columns:   comma-separated CourseSectionEnum names
-
-	Returns JSON { results: [ "Col A: val1 | Col B: val2", ... ] }
-	"""
-	keyword = request.args.get('keyword', '').strip().lower()
-	cols = request.args.get('columns', '').split(',')
-	cols = [c.strip() for c in cols if c.strip()]
-
-	if not keyword or not cols:
-		return jsonify({"error": "Both 'keyword' and 'columns' parameters are required."}), 400
-
-	af = load_assignment_file()
-	matches = []
-
-	for sec in af.sections.values():
-		row_parts = []
-		match = False
-
-		for col_name in cols:
-			# skip invalid enum names
-			if col_name not in CourseSectionEnum.__members__:
-				continue
-
-			enum = CourseSectionEnum[col_name]
-			attr = enum.name.lower()
-			val = getattr(sec, attr, '') or ''
-			val_str = str(val)
-
-			if keyword in val_str.lower():
-				match = True
-
-			# use the enum.value for a friendly label
-			row_parts.append(f"{enum.value}: {val_str}")
-
-		if match and row_parts:
-			matches.append(" | ".join(row_parts))
-
-	return jsonify({"results": matches})
+	print('application.py: /upload')
+	return jsonify({"message": "Invalid file format. Only CSV files are allowed."}), 400
 
 
 @application.route('/home', methods=['GET'])
@@ -845,22 +767,14 @@ def preserve_ignored_conflicts(old_conflicts: List[Conflict], new_conflicts: Lis
 
 	return new_conflicts
 
-def save_baseline(sections: Dict[str, CourseSection]):
+def save_baseline(sections: Dict[str,CourseSection]):
+	if os.path.exists(BASELINE_FILE):
+		return
 	with open(BASELINE_FILE, 'wb') as f:
-		snap = {}
-		for k, sec in sections.items():
-			# ensure a plain list for rooms; every other attr is already scalar
-			snap[k] = {
-				'room'            : sec.room,               # string from CSV or later edits
-				'meeting_pattern' : sec.meeting_pattern,
-				'instructor'      : sec.instructor,
-				'max_enrollment'  : sec.max_enrollment,
-				'enrollment'      : sec.enrollment,
-				'comments'        : sec.comments,
-				'notes1'          : sec.notes1,
-				'notes2'          : sec.notes2
-			}
-		pickle.dump(snap, f)
+		for sec in sections.values():
+			if not hasattr(sec, 'rooms'):
+				sec.rooms = parse_rooms(sec.rooms)
+		pickle.dump({k: deepcopy(v.__dict__) for k, v in sections.items()}, f)
 
 def load_baseline():
 	try:
@@ -870,46 +784,37 @@ def load_baseline():
 		print("NO BASELINE FOUND")
 		return {}
 	
-def diff_sections(sections: Dict[str, CourseSection]):
-	base   = load_baseline()
-	result = []
-
+def diff_sections(sections):
+	baseline	= load_baseline()
+	changes		= []
 	for sid, sec in sections.items():
-		if sid not in base:
+		if sid not in baseline:
 			continue
-		orig  = base[sid]
-		diff  = {}
+		orig	= baseline[sid]
+		diffs	= {}
+		def check(attr, pretty=None, transform=lambda x: x):
+			old = None
+			if orig.get(attr):
+				old = transform(orig.get(attr))
+			new = transform(getattr(sec, attr, None))
 
-		def check(name, pretty=None, cast=lambda x: x):
-			old, new = cast(orig[name]), cast(getattr(sec, name))
 			if old != new:
-				diff[pretty or name] = [old, new]
+				diffs[pretty or attr] = [old, new]
 
-		check('room',            'Room')
-		check('meeting_pattern', 'Meeting Pattern')
-		check('instructor',      'Instructor')
-		check('max_enrollment',  'Max Enrollment')
-		check('enrollment',      'Enrollment')
-		check('comments',        'Comments')
-		check('notes1',          'Notes 1')
-		check('notes2',          'Notes 2')
+		diffs = {}
 
-		if diff:
-			result.append({'id': sid, **diff})
+		check('rooms',	'Rooms',	list)
+		check('meeting_pattern',	'Meeting Pattern')
+		check('instructor',	'Instructor')
+		check('max_enrollment',	'Max Enrollment')
+		check('enrollment',	'Enrollment')
+		check('comments',	'Comments')
+		check('notes1',	'Notes 1')
+		check('notes2',	'Notes 2')
+		if diffs:
+			changes.append({ 'id': sid, **diffs })
 
-	return result
-
-def current_username() -> str:
-	"""
-	Return the username in the JWT if present, else "Guest User".
-	Call inside any view — no decorator needed.
-	"""
-	try:
-		verify_jwt_in_request(optional=True)	# only parses token if it exists
-		return get_jwt_identity() or "Guest User"
-	except Exception:
-		return "Guest User"
-
+	return changes
 
 #....................................................................................
 # DB Stuff

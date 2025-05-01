@@ -1,8 +1,7 @@
 import re
 from typing import Dict
 from Model.Classroom import Classroom
-from Model.CourseSection import CourseSection, combine_section_info
-from typing import List, Tuple
+from Model.CourseSection import CourseSection
 
 global count
 
@@ -12,14 +11,12 @@ def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, Cou
 	assign_sections_to_rooms(classrooms, sections)
 	assigned_count1 = assign_via_frequency_map_department(classrooms, sections)
 	assigned_count2 = assign_via_frequency_map(classrooms, sections)
-	assigned_count3 = assign_via_special_requirements(sections, classrooms)
-	assigned_count = assigned_count1+assigned_count2+assigned_count3
+	assigned_count = assigned_count1+assigned_count2
 	print(f'```````````````````````````')
 	print(f'assigner.py: Automatically assigned {assigned_count}/{len(sections)} sections to rooms.')
 	print(f'assigner.py: Total rooms assigned: {print_assignment_stats(sections)}/{len(sections)}.')
 	print(f'assigned count 1: {assigned_count1}')
 	print(f'assigned count 2: {assigned_count2}')
-	print(f'assigned count 3: {assigned_count3}')
 	print(f'===========================')
 	
 	return assigned_count
@@ -156,6 +153,7 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 
 	return assigned_count
 
+<<<<<<< HEAD
 def assign_via_special_requirements(sections: Dict[str, CourseSection],
 									classrooms: Dict[str, Classroom]) -> int:
 	"""
@@ -237,6 +235,8 @@ def assign_via_special_requirements(sections: Dict[str, CourseSection],
 	return assigned_count
 
 
+=======
+>>>>>>> parent of fb3c1f4 (-visual design overhaul with minimal css adjustments)
 
 def find_max_frequency(frequency_map: Dict[str, int]):
 	sorted_items = sorted(frequency_map.items(), key=lambda x: x[1], reverse=True)
@@ -272,24 +272,3 @@ def print_assignment_stats(sections: Dict[str, CourseSection]) -> int:
 		if section.rooms != ['To Be Announced']:
 			count += 1
 	return count
-
-def commit_assignment(section: CourseSection, classroom: Classroom):
-	classroom.add_course_section_object(section)
-	if section.rooms == ['To Be Announced']:
-		section.rooms = [classroom.room]
-	else:
-		section.add_room(classroom.room)
-	section.room = room_str_maker(section)
-
-def room_has_all_features(room: Classroom, needed: set[str]) -> bool:
-	if not needed:
-		return True
-	room_text = f"{room.displays} {room.info_and_connectivity}".lower()
-	return all(feature.lower() in room_text for feature in needed)
-
-def to_int(x: str | int | None) -> int:
-	if isinstance(x, int):
-		return x
-	if isinstance(x, str) and x.strip().isdigit():
-		return int(x)
-	return 0

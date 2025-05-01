@@ -31,8 +31,6 @@ import { RegistrationComponent } from './registration/registration.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor }   from './auth.interceptor';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 
 const routes: Routes = [
@@ -53,7 +51,6 @@ const routes: Routes = [
 	],
 	imports: [
 		BrowserModule,
-		BrowserAnimationsModule,
 		RouterModule.forRoot(routes),
 		AppRoutingModule,
 		HttpClientModule,
@@ -75,7 +72,9 @@ const routes: Routes = [
 	bootstrap: [AppComponent],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-	  ],
+		provideAnimationsAsync(),
+		provideAnimationsAsync('noop')
+	],
 	schemas: [
 		CUSTOM_ELEMENTS_SCHEMA
 	]
