@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Training Data</h2>
+
+<mat-dialog-content>
+
+  <p>Current CSVs:</p>
+  <ul class="training-list">
+    <li *ngFor="let f of files">{{ f }}</li>
+  </ul>
+
+  <div class="upload-block">
+    <input type="file" accept=".csv" (change)="uploadFile($event)" [disabled]="uploading" />
+    <mat-progress-spinner
+      *ngIf="uploading"
+      mode="indeterminate"
+      diameter="24"
+      style="vertical-align: middle; margin-left: .5rem;">
+    </mat-progress-spinner>
+  </div>
+  <br>
+  <p>IMPORTANT: Only upload additional training CSVs if they are approved by the registrar and final for the semester! Any incorrect training data will degrade accuracy of auto-assignments.
+  </p>
+  <br>
+  <button 
+	mat-stroked-button 
+	color="warn" 
+	(click)="resetDefaults()" 
+	class="reset-btn" 
+	style="border: 2px solid rgb(255, 0, 0); color: black;">
+	Reset to Default (Cannot be Undone)
+</button>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>

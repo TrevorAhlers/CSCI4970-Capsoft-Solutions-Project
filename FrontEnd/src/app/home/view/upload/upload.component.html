@@ -1,41 +1,58 @@
 <mat-card class="upload" appearance="outlined">
+
 	<mat-card-header>
-	  <mat-card-title>Upload File</mat-card-title>
+		<mat-card-title>Upload File</mat-card-title>
 	</mat-card-header>
+
 	<mat-divider></mat-divider>
-  
-	<!-- spinner sits on top without touching your layout -->
+
 	<div class="spinner-overlay my-upload-spinner" *ngIf="loading">
-		<mat-progress-spinner
-		mode="indeterminate"
-		color="warn">
-		</mat-progress-spinner>
-	  </div>
-  
+		<mat-progress-spinner mode="indeterminate" color="warn"></mat-progress-spinner>
+	</div>
+
 	<mat-card-content>
-	  <form action="/action_page.php"></form>
+		<form></form>
 	</mat-card-content>
-  
+
 	<img
-	  class="upload-pic"
-	  [class.dimmed]="loading"
-	  src="/assets/cloud_upload_img_grad.png"
-	  alt="Upload Icon"
+		class="upload-pic"
+		[class.dimmed]="loading"
+		src="/assets/cloud_upload_img_grad.png"
+		alt="Upload Icon"
 	/>
-  
+
 	<mat-card-content class="space"></mat-card-content>
-  
+
 	<mat-card-content class="file">
-	  <form action="/action_page.php">
 		<input
-		  type="file"
-		  (change)="onFileSelected($event)"
-		  accept=".csv"
-		  [disabled]="loading"
+			type="file"
+			accept=".csv"
+			(change)="onFileSelected($event)"
+			[disabled]="loading"
 		/>
-	  </form>
 	</mat-card-content>
-	<button mat-stroked-button (click)="openLogicSelector()" [disabled]="loading" class="column-btn">
-		Select Assignment Logic
-	</button>
-  </mat-card>
+	
+	<div class="column-btn-container">
+		<mat-card-content class="manual-override-checkbox">
+			<mat-checkbox [(ngModel)]="manualOverride" [disabled]="loading">
+				Manual assignment only (disable all auto-assignment)
+			</mat-checkbox>
+		</mat-card-content>
+		<button
+			mat-stroked-button
+			class="column-btn"
+			(click)="openLogicSelector()"
+			[disabled]="loading">
+			Select Auto-Assignment Strategies
+		</button>
+
+		<button
+			mat-stroked-button
+			class="column-btn"
+			(click)="openTrainingDataDialog()"
+			[disabled]="loading">
+			Training Data
+		</button>
+	</div>
+
+</mat-card>

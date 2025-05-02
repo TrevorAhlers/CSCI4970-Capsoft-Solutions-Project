@@ -42,60 +42,85 @@ user_repo.init_db()
 
 
 import json
-
 #....................................................................................
 # Globals
 
-BASELINE_FILE	= 'baseline_sections.pkl'
-CHANGELOG_FILE	= 'change_log.txt'
-
-DB_CONFIG = {
-	'host': 'app-db-1.c6zkyqugocxt.us-east-1.rds.amazonaws.com',
-	'user': 'capsoftdb',
-	'password': 'csci4970',
-	'database': 'maindb'
-}
-
-FALLBACK_USER = {'username': 'admin', 'password': 'password'}
-DB_AVAILABLE  = True
-try:
-	user_repo.init_db()
-except Exception as e:
-	print('[DB INIT FAILURE]', e)
-	DB_AVAILABLE = False
-
-try:
-	af_db.init_db()
-except Exception as e:
-	print(f"[INIT ERROR] {e}")
+BASELINE_FILE   = "baseline_sections.pkl"
+CHANGELOG_FILE  = "change_log.txt"
 
 #....................................................................................
 # FILE NAMES:
-INPUT_CSV = 'Fall2025.csv'
-#INPUT_CSV = 'Spring2023_test_261.csv'
-ROOMS_CSV = 'PKIRooms.csv'
-UNASSIGNED_CSV = 'Spring2023 conflict.csv'
-OUTPUT_CSV = 'OutputCSV.csv'
-TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
+INPUT_CSV      = "Fall2025.csv"                # latest upload
+ROOMS_CSV      = "PKIRooms.csv"
+UNASSIGNED_CSV = "Spring2023 conflict.csv"
+OUTPUT_CSV     = "OutputCSV.csv"
 
+# ---- training‑data CSVs ----------------------------------------------------------
+#DEFAULT_TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv", "Spring2023.csv"]
+DEFAULT_TRAINING_CSVS = ["Fall2022.csv", "Fall2025.csv"]
+TRAINING_LIST_FILE    = "training_files.json"
+
+def load_training_list() -> list[str]:
+	try:
+		with open(TRAINING_LIST_FILE, "r", encoding="utf-8") as f:
+			return json.load(f)
+	except Exception:
+		return DEFAULT_TRAINING_CSVS.copy()
+
+def save_training_list(lst: list[str]) -> None:
+	with open(TRAINING_LIST_FILE, "w", encoding="utf-8") as f:
+		json.dump(lst, f, indent=2)
+
+TRAINING_CSVS = load_training_list()
 #....................................................................................
 # INIT
-application = Flask(__name__)
-application.secret_key = 'your_secret_key'
-application.config['JWT_SECRET_KEY'] = 'super-secret'
-jwt = JWTManager(application)
-CORS(
-	application,
-	resources={r"/*": {"origins": "*"}},
-	allow_headers=["Content-Type", "Authorization"],
-	supports_credentials=True
-)
+application             = Flask(__name__)
+application.secret_key  = "your_secret_key"
+application.config["JWT_SECRET_KEY"] = "super-secret"
+jwt                     = JWTManager(application)
+CORS(application, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-UPLOAD_FOLDER = 'uploads'
-application.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-application.config['ALLOWED_EXTENSIONS'] = {'csv'}
+UPLOAD_FOLDER = "uploads"
+application.config["UPLOAD_FOLDER"]        = UPLOAD_FOLDER
+application.config["ALLOWED_EXTENSIONS"]   = {"csv"}
 
 #....................................................................................
+
+@application.route("/training/files", methods=["GET"])
+def training_files():
+    return jsonify({"files": TRAINING_CSVS})
+
+
+@application.route("/training/upload", methods=["POST"])
+def training_upload():
+    if "file" not in request.files:
+        return jsonify({"message": "No file part"}), 400
+
+    f = request.files["file"]
+    if f.filename == "":
+        return jsonify({"message": "No selected file"}), 400
+    if not allowed_file(f.filename):
+        return jsonify({"message": "Invalid format"}), 400
+
+    base_dir = os.path.dirname(__file__)
+    trg_dir  = os.path.join(base_dir, "Files", "Training")
+    os.makedirs(trg_dir, exist_ok=True)
+    save_path = os.path.join(trg_dir, f.filename)
+    f.save(save_path)
+
+    if f.filename not in TRAINING_CSVS:
+        TRAINING_CSVS.append(f.filename)
+        save_training_list(TRAINING_CSVS)
+
+    return "", 204
+
+
+@application.route("/training/reset", methods=["POST"])
+def training_reset():
+    global TRAINING_CSVS
+    TRAINING_CSVS = DEFAULT_TRAINING_CSVS.copy()
+    save_training_list(TRAINING_CSVS)
+    return "", 204
 
 @application.route('/')
 def index():
@@ -421,8 +446,6 @@ def course_info():
 
 @application.route('/upload', methods=['POST'])
 def upload():
-	print('[ROUTE HIT] /upload')
-
 	base_dir   = os.path.dirname(__file__)
 	upload_dir = os.path.join(base_dir, application.config['UPLOAD_FOLDER'])
 	os.makedirs(upload_dir, exist_ok=True)
@@ -435,10 +458,16 @@ def upload():
 		return jsonify({"message": "No selected file"}), 400
 
 	logic_raw = request.form.get('logic')
-	try:
-		selected_logic = set(json.loads(logic_raw)) if logic_raw else None
-	except Exception:
-		selected_logic = None
+	if logic_raw == '__manual_only__':
+		selected_logic = set()
+	elif logic_raw:
+		try:
+			parsed = json.loads(logic_raw)
+			selected_logic = set(parsed) if isinstance(parsed, list) else {"historical", "historical-dept", "predictive"}
+		except Exception:
+			selected_logic = {"historical", "historical-dept", "predictive"}
+	else:
+		selected_logic = {"historical", "historical-dept", "predictive"}
 
 	if file and allowed_file(file.filename):
 		save_path = os.path.join(upload_dir, file.filename)
@@ -480,16 +509,17 @@ def upload():
 		preserved       = preserve_ignored_conflicts(old_conflicts, new_conflicts)
 		assignment_file = AssignmentFile(sections, classrooms, preserved)
 		save_assignment_file(assignment_file)
-		print('application.py: /upload complete')
 		return jsonify({
 			"message": "File uploaded and memory updated",
 			"filename": file.filename
 		})
 
-	print('application.py: /upload — invalid extension')
 	return jsonify({
 		"message": "Invalid file format. Only CSV files are allowed."
 	}), 400
+
+
+
 
 
 
@@ -685,18 +715,23 @@ def init_assignment_file_from_db(fid: int):
 # Helper functions:
 #....................................................................................
 def build_all(logic=None):
-	if not logic:
+	if logic is None:
 		logic = {"historical", "historical-dept", "predictive"}
+	elif not logic:
+		logic = set()
 
 	sections = build_sections()
 	classrooms = build_classrooms(sections)
+
 	build_freq_map(sections)
 	build_department_freq_map(sections, classrooms)
 
-	assigner.default_assignment(classrooms, sections, logic)
+	if logic:
+		assigner.default_assignment(classrooms, sections, logic)
 
 	conflicts = build_conflicts(sections, classrooms)
 	return sections, classrooms, conflicts
+
 
 def build_freq_map(sections: Dict[str,CourseSection]):
 	freq_map = room_scorer.map_assignment_freq(TRAINING_CSVS)

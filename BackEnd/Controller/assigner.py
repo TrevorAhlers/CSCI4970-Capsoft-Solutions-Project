@@ -10,6 +10,10 @@ def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, Cou
 	Main entry point to the auto-assigner
 	"""
 
+	if not logic:
+		print('[DEBUG] default_assignment skipped — logic was empty')
+		return 0
+
 	assign_sections_to_rooms(classrooms, sections)
 
 	assigned_count1 = assigned_count2 = assigned_count3 = 0
@@ -30,6 +34,7 @@ def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, Cou
 	print(f'assigned count 3: {assigned_count3}')
 	print(f'===========================')
 	return assigned_count
+
 
 
 #...........................................................................................................
@@ -108,11 +113,8 @@ def assign_via_frequency_map_department(classrooms: Dict[str, Classroom], sectio
 				if not department_match(classrooms[best_candidate_room], section):
 					best_candidate_rooms.pop(0)
 					continue
-
-				print(f'Trying to assign {section.id} to {best_candidate_room}')
 				if classroom_would_conflict(classrooms[best_candidate_room], section):
 					best_candidate_rooms.pop(0)
-					print(f'assigner.py: Could not assign {section.id} to {best_candidate_room}. Conflicts.')
 					continue
 
 				classrooms[best_candidate_room].add_course_section_object(section)
@@ -151,10 +153,8 @@ def assign_via_frequency_map(classrooms: Dict[str, Classroom], sections: Dict[st
 					best_candidate_rooms.pop(0)
 					continue
 
-				print(f'Trying to assign {section.id} to {best_candidate_room}')
 				if classroom_would_conflict(classrooms[best_candidate_room], section):
 					best_candidate_rooms.pop(0)
-					print(f'assigner.py: Could not assign {section.id} to {best_candidate_room}. Conflicts.')
 					continue
 
 				classrooms[best_candidate_room].add_course_section_object(section)
@@ -203,6 +203,7 @@ def assign_via_special_requirements(sections: Dict[str, CourseSection],
 
 		if candidates:
 			commit_assignment(section, candidates[0])
+			print(f'assigner.py: Assigned {section.id} to room {room}. Method: special requirements')
 			assigned_count += 1
 
 	return assigned_count
@@ -301,7 +302,7 @@ def inherit_crosslisted_room(section: CourseSection, sections: Dict[str, CourseS
 		if cid not in sections:
 			continue
 		linked = sections[cid]
-		if linked.rooms and linked.rooms != ['To Be Announced']:
+		if linked.rooms != ['To Be Announced']:
 			section.rooms = linked.rooms.copy()
 			section.room = room_str_maker(section)
 			return True

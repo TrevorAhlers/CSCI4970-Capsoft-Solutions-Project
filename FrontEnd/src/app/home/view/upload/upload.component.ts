@@ -1,10 +1,13 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
-import { AssignmentLogicDialogComponent } from './assignment-logic-dialog.component';
-import { DataService } from '@services/data.service';
-import { environment } from 'src/environments/environment';
 import { finalize } from 'rxjs/operators';
+
+import { environment } from 'src/environments/environment';
+import { DataService } from '@services/data.service';
+
+import { AssignmentLogicDialogComponent } from './assignment-logic-dialog.component';
+import { TrainingDataDialogComponent } from './training-data-dialog.component';
 
 @Component({
 	selector: 'app-upload',
@@ -13,8 +16,10 @@ import { finalize } from 'rxjs/operators';
 })
 export class UploadComponent {
 	@Output() fileUploaded = new EventEmitter<void>();
+
 	loading = false;
 	selectedLogic: string[] = [];
+	manualOverride = false;
 
 	constructor(
 		private http: HttpClient,
@@ -22,17 +27,23 @@ export class UploadComponent {
 		private dialog: MatDialog
 	) {}
 
-	onFileSelected(event: any) {
-		const file = event.target.files[0];
-		if (!file) return;
+	onFileSelected(evt: any): void {
+		const f = evt.target.files[0];
+		if (!f) return;
 
-		const formData = new FormData();
-		formData.append('file', file, file.name);
-		formData.append('logic', JSON.stringify(this.selectedLogic));
+		const form = new FormData();
+		form.append('file', f, f.name);
+
+		if (this.manualOverride) {
+			form.append('logic', '__manual_only__');
+		} else if (this.selectedLogic.length > 0) {
+			form.append('logic', JSON.stringify(this.selectedLogic));
+		}
 
 		this.loading = true;
-		this.http.post(`${environment.apiBaseUrl}/upload`, formData)
-			.pipe(finalize(() => this.loading = false))
+		this.http
+			.post(`${environment.apiBaseUrl}/upload`, form)
+			.pipe(finalize(() => (this.loading = false)))
 			.subscribe({
 				next: () => {
 					this.dataService.triggerRefresh();
@@ -44,13 +55,17 @@ export class UploadComponent {
 	}
 
 	openLogicSelector(): void {
-		const dialogRef = this.dialog.open(AssignmentLogicDialogComponent, {
+		const ref = this.dialog.open(AssignmentLogicDialogComponent, {
 			width: '30rem',
 			data: { selected: this.selectedLogic }
 		});
 
-		dialogRef.afterClosed().subscribe((result: string[]) => {
-			if (result) this.selectedLogic = result;
+		ref.afterClosed().subscribe((res: string[]) => {
+			if (res) this.selectedLogic = res;
 		});
+	}
+
+	openTrainingDataDialog(): void {
+		this.dialog.open(TrainingDataDialogComponent, { width: '32rem' });
 	}
 }

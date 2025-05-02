@@ -12,10 +12,24 @@
 	
 }
 
-.upload button.column-btn {
+.upload button {
 	align-self: center;
 	margin-top: auto;
 	margin-bottom: 4vh;
+}
+
+.column-btn-container {
+	position: absolute;
+	bottom: 2vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.column-btn {
+	margin: 0.25vh 0;
+	width: 20vw;
 }
 
 .upload-pic {
