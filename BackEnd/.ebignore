@@ -5,14 +5,16 @@
 !application.py
 !Procfile
 
-!Utils/**/*.py
-!Controller/**/*.py
-!Model/**/*.py
+!Utils/**
+!Controller/**
+!Model/**
 !Files/**
+!assigner.py
+!routes.py
+!whatever_else.py
 
 !static/**
 !templates/**
-
 !*.html
 !*.js
 !*.json

@@ -28,6 +28,8 @@ import { ConflictCardComponent } from './conflict-manager/conflict-card.componen
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ColumnSelectorDialogComponent } from './view/sectionview/column-selector-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AssignmentLogicDialogComponent } from './view/upload/assignment-logic-dialog.component';
 
 @NgModule({
 	imports: [
@@ -46,7 +48,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		MatInputModule,
 		MatCheckboxModule,
 		MatProgressSpinnerModule,
-		
+		MatDialogModule
 	],
 	declarations: [
 		HomeComponent,
@@ -59,7 +61,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		SectionRowComponent,
 		ClassComponent,
 		ConflictCardComponent,
-		ColumnSelectorDialogComponent
+		ColumnSelectorDialogComponent,
+		AssignmentLogicDialogComponent,
 	],
 	exports: [
 		HomeComponent

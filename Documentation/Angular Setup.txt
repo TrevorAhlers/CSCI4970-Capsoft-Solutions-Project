@@ -10,3 +10,6 @@ npx ng serve
 To install libraries:
        # Library name
 ng add @angular/material
+
+production build to dist directory:
+ng build --configuration=production

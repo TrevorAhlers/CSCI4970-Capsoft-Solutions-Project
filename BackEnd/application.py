@@ -421,12 +421,11 @@ def course_info():
 
 @application.route('/upload', methods=['POST'])
 def upload():
-	print(f'[ROUTE HIT] /upload')
-	# make sure we save into the BackEnd/uploads folder, not whatever cwd happens to be
-	base_dir     = os.path.dirname(__file__)
-	upload_dir   = os.path.join(base_dir, application.config['UPLOAD_FOLDER'])
-	if not os.path.exists(upload_dir):
-		os.makedirs(upload_dir)
+	print('[ROUTE HIT] /upload')
+
+	base_dir   = os.path.dirname(__file__)
+	upload_dir = os.path.join(base_dir, application.config['UPLOAD_FOLDER'])
+	os.makedirs(upload_dir, exist_ok=True)
 
 	if 'file' not in request.files:
 		return jsonify({"message": "No file part"}), 400
@@ -435,17 +434,19 @@ def upload():
 	if file.filename == '':
 		return jsonify({"message": "No selected file"}), 400
 
+	logic_raw = request.form.get('logic')
+	try:
+		selected_logic = set(json.loads(logic_raw)) if logic_raw else None
+	except Exception:
+		selected_logic = None
+
 	if file and allowed_file(file.filename):
-		# save into BackEnd/uploads
 		save_path = os.path.join(upload_dir, file.filename)
 		file.save(save_path)
 
 		global INPUT_CSV
 		INPUT_CSV = file.filename
 
-		# ----------------------------------------------------------------
-		# snapshot the raw sections before auto-assignment
-		# ----------------------------------------------------------------
 		sections_for_baseline = build_sections()
 		for sec in sections_for_baseline.values():
 			sec.parsed_meetings = parse_meetings(sec.meeting_pattern)
@@ -453,17 +454,14 @@ def upload():
 			sec.room_numbers    = extract_room_numbers(sec.rooms)
 		save_baseline(sections_for_baseline)
 
-		# preserve any user-ignored conflicts
 		try:
-			old_af       = load_assignment_file()
+			old_af = load_assignment_file()
 			old_conflicts = old_af.conflicts
 		except Exception:
 			old_conflicts = []
 
-		# build & auto-assign into rooms
-		sections, classrooms, new_conflicts = build_all()
+		sections, classrooms, new_conflicts = build_all(selected_logic)
 
-		# rebuild each section’s schedule
 		for sec in sections.values():
 			sec.parsed_meetings = parse_meetings(sec.meeting_pattern)
 			sec.rooms           = parse_rooms(sec.room)
@@ -472,7 +470,6 @@ def upload():
 				sec.id, sec.parsed_meetings, sec.rooms
 			)
 
-		# clear + re-populate each classroom’s minute schedule
 		for cr in classrooms.values():
 			cr.schedule = [[] for _ in range(7 * 1440)]
 		for sec in sections.values():
@@ -480,14 +477,12 @@ def upload():
 				if room_name in classrooms:
 					classrooms[room_name].add_course_section_object(sec)
 
-		# stitch back ignored conflicts & persist
 		preserved       = preserve_ignored_conflicts(old_conflicts, new_conflicts)
 		assignment_file = AssignmentFile(sections, classrooms, preserved)
 		save_assignment_file(assignment_file)
-
-		print('application.py: /upload')
+		print('application.py: /upload complete')
 		return jsonify({
-			"message":  "File uploaded and memory updated",
+			"message": "File uploaded and memory updated",
 			"filename": file.filename
 		})
 
@@ -495,6 +490,7 @@ def upload():
 	return jsonify({
 		"message": "Invalid file format. Only CSV files are allowed."
 	}), 400
+
 
 
 @application.route('/api/search', methods=['GET'])
@@ -688,12 +684,17 @@ def init_assignment_file_from_db(fid: int):
 #....................................................................................
 # Helper functions:
 #....................................................................................
-def build_all():
-	sections: 	Dict[str,CourseSection] = build_sections()
-	classrooms: Dict[str,Classroom] 	= build_classrooms(sections)
+def build_all(logic=None):
+	if not logic:
+		logic = {"historical", "historical-dept", "predictive"}
+
+	sections = build_sections()
+	classrooms = build_classrooms(sections)
 	build_freq_map(sections)
 	build_department_freq_map(sections, classrooms)
-	assigner.default_assignment(classrooms, sections)
+
+	assigner.default_assignment(classrooms, sections, logic)
+
 	conflicts = build_conflicts(sections, classrooms)
 	return sections, classrooms, conflicts
 
