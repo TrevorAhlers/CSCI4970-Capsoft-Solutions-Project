@@ -2,11 +2,13 @@
 
 <mat-dialog-content>
 
+	<!-- File List -->
 	<p>Current CSVs:</p>
 	<ul class="training-list">
 		<li *ngFor="let f of files">{{ f }}</li>
 	</ul>
 
+	<!-- File Upload and Spinner -->
 	<div class="upload-block">
 		<input type="file" accept=".csv" (change)="uploadFile($event)" [disabled]="uploading" />
 		<mat-progress-spinner
@@ -17,6 +19,7 @@
 		</mat-progress-spinner>
 	</div>
 
+	<!-- Invalid Input -->
 	<p *ngIf="uploadError" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;">
 		{{ uploadError }}
 	</p>
@@ -27,6 +30,7 @@
 		Any incorrect training data will degrade accuracy of auto-assignments.
 	</p>
 
+	<!-- Buttons -->
 	<br>
 	<button 
 		mat-stroked-button 

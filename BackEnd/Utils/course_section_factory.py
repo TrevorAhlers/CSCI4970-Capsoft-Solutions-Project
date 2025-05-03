@@ -1,19 +1,4 @@
-#####################################################################################
-# 	CourseSection Object Instantiation
-#
-#
-#	Data extraction from input CSV and preparing the data to populate class objects.
-#	All functions skip the first two lines of the file and treat the third line
-#	as the header row (skiprows=2, header=0).
-#
-#	Builds a dictionary of CourseSection objects keyed by columns: "Catalog Number"
-# 	[hyphen] "Section #""
-#
-#	Example: course_sections["1030-1"] = new CourseSection(inputDictionary)
-# 
-# 	We use the course_sections dictionary to look-up a CourseSection Object by
-# 	its course code with its section number.
-#....................................................................................
+# Populates CourseSection objs
 
 import csv
 import os
@@ -22,6 +7,7 @@ import re
 from typing import Dict, List, Optional
 from Model.CourseSection import CourseSection, CourseSectionEnum
 
+#....................................................................................
 float_headers = [
 	"Section #",
 	"Credit Hrs Min",
@@ -35,13 +21,13 @@ float_headers = [
 	"Cross-list Rm Cap Request",
 ]
 
-
-#....................................................................................
-#####################################################################################
-# 	Reads the CSV and creates a dictionary of CourseSection 
-# objects. Each entry is keyed by "Catalog Number-Section #", for example "1030-1".
 #....................................................................................
 def build_course_sections(filename: str) -> Dict[str, CourseSection]:
+	"""
+	Reads a CSV and returns a dict of CourseSection objs
+	"""
+
+
 	df = pd.read_csv(filename, skiprows=2, header=0)
 	course_sections: Dict[str, CourseSection] = {}
 
@@ -55,7 +41,7 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 				# We make_int() if it can be a value that ends in ".0", which we
 				# don't want.
 				if enum_col.value in float_headers:
-					row_data[enum_col.value] = make_int_str(cell_str)
+					row_data[enum_col.value] = strip_decimal(cell_str)
 				else:
 					row_data[enum_col.value] = cell_str
 
@@ -133,43 +119,23 @@ def build_course_sections(filename: str) -> Dict[str, CourseSection]:
 
 	return filtered_sections
 
+#....................................................................................
+def strip_decimal(attribute: str) -> str:
+	"""
+	Removes a trailing '.0'
+	"""
 
-#....................................................................................
-#####################################################################################
-# 	Removes trailing ".0" if it exists in the attribute 
-#....................................................................................
-def make_int_str(attribute: str) -> str:
 	if attribute.endswith(".0"):
 		attribute = attribute[:-2]
 		return attribute
 	return attribute
 
-
-#....................................................................................
-#####################################################################################
-# 	Reads the CSV to find all attribute strings
-#....................................................................................
-def get_headers(filename: str, defaults: Optional[Dict[int, str]] = None) -> List[str]:
-
-	try:
-		df = pd.read_csv(filename, skiprows=2, header=0)
-		if not defaults:
-			defaults = {}
-		columns = list(df.columns)
-		for i, col_name in enumerate(columns):
-			if not col_name.strip():
-				columns[i] = defaults.get(i, f"Column{i+1}")
-		return columns
-	except FileNotFoundError as e:
-		raise FileNotFoundError(f"CSV file not found: {filename}") from e
-
-
-#....................................................................................
-#####################################################################################
-# 	Some sections fail to account for all crosslisted classes... so we investigate
-#	by exploring all crosslistings of the crosslistings to get a full list.
 #....................................................................................
 def finalize_all_crosslistings(sections: Dict[str, CourseSection]) -> None:
+	"""
+	Expands and removes duplicates from all crosslistings
+	"""
+
 	for sec_id, section in sections.items():
 		expanded = set()
 		stack = list(section.crosslistings_cleaned)

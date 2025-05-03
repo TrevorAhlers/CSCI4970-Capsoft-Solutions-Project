@@ -1,5 +1,7 @@
+<!-- Header -->
 <h2 style="margin-top: 16px; margin-left: 12px">Select Columns</h2>
 
+<!-- Column Selection -->
 <div class="checkbox-grid">
 	<mat-checkbox
 		*ngFor="let col of data.allColumns"
@@ -9,6 +11,7 @@
 	</mat-checkbox>
 </div>
 
+<!-- Buttons -->
 <div style="margin-top: 16px; margin-left: 12px; margin-bottom: 16px;">
 	<button mat-button (click)="cancel()" style="margin-right: 12px;">Cancel</button>
 	<button mat-raised-button color="primary" (click)="save()">Save</button>

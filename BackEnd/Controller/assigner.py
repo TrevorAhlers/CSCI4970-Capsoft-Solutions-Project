@@ -4,7 +4,7 @@ from Model.Classroom import Classroom, DAY_OFFSETS
 from Model.CourseSection import CourseSection, combine_section_info
 from typing import List, Tuple
 
-
+#...........................................................................................................
 def default_assignment(classrooms: Dict[str, Classroom], sections: Dict[str, CourseSection], logic: set[str]):
 	"""
 	Main entry point to the auto-assigner

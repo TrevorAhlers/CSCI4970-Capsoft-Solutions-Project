@@ -15,7 +15,7 @@ export class RegistrationComponent {
 
 	createAnAccount = new FormGroup({
 		username: new FormControl('', Validators.required),
-		email:    new FormControl('', [Validators.required, Validators.email]),
+		email: new FormControl('', [Validators.required, Validators.email]),
 		password: new FormControl('', Validators.required),
 		confirm_password: new FormControl('', Validators.required)
 	});
@@ -26,7 +26,7 @@ export class RegistrationComponent {
 
 		const payload = {
 			username: f.username,
-			email:    f.email,
+			email: f.email,
 			password: f.password
 		};
 

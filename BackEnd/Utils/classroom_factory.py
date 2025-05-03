@@ -1,8 +1,4 @@
-#####################################################################################
-# 	Classroom Object Instantiation
-# 
-#
-#....................................................................................
+# Populates Classroom objects
 
 import csv
 import os
@@ -13,6 +9,13 @@ from Model.Classroom import Classroom, ClassroomEnum
 from Model.CourseSection import CourseSection, CourseSectionEnum
 
 def build_classrooms(filename: str, sections: Dict[str, CourseSection]) -> Dict[str, Classroom]:
+	"""
+	Reads CSV and builds Classroom objs
+
+	Links them to match CourseSections objs
+
+	Assigns default data if missing or we don't have that room
+	"""
 
 	classroom_keys = []
 

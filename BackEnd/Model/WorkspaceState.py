@@ -1,3 +1,6 @@
+# Stores user selections for convenience when the platform is accessed later... like columns, auto-sorting strategies etc...
+# Unfortunately not implemented.
+
 from enum import Enum
 import re
 from typing import Dict, List, Tuple

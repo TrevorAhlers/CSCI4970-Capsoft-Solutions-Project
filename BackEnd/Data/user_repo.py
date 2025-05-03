@@ -2,23 +2,33 @@ import mysql.connector, json
 from contextlib import contextmanager
 from Model.User import User
 
-DB_CONFIG = {
+DBconFIG = {
 	'host': 'app-db-1.c6zkyqugocxt.us-east-1.rds.amazonaws.com',
 	'user': 'capsoftdb',
 	'password': 'csci4970',
 	'database': 'maindb'
 }
 
+#...............................................
 @contextmanager
-def _con():
-	con = mysql.connector.connect(**DB_CONFIG)
+def con():
+	"""
+	Opens DB connection
+	"""
+
+	con = mysql.connector.connect(**DBconFIG)
 	try:
 		yield con
 	finally:
 		con.close()
 
+#...............................................
 def init_db():
-	with _con() as con:
+	"""
+	Creates the users table if needed
+	"""
+
+	with con() as con:
 		con.cursor().execute("""
 			CREATE TABLE IF NOT EXISTS users(
 				id  VARCHAR(255) PRIMARY KEY,
@@ -27,23 +37,17 @@ def init_db():
 		""")
 		con.commit()
 
-def _dump(u: User) -> str:
+#...............................................
+def dump(u: User) -> str:
 	"""
-	Create the JSON payload stored in the `obj` column.
+	User object to JSON string for DB storage
+	"""
 
-	* id column (written elsewhere) is "username:email"
-	* inside JSON we keep them separate:
-	    { "user_id": "username",
-	      "email"  : "username@example.com",
-	      "user_password": "…",
-	      "workspace_state": {...} }
-	"""
 	ws = {}
 	if hasattr(u.workspace_state, 'to_json'):
 		try:	ws = u.workspace_state.to_json()
 		except Exception:	pass
 
-	# split the id that came in as "username:email"
 	username, email = (u.user_id.split(':', 1) + [''])[:2]
 
 	return json.dumps({
@@ -53,28 +57,39 @@ def _dump(u: User) -> str:
 		"workspace_state": ws
 	})
 
+#...............................................
 def upsert(user: User):
-	with _con() as con:
+	"""
+	Inserts or updates a user row in the DB with the id
+	"""
+
+	with con() as con:
 		con.cursor().execute("""
 			INSERT INTO users(id,obj)
 			VALUES (%s,%s)
 			ON DUPLICATE KEY UPDATE obj = VALUES(obj)
-		""", (user.user_id, _dump(user)))
+		""", (user.user_id, dump(user)))
 		con.commit()
 
+#...............................................
 def fetch_one(uid: str) -> dict|None:
-	with _con() as con:
+	"""
+	Gets a user row from the DB by exact ID
+	"""
+
+	with con() as con:
 		cur = con.cursor()
 		cur.execute("SELECT obj FROM users WHERE id = %s", (uid,))
 		row = cur.fetchone()
 		return json.loads(row[0]) if row else None
 
+#...............................................
 def get_by_username(username: str) -> dict|None:
 	"""
-	Return the JSON row whose id starts with 'username:'.
-	If duplicates ever exist we return the first.
+	Returns user whose ID starts with the given username
 	"""
-	with _con() as con:
+
+	with con() as con:
 		cur = con.cursor()
 		cur.execute("SELECT obj FROM users WHERE id LIKE %s LIMIT 1", (f"{username}:%",))
 		row = cur.fetchone()

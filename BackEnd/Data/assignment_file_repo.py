@@ -1,4 +1,5 @@
-# Data/assignment_file_repo.py
+# DB transactions for assignment files
+
 import pickle, mysql.connector
 from contextlib import contextmanager
 from Model.AssignmentFile import AssignmentFile
@@ -10,13 +11,22 @@ DB_CONFIG = {
 	'database': 'maindb'
 }
 
+#................................................................
 @contextmanager
 def get_con():
+	"""
+	Starts DB connection
+	"""
+
 	con = mysql.connector.connect(**DB_CONFIG)
 	try:	yield con
 	finally:	con.close()
 
 def init_db():
+	"""
+	Creates table if needed
+	"""
+
 	with get_con() as con:
 		con.cursor().execute("""
 			CREATE TABLE IF NOT EXISTS assignment_files(
@@ -26,7 +36,12 @@ def init_db():
 		""")
 		con.commit()
 
+#................................................................
 def save(af: AssignmentFile):
+	"""
+	Stores or updates a pickled AssignmentFile in the DB
+	"""
+
 	with get_con() as con:
 		con.cursor().execute("""
 			INSERT INTO assignment_files(filename,obj)
@@ -35,7 +50,12 @@ def save(af: AssignmentFile):
 		""", (af._filename, pickle.dumps(af)))
 		con.commit()
 
+#................................................................
 def list_assignment_files():
+	"""
+	Returns a list of all filenames from the database
+	"""
+
 	with get_con() as con:
 		cur = con.cursor()
 		cur.execute("SELECT filename FROM assignment_files ORDER BY filename")

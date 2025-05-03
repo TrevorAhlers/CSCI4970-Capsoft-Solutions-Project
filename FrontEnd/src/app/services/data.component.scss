@@ -1,64 +1,53 @@
-
 :host {
-    display: flex;
-   
-    height: 100vh;
-  background: lightcyan;
-    border: 1px solid black;
-    padding: 10px;
-    overflow: auto; 
-    
-  }
-
-.profile_box.your_profile{
-   position: relative;
-   bottom: 500px;
-   
+	display: flex;
+	height: 100vh;
+	background: lightcyan;
+	border: 1px solid black;
+	padding: 10px;
+	overflow: auto;
 }
 
-.back_home_button{
-    position: relative;
-    bottom: 100px;
-    left:130px;
-    
-}
-.profile_box{
-
-   
-    border: 5px solid lightgrey;
-    padding: 40px;
-    margin: 2px;
-    box-shadow: 10px 5px 5px grey;
-    border-color: black;
-    background-color: lightblue;
-    width:240px;
-    height:130px;
-    position: relative;
-    resize: both; 
-    overflow: auto; 
-    
-    left: 10px;
+.profile_box.your_profile {
+	position: relative;
+	bottom: 500px;
 }
 
-.user_pic{
-    width:100px;
-    height:100px;
-    position: relative;
-    bottom: 10px;
+.back_home_button {
+	position: relative;
+	bottom: 100px;
+	left: 130px;
+}
+
+.profile_box {
+	border: 5px solid lightgrey;
+	padding: 40px;
+	margin: 2px;
+	box-shadow: 10px 5px 5px grey;
+	border-color: black;
+	background-color: lightblue;
+	width: 240px;
+	height: 130px;
+	position: relative;
+	resize: both;
+	overflow: auto;
+	left: 10px;
+}
+
+.user_pic {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	bottom: 10px;
 }
 
 .resizable-box {
-    margin-left: 50px;
-    border: 2px solid #333;
-    background: lightgray;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: auto;
-    resize: both; 
-    border-collapse: collapse
-
-  }
-
-
-  
+	margin-left: 50px;
+	border: 2px solid #333;
+	background: lightgray;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	overflow: auto;
+	resize: both;
+	border-collapse: collapse;
+}

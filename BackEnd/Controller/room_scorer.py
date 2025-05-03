@@ -1,10 +1,4 @@
-#####################################################################################
-# 	Room Scorer
-#
-#	Assigns scores to rooms for each course-section, so we know historically which
-#	assignments have worked in the past, and how often.
-#
-#....................................................................................
+# Makes frequency maps for historical assignment logic
 
 import os
 import pandas as pd
@@ -25,28 +19,24 @@ float_headers = [
 	"Cross-list Rm Cap Request",
 ]
 
+#.........................................................................
 def split_rooms(room):
+	"""
+	Splits a room string into a list of individual room names
+	"""
+
 	if not isinstance(room, str):
 		room = str(room) if pd.notna(room) else ""
 	if ';' in room:
 		return [r for r in room.split("; ") if r != 'Partially Online']
 	return [room] if room else []
 
-
-
-import os
-import pandas as pd
-from typing import Dict, List
-
-def split_rooms(room):
-	if not isinstance(room, str):
-		room = str(room) if pd.notna(room) else ""
-	if ';' in room:
-		return [r for r in room.split('; ') if r != 'Partially Online']
-	return [room] if room else []
-
-
+#.........................................................................
 def map_assignment_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
+	"""
+	Builds a dict map of how often each CourseSection is assigned to specific rooms
+	"""
+
 	output_map: Dict[str, Dict[str, int]] = {}
 
 	for filename in filenames:
@@ -57,7 +47,7 @@ def map_assignment_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
 		for _, row in df.iterrows():
 			subj = str(row.get("Subject Code", ""))
 			num = str(row.get("Catalog Number", ""))
-			section_str = make_int_str(str(row.get("Section #", "")))
+			section_str = strip_decimal(str(row.get("Section #", "")))
 			key = f"{subj} {num}-{section_str}"
 
 			ss_room = row.get("Room", "")
@@ -73,7 +63,12 @@ def map_assignment_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
 
 	return output_map
 
+#.........................................................................
 def map_department_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
+	"""
+	Builds a dict map showing how often each department is used for each room
+	"""
+
 	output_map: Dict[str, Dict[str, int]] = {}
 
 	for filename in filenames:
@@ -94,6 +89,9 @@ def map_department_freq(filenames: List[str]) -> Dict[str, Dict[str, int]]:
 
 	return output_map
 
-
-def make_int_str(attribute: str) -> str:
+#.........................................................................
+def strip_decimal(attribute: str) -> str:
+	"""
+	Removes any .0 values from numbers like 1.0
+	"""
 	return attribute[:-2] if attribute.endswith(".0") else attribute

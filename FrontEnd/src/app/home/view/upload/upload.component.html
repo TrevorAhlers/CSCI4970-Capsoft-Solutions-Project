@@ -1,18 +1,19 @@
+<!-- Card Container -->
 <mat-card class="upload" appearance="outlined">
+	
+	<!-- Header -->
 	<mat-card-header>
 		<mat-card-title>Upload File</mat-card-title>
 	</mat-card-header>
 
 	<mat-divider></mat-divider>
 
+	<!-- Loading Spinner -->
 	<div class="spinner-overlay my-upload-spinner" *ngIf="loading">
 		<mat-progress-spinner mode="indeterminate" color="warn"></mat-progress-spinner>
 	</div>
 
-	<mat-card-content>
-		<form></form>
-	</mat-card-content>
-
+	<!-- Art -->
 	<img
 		class="upload-pic"
 		[class.dimmed]="loading"
@@ -22,6 +23,7 @@
 
 	<mat-card-content class="space"></mat-card-content>
 
+	<!-- File Input -->
 	<mat-card-content class="file">
 		<input
 			type="file"
@@ -34,12 +36,15 @@
 		</p>
 	</mat-card-content>
 	
+	<!-- Buttons/Selections -->
 	<div class="column-btn-container">
 		<mat-card-content class="manual-override-checkbox">
 			<mat-checkbox [(ngModel)]="manualOverride" [disabled]="loading">
 				Manual assignment only (disable all auto-assignment)
 			</mat-checkbox>
 		</mat-card-content>
+
+		<!-- Strategy -->
 		<button
 			mat-stroked-button
 			class="column-btn"
@@ -48,6 +53,7 @@
 			Select Auto-Assignment Strategies
 		</button>
 
+		<!-- Training Data -->
 		<button
 			mat-stroked-button
 			class="column-btn"

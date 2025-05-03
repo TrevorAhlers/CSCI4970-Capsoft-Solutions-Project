@@ -33,12 +33,12 @@ SUBJECT_CODES = {
 	"SCMT": "Supply Chain Management"
 }
 
-
-#....................................................................................
-#####################################################################################
-# 	Convert something like "9am" or "10:30pm" to minutes (0..1439) from midnight.
 #....................................................................................
 def parse_time(timestr: str) -> int:
+	"""
+	Convert a time string like '3pm' or '10:30am' into total minutes from midnight
+	"""
+
 	match = re.match(r'(\d{1,2})(?::(\d{2}))?(am|pm)', timestr.strip().lower())
 	if not match:
 		return 0
@@ -52,11 +52,11 @@ def parse_time(timestr: str) -> int:
 	return hour * 60 + minute
 
 #....................................................................................
-#####################################################################################
-# 	Given "MW 3pm-4:15pm; F 8:30am-10:20am", return a list of (day, start_min, end_min).
-#	For example: [('M', 900, 975), ('W', 900, 975), ('F', 510, 620)].
-#....................................................................................
 def parse_meeting_line(line: str) -> List[Tuple[str, int, int]]:
+	"""
+	Break a string like 'MW 3pm-4:15pm' into a list of day/start/end time tuples
+	"""
+
 	meetings = []
 	for chunk in line.split(';'):
 		parts = chunk.strip().split(maxsplit=2)
@@ -73,12 +73,18 @@ def parse_meeting_line(line: str) -> List[Tuple[str, int, int]]:
 			meetings.append((d, start_min, end_min))
 	return meetings
 
-def make_int_str(attribute: str) -> str:
+#....................................................................................
+def strip_decimal(attribute: str) -> str:
+	"""
+	Strip trailing '.0'
+	"""
+
 	if attribute.endswith(".0"):
 		attribute = attribute[:-2]
 		return attribute
 	return attribute
 
+#....................................................................................
 class ClassroomEnum(Enum):
 	ROOM             		= 'Room Number'
 	SEATS                   = 'Seats'
@@ -86,10 +92,11 @@ class ClassroomEnum(Enum):
 	COMPUTER_COUNT          = 'Computer Count'
 	INFO_AND_CONNECTIVITY   = 'Information and Connectivity'
 
+#....................................................................................
 class Classroom:
 	def __init__(self, attributes: Dict[str, str]) -> None:
 		self._room		             = attributes[ClassroomEnum.ROOM.value]
-		self._seats                  = make_int_str(attributes[ClassroomEnum.SEATS.value])
+		self._seats                  = strip_decimal(attributes[ClassroomEnum.SEATS.value])
 		self._displays               = attributes[ClassroomEnum.DISPLAYS.value]
 		self._computer_count         = attributes[ClassroomEnum.COMPUTER_COUNT.value]
 		self._info_and_connectivity  = attributes[ClassroomEnum.INFO_AND_CONNECTIVITY.value]
@@ -100,6 +107,7 @@ class Classroom:
 		# A 1440 * possible_days = total items
 		self._minute_schedule: List[List[str]] = [[] for _ in range(7 * 1440)]
 
+#....................................................................................
 	@property
 	def department_counts(self) -> Dict:
 		return self._department_counts
@@ -172,29 +180,31 @@ class Classroom:
 		self._minute_schedule = value
 
 #....................................................................................
-#####################################################################################
-# 	# Occupies minutes [start_slot, end_slot) in the _minute_schedule.
-#....................................................................................
 	def add_course_section(self, course_id: str, room: str, start_slot: int, end_slot: int) -> None:
+		"""
+		Sets a time range in the schedule for a course in this room
+		"""
+
 		for minute in range(start_slot, end_slot):
 			if room != ['To Be Announced']:
 				self._minute_schedule[minute].append(course_id)
 
 #....................................................................................
-#####################################################################################
-# 	Removes course_id from all minutes in the schedule.
-#....................................................................................
 	def remove_course_section(self, course_id: str) -> None:
+		"""
+		Remove a course from all minutes it was occupying in the schedule
+		"""
+
 		for minute_list in self._minute_schedule:
 			while course_id in minute_list:
 				minute_list.remove(course_id)
 
 #....................................................................................
-#####################################################################################
-# 	Parses course_section_object.meetings (assuming it's something like
-#	'MW 3pm-4:15pm; F 8:30am-10:20am') and adds it to this room's schedule.
-#....................................................................................
 	def add_course_section_object(self, course_section_object: CourseSection) -> None:
+		"""
+		Insert a course section object into the schedule
+		"""
+
 		schedule = course_section_object.schedule
 		self.add_section(course_section_object)
 
@@ -210,10 +220,11 @@ class Classroom:
 				self.add_course_section(section_id, room, start_slot, end_slot)
 
 #....................................................................................
-#####################################################################################
-# Convert minute-based schedule to intervals
-#....................................................................................
 	def gather_intervals(self) -> List[Tuple[str, int, int]]:
+		"""
+		Convert the minute schedule into a list of course times
+		"""
+
 		intervals: List[Tuple[str, int, int]] = []
 
 		all_courses = set()
@@ -238,10 +249,11 @@ class Classroom:
 		return intervals
 
 #....................................................................................
-#####################################################################################
-# Return interval overlaps as conflicts
-#....................................................................................
 	def find_conflicts(self) -> List[Tuple[str, int, int, str, int, int]]:
+		"""
+		Check for overlapping intervals for courses and return conflicts
+		"""
+
 		conflict_set = set()
 		intervals = self.gather_intervals()
 

@@ -7,17 +7,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ConflictCardComponent {
 
-	@Input()  conflict!: { id: string; content: string; ignored: boolean };
-	@Output() ignore	= new EventEmitter<string>();
-	@Output() restore	= new EventEmitter<string>();
+@Input()	conflict!: { id: string; content: string; ignored: boolean };
+@Output()	ignore	= new EventEmitter<string>();
+@Output()	restore	= new EventEmitter<string>();
 
-	handleIgnore(e: MouseEvent): void {
-		e.stopPropagation();
-		this.ignore.emit(this.conflict.id);
-	}
+handleIgnore(e: MouseEvent): void {
+	e.stopPropagation();
+	this.ignore.emit(this.conflict.id);
+}
 
-	handleRestore(e: MouseEvent): void {
-		e.stopPropagation();
-		this.restore.emit(this.conflict.id);
-	}
+handleRestore(e: MouseEvent): void {
+	e.stopPropagation();
+	this.restore.emit(this.conflict.id);
+}
 }

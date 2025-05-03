@@ -13,31 +13,29 @@ export class ProfileComponent {
 
 	constructor(private router: Router) {}
 
-	navigateToData() {
-		this.router.navigate(['/data']);
-	}
+navigateToData() {
+	this.router.navigate(['/data']);
+}
 
-	navigateToHome() {
-		this.router.navigate(['/home']);
-	}
+navigateToHome() {
+	this.router.navigate(['/home']);
+}
 
-	navigateToLogin() {
-		this.router.navigateByUrl('/login');
-	}
+navigateToLogin() {
+	this.router.navigateByUrl('/login');
+}
 
-	downloadCsv(): void {
-		const link = document.createElement('a');
-		link.href = `${environment.apiBaseUrl}/api/download`;
-		link.download = 'room_assignments.csv';
-		link.click();
-	}
+downloadCsv(): void {
+	const link = document.createElement('a');
+	link.href = `${environment.apiBaseUrl}/api/download`;
+	link.download = 'room_assignments.csv';
+	link.click();
+}
 
-	saveChanges(): void {
-		const link = document.createElement('a')
-		link.href      = `${environment.apiBaseUrl}/api/change-log`
-		link.download  = 'change_log.txt'
-		link.click()
-	}
-
-	
+saveChanges(): void {
+	const link = document.createElement('a')
+	link.href      = `${environment.apiBaseUrl}/api/change-log`
+	link.download  = 'change_log.txt'
+	link.click()
+}
 }

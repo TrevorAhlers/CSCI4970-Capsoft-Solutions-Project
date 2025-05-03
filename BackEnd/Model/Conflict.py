@@ -7,6 +7,9 @@ from Model.Classroom import Classroom, ClassroomEnum
 
 
 def make_time_single(times):
+	"""
+	Condense a list of [start, end] times into a single list
+	"""
 	output = []
 	for x in times:
 		output.append(x[0])
@@ -15,6 +18,10 @@ def make_time_single(times):
 
 
 def generate_conflict_id(sections: List[CourseSection], times: List[List], rooms: List, msg: str) -> str:
+	"""
+	Build a unique string ID using attributes of the conflict
+	"""
+
 	section_ids = [sec.id for sec in sections]
 
 	time_parts = [f"{t[0]}-{t[1]}" for t in times]

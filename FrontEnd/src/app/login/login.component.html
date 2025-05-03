@@ -1,5 +1,6 @@
 <div class="spacer layer1">
 
+	<!-- Capsoft Info -->
 	<div style="position: absolute; top: 10px; right: 15px; text-align: right; color: white; font-size: 0.8rem;">
 		<div>Capsoft Solutions</div>
 		<div style="font-size: 0.7rem;">capsoft&#64;proton.me</div>
@@ -8,14 +9,19 @@
 	<img src="/assets/uno_logo.png" alt="UNO logo" class="uno-logo-bg">
 	<img src="/assets/pki_logo.png" alt="PKI logo" class="logo-bg">
 
+	<!-- Login Container -->
 	<div class="login-container">
 		<mat-card class="login-mat_container">
+			
+			<!-- Form -->
 			<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
 				<div class="title_login">
 					<mat-card-title>Login</mat-card-title>
 				</div>
 
 				<mat-card-content>
+
+					<!-- Username -->
 					<p class="username_title">Your Username</p>
 					<mat-form-field appearance="outline" class="username_box">
 						<input matInput placeholder="Username" formControlName="username">
@@ -24,6 +30,7 @@
 						</mat-error>
 					</mat-form-field>
 
+					<!-- Password -->
 					<p class="password_title">Your Password</p>
 					<mat-form-field appearance="outline" class="password_box">
 						<input type="password" matInput placeholder="Password" formControlName="password">
@@ -32,10 +39,12 @@
 						</mat-error>
 					</mat-form-field>
 
+					<!-- Invalid Input -->
 					<div *ngIf="loginFailed" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;">
 						Invalid username or password.
 					</div>
 
+					<!-- Submit -->
 					<div class="login-button">
 						<button mat-flat-button
 								color="primary"
@@ -48,9 +57,11 @@
 				</mat-card-content>
 			</form>
 
+			<!-- Registration -->
 			<a class="registration_link" (click)="navigateToRegistration()">
 				Don't have an account?
 			</a>
+
 		</mat-card>
 	</div>
 </div>

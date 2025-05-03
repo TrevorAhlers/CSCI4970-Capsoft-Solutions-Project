@@ -5,7 +5,12 @@ from Model.Conflict import Conflict
 
 TIME_BETWEEN_CLASSES = 5
 
+#............................................................................................................
 def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Classroom]) -> List[Conflict]:
+	"""
+	Entry point... Builds a full list of conflicts using the individual strategies
+	"""
+
 	conflicts,time_count = build_time_conflicts(sections,classrooms)
 	conflicts,capacity_count = build_capacity_conflicts(sections,classrooms,conflicts)
 	conflicts,parse_count = build_parse_conflicts(sections,conflicts)
@@ -15,10 +20,11 @@ def build_conflicts(sections: Dict[str, CourseSection], classrooms: Dict[str, Cl
 	print(f"conflict_factory.py: {parse_count}/{len(conflicts)} were parse conflicts.")
 	return conflicts
 
-def build_time_conflicts(
-		sections: Dict[str, CourseSection],
-		classrooms: Dict[str, Classroom]
-) -> List[Conflict]:
+#............................................................................................................
+def build_time_conflicts(sections: Dict[str, CourseSection],classrooms: Dict[str, Classroom]) -> List[Conflict]:
+	"""
+	Creates conflicts when CourseSection objs overlap in time within the same room and aren't crosslisted
+	"""
 
 	output_conflicts: List[Conflict] = []
 
@@ -79,11 +85,14 @@ def build_time_conflicts(
 	]
 	return filtered, len(filtered)
 
-
-
+#............................................................................................................
 def build_parse_conflicts(sections: Dict[str,CourseSection], output_conflicts: List[Conflict]) -> List[Conflict]:
-	# We try to parse meeting times with their rooms. If we encounter uncertainty or failure
-	# we create a conflict object.
+	"""
+	Creates conflicts when meeting time and room parsing is ambiguous or fails entirely
+
+	This lets the user know to review the potentially problematic assignment
+	"""
+
 	start_count = len(output_conflicts)
 	for sec_id, section in sections.items():
 		if section.rooms == ['To Be Announced']:
@@ -104,7 +113,12 @@ def build_parse_conflicts(sections: Dict[str,CourseSection], output_conflicts: L
 				add_conflict_if_unique(output_conflicts, [section], [], section.rooms, str(e))
 	return output_conflicts, len(output_conflicts) - start_count
 
+#............................................................................................................
 def build_capacity_conflicts(sections: Dict[str,CourseSection], classrooms: Dict[str,Classroom], output_conflicts: List[Conflict]) -> List[Conflict]:
+	"""
+	Creates conflicts when enrollment exceeds max enrollment
+	"""
+
 	start_count = len(output_conflicts)
 	for _,section in sections.items():
 		enrollment = 0
@@ -127,37 +141,35 @@ def build_capacity_conflicts(sections: Dict[str,CourseSection], classrooms: Dict
 			continue
 	return output_conflicts, len(output_conflicts) - start_count
 
+#............................................................................................................
+def add_conflict_if_unique(output_conflicts: List[Conflict],conflict_cluster: List[CourseSection],times: List[List[int]],rooms: List[str],msg: str = "") -> List[Conflict]:
+	"""
+	Adds a new conflict object only if no matching signature already exists
+	"""
 
-def add_conflict_if_unique(
-        output_conflicts: List[Conflict],
-        conflict_cluster: List[CourseSection],
-        times: List[List[int]],
-        rooms: List[str],
-        msg: str = ""
-) -> List[Conflict]:
+	# signature ignores minute values -> no duplicates across days
+	id_signature      = tuple(sorted(sec.id for sec in conflict_cluster))
+	rooms_signature   = tuple(sorted(rooms))
+	conflict_key      = (id_signature, rooms_signature, msg)
 
-    # signature ignores minute values -> no duplicates across days
-    id_signature      = tuple(sorted(sec.id for sec in conflict_cluster))
-    rooms_signature   = tuple(sorted(rooms))
-    conflict_key      = (id_signature, rooms_signature, msg)
+	# look for an existing conflict with same signature
+	for existing in output_conflicts:
+		if getattr(existing, "_id", None) == conflict_key:
+			# merge additional time ranges
+			existing.times.extend(times)
+			return output_conflicts
 
-    # look for an existing conflict with same signature
-    for existing in output_conflicts:
-        if getattr(existing, "_id", None) == conflict_key:
-            # merge additional time ranges
-            existing.times.extend(times)
-            return output_conflicts
+	# create new conflict object
+	new_conflict = Conflict(conflict_cluster, times.copy(), rooms, msg)
+	new_conflict._id = conflict_key
+	output_conflicts.append(new_conflict)
+	return output_conflicts
 
-    # create new conflict object
-    new_conflict = Conflict(conflict_cluster, times.copy(), rooms, msg)
-    new_conflict._id = conflict_key
-    output_conflicts.append(new_conflict)
-    return output_conflicts
-
-# Remote learning classes are still assigned to rooms. We just need to know which other 
-# section its schedule mirrors. We can assign it to that matching section's room without 
-# conflict. So we suppress the conflict here.
+#............................................................................................................
 def conflict_exclusions_generator(remote_section: CourseSection, sections: Dict[str,CourseSection]) -> List:
+	"""
+	Returns section IDs that should be excluded from conflict checks based on remote-learning or room TBA
+	"""
 
 	conflict_exclusion_list = []
 

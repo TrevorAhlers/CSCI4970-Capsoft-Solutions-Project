@@ -1,5 +1,6 @@
 <h2 mat-dialog-title>Select Assignment Logic</h2>
 
+<!-- Logic Choices -->
 <mat-dialog-content>
 	<mat-checkbox
 		*ngFor="let opt of logicOptions"
@@ -8,11 +9,13 @@
 		{{ opt.label }}
 	</mat-checkbox>
 
+	<!-- Invalid Input -->
 	<div *ngIf="showError" style="color: red; margin-top: 10px;">
 		At least one assignment logic must be selected.
 	</div>
 </mat-dialog-content>
 
+<!-- Buttons -->
 <mat-dialog-actions align="end">
 	<button mat-button (click)="cancel()">Cancel</button>
 	<button mat-button color="primary" (click)="confirm()">OK</button>

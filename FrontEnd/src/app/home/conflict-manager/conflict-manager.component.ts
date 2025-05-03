@@ -29,71 +29,71 @@ export class ConflictManagerComponent implements OnInit, OnChanges, OnDestroy {
 
 	constructor(private http: HttpClient, private dataService: DataService) {}
 
-	ngOnInit(): void {
-		this.refreshSub = this.dataService.conflictRefresh$.subscribe(() => {
-			this.reloadBoth();
-		});
+ngOnInit(): void {
+	this.refreshSub = this.dataService.conflictRefresh$.subscribe(() => {
+		this.reloadBoth();
+	});
 
-		this.loadActiveConflicts();
-		this.loadIgnoredConflicts();
-	}
+	this.loadActiveConflicts();
+	this.loadIgnoredConflicts();
+}
 
-	ngOnDestroy(): void {
-		if (this.refreshSub) this.refreshSub.unsubscribe();
-	}
+ngOnDestroy(): void {
+	if (this.refreshSub) this.refreshSub.unsubscribe();
+}
 
-	ngOnChanges(changes: SimpleChanges): void {
-		if (!changes['clear']) return;
+ngOnChanges(changes: SimpleChanges): void {
+	if (!changes['clear']) return;
 
-		const { previousValue: prev, currentValue: curr } = changes['clear'];
-		if (curr === true) {
-			this.activeConflicts = [];
-			this.ignoredConflicts = [];
-			this.activeLoaded = false;
-			this.ignoredLoaded = false;
-			return;
-		}
-		if (prev === true && curr === false) this.reloadBoth();
-	}
-
-	private loadActiveConflicts(): void {
-		if (this.clear || this.activeLoaded) return;
-		this.http.get<ConflictView[]>(`${this.API}/conflicts/active`)
-			.subscribe(r => {
-				this.activeConflicts = r ?? [];
-				this.activeLoaded = true;
-			});
-	}
-
-	private loadIgnoredConflicts(): void {
-		if (this.clear || this.ignoredLoaded) return;
-		this.http.get<ConflictView[]>(`${this.API}/conflicts/ignored`)
-			.subscribe(r => {
-				this.ignoredConflicts = r ?? [];
-				this.ignoredLoaded = true;
-			});
-	}
-
-	private reloadBoth(): void {
+	const { previousValue: prev, currentValue: curr } = changes['clear'];
+	if (curr === true) {
+		this.activeConflicts = [];
+		this.ignoredConflicts = [];
 		this.activeLoaded = false;
 		this.ignoredLoaded = false;
-		this.loadActiveConflicts();
-		this.loadIgnoredConflicts();
+		return;
 	}
+	if (prev === true && curr === false) this.reloadBoth();
+}
 
-	onIgnoreConflict(id: string): void {
-		this.http.put(`${this.API}/conflict/ignore/${id}`, {})
-			.subscribe(() => this.reloadBoth());
-	}
+private loadActiveConflicts(): void {
+	if (this.clear || this.activeLoaded) return;
+	this.http.get<ConflictView[]>(`${this.API}/conflicts/active`)
+		.subscribe(r => {
+			this.activeConflicts = r ?? [];
+			this.activeLoaded = true;
+		});
+}
 
-	onRestoreConflict(id: string): void {
-		this.http.put(`${this.API}/conflict/activate/${id}`, {})
-			.subscribe(() => this.reloadBoth());
-	}
+private loadIgnoredConflicts(): void {
+	if (this.clear || this.ignoredLoaded) return;
+	this.http.get<ConflictView[]>(`${this.API}/conflicts/ignored`)
+		.subscribe(r => {
+			this.ignoredConflicts = r ?? [];
+			this.ignoredLoaded = true;
+		});
+}
 
-	switchTab(next: number): void {
-		this.tab = next;
-		if (next === 0) this.loadActiveConflicts();
-		else this.loadIgnoredConflicts();
-	}
+private reloadBoth(): void {
+	this.activeLoaded = false;
+	this.ignoredLoaded = false;
+	this.loadActiveConflicts();
+	this.loadIgnoredConflicts();
+}
+
+onIgnoreConflict(id: string): void {
+	this.http.put(`${this.API}/conflict/ignore/${id}`, {})
+		.subscribe(() => this.reloadBoth());
+}
+
+onRestoreConflict(id: string): void {
+	this.http.put(`${this.API}/conflict/activate/${id}`, {})
+		.subscribe(() => this.reloadBoth());
+}
+
+switchTab(next: number): void {
+	this.tab = next;
+	if (next === 0) this.loadActiveConflicts();
+	else this.loadIgnoredConflicts();
+}
 }

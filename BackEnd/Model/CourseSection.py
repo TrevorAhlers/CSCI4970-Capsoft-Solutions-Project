@@ -1,20 +1,9 @@
-#....................................................................................
-# CourseSection Datamodel:
-#____________________________________________________________________________________
-#
-# Enum codes, like DEPARTMENT_CODE, should be uppercase version of class object
-# variables like department_code. Logic in the data formatter relies on this
-# convention in the row_to_string() function.
-#
-#
-#....................................................................................
-
-
 from enum import Enum
 from typing import Dict, List, Tuple
 import re
 from collections import defaultdict, Counter
 
+#......................................................................
 class CourseSectionEnum(Enum):
 	DEPARTMENT_CODE    = 'Department Code'
 	SUBJECT_CODE       = 'Subject Code'
@@ -48,11 +37,13 @@ class CourseSectionEnum(Enum):
 	NOTES1             = 'Notes#1'
 	NOTES2             = 'Notes#2'
 
-
-def lower(self):
-	return self.lower
-
+#......................................................................
 def parse_rooms(room: str) -> List[str]:
+	"""
+	Cleans and normalizes a semicolon/comma-separated string of room names
+	"""
+
+
 	if not room:
 		return []
 
@@ -72,8 +63,13 @@ def parse_rooms(room: str) -> List[str]:
 
 	return output
 
-    
+#......................................................................
 def parse_meetings(line: str) -> List[Tuple[str, int, int]]:
+	"""
+	Converts a meeting pattern string to a list of (day, start, end) tuples
+	"""
+
+
 	meetings = []
 	for chunk in line.split(';'):
 		parts = chunk.strip().split(maxsplit=2)
@@ -90,7 +86,13 @@ def parse_meetings(line: str) -> List[Tuple[str, int, int]]:
 			meetings.append((d, start_min, end_min))
 	return meetings
 
+#......................................................................
 def parse_time(timestr: str) -> int:
+	"""
+	Turns a string like 3:30pm into the number of minutes since midnight
+	"""
+
+
 	match = re.match(r'(\d{1,2})(?::(\d{2}))?(am|pm)', timestr.strip().lower())
 	if not match:
 		return 0
@@ -103,7 +105,12 @@ def parse_time(timestr: str) -> int:
 		hour = 0
 	return hour * 60 + minute
 
+#......................................................................
 def extract_room_numbers(rooms: List[str]) -> List[str]:
+	"""
+	Extracts number from room names
+	"""
+
 	if not rooms:
 		return []
 	room_numbers = []
@@ -112,24 +119,28 @@ def extract_room_numbers(rooms: List[str]) -> List[str]:
 		room_numbers.append(match.group() if match else "To Be Announced")
 	return room_numbers
 
+#......................................................................
 def time_to_str(minutes: int) -> str:
-		hour = minutes // 60
-		minute = minutes % 60
-		ampm = "am"
-		if hour == 0:
-			hour = 12
-		elif hour == 12:
-			ampm = "pm"
-		elif hour > 12:
-			hour -= 12
-			ampm = "pm"
-		return f"{hour}:{minute:02}{ampm}"
+	"""
+	Turns minutes into a formatted string like 3:30pm
+	"""
+	hour = minutes // 60
+	minute = minutes % 60
+	ampm = "am"
+	if hour == 0:
+		hour = 12
+	elif hour == 12:
+		ampm = "pm"
+	elif hour > 12:
+		hour -= 12
+		ampm = "pm"
+	return f"{hour}:{minute:02}{ampm}"
 
-
-def combine_section_info(
-	section_id: str,
-	meeting_times: List[Tuple[str, int, int]],
-	rooms: List[str]) -> Tuple[List[Tuple[str, str, str, int, int]], str]:
+#......................................................................
+def combine_section_info(section_id: str, meeting_times: List[Tuple[str, int, int]], rooms: List[str]) -> Tuple[List[Tuple[str, str, str, int, int]], str]:
+	"""
+	Maps rooms with meeting times
+	"""
 	results = []
 	warning = ""
 
@@ -208,12 +219,18 @@ def combine_section_info(
 
 		return results, warning
 
+#......................................................................
 def parse_crosslistings(text):
+	"""
+	Extracts cross-listed classes from the CSV text
+	"""
+
 	pattern = r"\b([A-Za-z]{3,5}(?:[\s-]\d{1,4}[A-Za-z]?)-)0*(\d{1,3})\b"
 	matches = re.findall(pattern, text)
 	section_ids = [m[0] + m[1] for m in matches]
 	return section_ids
 
+#......................................................................
 class CourseSection:
 	def __init__(self, attributes: Dict[str, str]) -> None:
 		self._department_code   = attributes[		CourseSectionEnum.DEPARTMENT_CODE.value]
@@ -267,8 +284,11 @@ class CourseSection:
 		
 		self._crosslistings_cleaned = parse_crosslistings(self._cross_listings)
 
-
+#......................................................................
 	def update_meetings(self, value: List[Tuple[str, str, str, int, int]]) -> None:
+		"""
+		Aligns CourseSection obj meeting times and rooms from the Classroom obj schedule
+		"""
 
 		if not value:
 			self._parsed_meetings = []
@@ -291,6 +311,7 @@ class CourseSection:
 		self._room = "; ".join(sorted(set(all_rooms)))
 		self._schedule,_ = combine_section_info(self._id, self._parsed_meetings, self._rooms)
 
+#......................................................................
 	@property
 	def warning(self) -> str:
 		return self._warning

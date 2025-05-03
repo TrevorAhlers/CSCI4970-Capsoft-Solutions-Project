@@ -1,33 +1,39 @@
+<!-- Container -->
 <div class="trevor-container">
 
+	<!-- Headers -->
 	<div class="class-grid">
 		<div class="header-row">
 			<div class="cell header">Day / Time</div>
 			<div class="cell header" *ngFor="let time of timeSlots">{{ time }}</div>
 		</div>
 		
+		<!-- Rows -->
 		<div class="row" *ngFor="let day of daysOfWeek">
 			<div class="cell header" [title]="day.key">{{ day.key }}</div>
 		
+			<!-- Cells -->
 			<ng-container *ngFor="let time of timeSlots">
-			<ng-container *ngIf="getClassAt(day.key, time) as meeting">
-				<ng-container *ngIf="isClassStart(meeting, time)">
-				<div 
-					class="cell" 
-					[style.gridColumn]="'span ' + getSlotSpan(meeting.startTime, meeting.endTime)">
-					<div class="class-card">
-					<strong>{{ meeting.name }}</strong><br />
-					{{ meeting.rawMeetingText }}<br />
-					{{ meeting.room }}<br />
-					</div>
-				</div>
+				
+				<ng-container *ngIf="getClassAt(day.key, time) as meeting">
+					<ng-container *ngIf="isClassStart(meeting, time)">
+						<div 
+							class="cell" 
+							[style.gridColumn]="'span ' + getSlotSpan(meeting.startTime, meeting.endTime)">
+							<div class="class-card">
+								<strong>{{ meeting.name }}</strong><br />
+								{{ meeting.rawMeetingText }}<br />
+								{{ meeting.room }}<br />
+							</div>
+						</div>
+					</ng-container>
 				</ng-container>
+
+				<ng-container *ngIf="!getClassAt(day.key, time)">
+					<div class="cell"></div>
+				</ng-container>
+
 			</ng-container>
-		
-			<ng-container *ngIf="!getClassAt(day.key, time)">
-				<div class="cell"></div>
-			</ng-container>
-			</ng-container>
-		</div>
 		</div>
 	</div>
+</div>

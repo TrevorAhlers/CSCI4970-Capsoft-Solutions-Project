@@ -40,21 +40,19 @@ export class DataService {
 		this.conflictRefreshTrigger.next();
 	}
 
-	setCourse(course: any) {
+	setCourse(course: any): void {
 		this._selectedCourse = course;
 	}
-	
+
 	getCourse(): any {
-	return this._selectedCourse;
+		return this._selectedCourse;
 	}
 
 	getChangeLog(): Observable<string> {
-	return this.http.get(`${environment.apiBaseUrl}/api/change-log`, { responseType: 'text' })
+		return this.http.get(`${environment.apiBaseUrl}/api/change-log`, { responseType: 'text' });
 	}
 
-	getCurrentUsername(): Observable<{ username:string }> {
-		return this.http.get<{ username:string }>(
-			`${environment.apiBaseUrl}/api/current-user`
-		);
+	getCurrentUsername(): Observable<{ username: string }> {
+		return this.http.get<{ username: string }>(`${environment.apiBaseUrl}/api/current-user`);
 	}
 }

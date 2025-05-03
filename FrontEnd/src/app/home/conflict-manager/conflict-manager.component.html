@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="tab-content">
-			<!-- ACTIVE -->
+			<!-- Active -->
 			<div *ngIf="tab === 0" class="scroll-area">
 				<div *ngIf="activeConflicts.length === 0" class="empty">No active conflicts.</div>
 				<app-conflict-card
@@ -21,7 +21,7 @@
 				<img class="wave-pic" src="/assets/wave2.png">
 			</div>
 
-			<!-- IGNORED -->
+			<!-- Ignored -->
 			<div *ngIf="tab === 1" class="scroll-area">
 				<div *ngIf="ignoredConflicts.length === 0" class="empty">No ignored conflicts.</div>
 				<app-conflict-card
