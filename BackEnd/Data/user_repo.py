@@ -11,7 +11,7 @@ DBconFIG = {
 
 #...............................................
 @contextmanager
-def con():
+def _con():
 	"""
 	Opens DB connection
 	"""
@@ -28,7 +28,7 @@ def init_db():
 	Creates the users table if needed
 	"""
 
-	with con() as con:
+	with _con() as con:
 		con.cursor().execute("""
 			CREATE TABLE IF NOT EXISTS users(
 				id  VARCHAR(255) PRIMARY KEY,
@@ -63,7 +63,7 @@ def upsert(user: User):
 	Inserts or updates a user row in the DB with the id
 	"""
 
-	with con() as con:
+	with _con() as con:
 		con.cursor().execute("""
 			INSERT INTO users(id,obj)
 			VALUES (%s,%s)
@@ -77,7 +77,7 @@ def fetch_one(uid: str) -> dict|None:
 	Gets a user row from the DB by exact ID
 	"""
 
-	with con() as con:
+	with _con() as con:
 		cur = con.cursor()
 		cur.execute("SELECT obj FROM users WHERE id = %s", (uid,))
 		row = cur.fetchone()
@@ -89,7 +89,7 @@ def get_by_username(username: str) -> dict|None:
 	Returns user whose ID starts with the given username
 	"""
 
-	with con() as con:
+	with _con() as con:
 		cur = con.cursor()
 		cur.execute("SELECT obj FROM users WHERE id LIKE %s LIMIT 1", (f"{username}:%",))
 		row = cur.fetchone()
