@@ -78,7 +78,9 @@ application             = Flask(__name__)
 application.secret_key  = "your_secret_key"
 application.config["JWT_SECRET_KEY"] = "super-secret"
 jwt                     = JWTManager(application)
-CORS(application, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+CORS(application, resources={r"/*": {"origins": ["http://capsoftsolutions.com"]}}, supports_credentials=True)
+
+
 
 UPLOAD_FOLDER = "uploads"
 application.config["UPLOAD_FOLDER"]        = UPLOAD_FOLDER
@@ -140,7 +142,7 @@ def register():
 	if not all([username, email, password]):
 		return jsonify({'msg': 'Missing fields'}), 400
 
-	key  = f"{username}:{email}"
+	key  = username
 	user = User(key, password, None)
 
 	try:
@@ -150,6 +152,7 @@ def register():
 	except Exception as exc:
 		application.logger.exception(exc)
 		return jsonify({'msg': 'DB error'}), 500
+
 
 @application.route('/api/change-log', methods=['GET'])
 def download_change_log():

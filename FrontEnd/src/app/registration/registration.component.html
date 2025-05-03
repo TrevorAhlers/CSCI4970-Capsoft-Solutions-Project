@@ -1,4 +1,10 @@
 <div class="spacer layer1">
+
+	<div style="position: absolute; top: 10px; right: 15px; text-align: right; color: white; font-size: 0.8rem;">
+		<div>Capsoft Solutions</div>
+		<div style="font-size: 0.7rem;">capsoft&#64;proton.me</div>
+	</div>
+
 	<img src="/assets/uno_logo.png" alt="UNO logo" class="uno-logo-bg">
 	<img src="/assets/pki_logo.png" alt="PKI logo" class="logo-bg">
 	<div class="login-container">
@@ -13,33 +19,49 @@
 					<mat-form-field appearance="outline">
 						<mat-label>Username</mat-label>
 						<input type="text" matInput placeholder="Username" formControlName="username" />
+						<mat-error *ngIf="createAnAccount.get('username')?.touched && createAnAccount.get('username')?.invalid">
+							Username is required.
+						</mat-error>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Email</mat-label>
 						<input type="email" matInput placeholder="Email" formControlName="email" />
+						<mat-error *ngIf="createAnAccount.get('email')?.touched && createAnAccount.get('email')?.hasError('required')">
+							Email is required.
+						</mat-error>
+						<mat-error *ngIf="createAnAccount.get('email')?.touched && createAnAccount.get('email')?.hasError('email')">
+							Enter a valid email.
+						</mat-error>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Password</mat-label>
 						<input type="password" matInput placeholder="Password" formControlName="password" />
+						<mat-error *ngIf="createAnAccount.get('password')?.touched && createAnAccount.get('password')?.invalid">
+							Password is required.
+						</mat-error>
 					</mat-form-field>
 
 					<mat-form-field appearance="outline">
 						<mat-label>Confirm Password</mat-label>
 						<input type="password" matInput placeholder="Confirm Password" formControlName="confirm_password" />
+						<mat-error *ngIf="createAnAccount.get('confirm_password')?.touched && createAnAccount.get('confirm_password')?.invalid">
+							Confirmation is required.
+						</mat-error>
+						<mat-error *ngIf="createAnAccount.get('confirm_password')?.touched && createAnAccount.value.password !== createAnAccount.value.confirm_password">
+							Passwords do not match.
+						</mat-error>
 					</mat-form-field>
 
-					
 					<button mat-flat-button
-					color="primary"
-					type="submit"
-					class="register-mat"
-					[disabled]="createAnAccount.invalid || createAnAccount.value.password !== createAnAccount.value.confirm_password">
-					Create Account
+						color="primary"
+						type="submit"
+						class="register-mat"
+						[disabled]="createAnAccount.invalid || createAnAccount.value.password !== createAnAccount.value.confirm_password">
+						Create Account
 					</button>
 
-					
 				</mat-card-content>
 			</form>
 		</mat-card>

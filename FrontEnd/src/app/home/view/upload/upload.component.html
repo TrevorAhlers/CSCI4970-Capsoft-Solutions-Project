@@ -1,5 +1,4 @@
 <mat-card class="upload" appearance="outlined">
-
 	<mat-card-header>
 		<mat-card-title>Upload File</mat-card-title>
 	</mat-card-header>
@@ -30,6 +29,9 @@
 			(change)="onFileSelected($event)"
 			[disabled]="loading"
 		/>
+		<p *ngIf="uploadError" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;">
+			{{ uploadError }}
+		</p>
 	</mat-card-content>
 	
 	<div class="column-btn-container">
@@ -54,5 +56,4 @@
 			Training Data
 		</button>
 	</div>
-
 </mat-card>

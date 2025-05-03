@@ -19,19 +19,26 @@ export class DetailsComponent implements OnChanges, AfterViewInit {
 		comments: '', notes1: '', notes2: ''
 	};
 
+	errors = {
+		room: false,
+		meeting1: false,
+		maxEnrollment: false,
+		enrollment: false
+	};
+
 	ngOnChanges(): void {
 		if (this.selectedCourse?.content) {
 			const parser = new DOMParser();
 			const doc = parser.parseFromString(this.selectedCourse.content, 'text/html');
 			const pElements = Array.from(doc.querySelectorAll('p'));
-	
+
 			this.courseData = pElements.map(p => {
 				const text = p.textContent ?? '';
 				const [label, ...rest] = text.split(':');
 				return { label: label.trim(), value: rest.join(':').trim() };
 			});
 		}
-	
+
 		if (this.selectedCourse?.edit) {
 			this.userInput = {
 				room: this.selectedCourse.edit.room || '',
@@ -45,9 +52,26 @@ export class DetailsComponent implements OnChanges, AfterViewInit {
 				meeting2: '', meeting3: '', meeting4: ''
 			};
 		}
+
+		this.validate();
+	}
+
+	validate(): void {
+		const r = this.userInput.room.trim();
+		this.errors.room = r === '' || (r.length < 3 && r.toLowerCase() !== 'to be announced');
+		this.errors.meeting1 = this.userInput.meeting1.trim() === '';
+		this.errors.maxEnrollment = this.userInput.maxEnrollment.trim() === '';
+		this.errors.enrollment = this.userInput.enrollment.trim() === '';
+	}
+
+	hasErrors(): boolean {
+		return Object.values(this.errors).some(x => x);
 	}
 
 	save(): void {
+		this.validate();
+		if (this.hasErrors()) return;
+
 		this.saveClicked.emit({
 			id: this.selectedCourse?.edit?.id || this.selectedCourse?.id,
 			...this.userInput

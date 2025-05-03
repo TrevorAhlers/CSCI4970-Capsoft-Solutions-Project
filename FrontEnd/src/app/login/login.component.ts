@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 	styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+	loginFailed = false;
 
 	constructor(private router: Router, private http: HttpClient) {}
 
@@ -21,13 +22,16 @@ export class LoginComponent {
 	loginUser() {
 		const { username, password } = this.loginForm.value as any;
 
-		this.http.post<{token:string}>(`${environment.apiBaseUrl}/api/login`, { username, password })
+		this.http.post<{ token: string }>(`${environment.apiBaseUrl}/api/login`, { username, password })
 			.subscribe({
 				next: res => {
+					this.loginFailed = false;
 					localStorage.setItem('jwt', res.token);
 					this.router.navigateByUrl('/home');
 				},
-				error: err => console.error('Login failed:', err)
+				error: () => {
+					this.loginFailed = true;
+				}
 			});
 	}
 

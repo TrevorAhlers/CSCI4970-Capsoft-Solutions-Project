@@ -20,6 +20,7 @@ export class UploadComponent {
 	loading = false;
 	selectedLogic: string[] = [];
 	manualOverride = false;
+	uploadError: string | null = null;
 
 	constructor(
 		private http: HttpClient,
@@ -30,6 +31,13 @@ export class UploadComponent {
 	onFileSelected(evt: any): void {
 		const f = evt.target.files[0];
 		if (!f) return;
+
+		if (!f.name.toLowerCase().endsWith('.csv')) {
+			this.uploadError = 'Only CSV files are allowed.';
+			return;
+		}
+
+		this.uploadError = null;
 
 		const form = new FormData();
 		form.append('file', f, f.name);
@@ -50,7 +58,10 @@ export class UploadComponent {
 					this.dataService.triggerConflictRefresh();
 					this.fileUploaded.emit();
 				},
-				error: err => console.error('Error uploading file:', err)
+				error: err => {
+					this.uploadError = 'Upload failed. Please try again.';
+					console.error('Error uploading file:', err);
+				}
 			});
 	}
 

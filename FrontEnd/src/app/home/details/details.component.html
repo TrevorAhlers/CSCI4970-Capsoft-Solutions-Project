@@ -5,16 +5,12 @@
 
 	<mat-divider></mat-divider>
 
-	<!-- Tabs -->
 	<div class="tab-bar">
 		<button mat-flat-button color="primary" [class.active]="tab === 0" (click)="switchTab(0)">Details</button>
 		<button mat-flat-button color="primary" [class.active]="tab === 1" (click)="switchTab(1)">Edit</button>
-		
 	</div>
 
-	<!-- Content -->
 	<div class="tab-content">
-		<!-- COURSE DETAILS TAB -->
 		<div *ngIf="tab === 0" class="scroll-area">
 			<div class="courseDetailsHtml">
 				<div *ngFor="let item of courseData">
@@ -23,32 +19,34 @@
 			</div>
 			<img class="wave-pic" src="/assets/wave1.png">
 		</div>
-		
 
-		<!-- EDIT TAB -->
 		<div *ngIf="tab === 1" class="scroll-area edit-form">
 			<label>Room(s):</label>
-			<input type="text" [(ngModel)]="userInput.room" />
+			<input type="text" [(ngModel)]="userInput.room" (ngModelChange)="validate()" />
+			<p *ngIf="errors.room" style="color: red;">Please use "To Be Announced" if no room is assigned.</p>
 			<p style="font-size: 0.75rem; color: gray;">(ex: Peter Kiewit Institute 248; Peter Kiewit Institute 176)</p>
 
 			<label>Meeting Pattern:</label>
-			<input type="text" [(ngModel)]="userInput.meeting1" />
+			<input type="text" [(ngModel)]="userInput.meeting1" (ngModelChange)="validate()" />
+			<p *ngIf="errors.meeting1" style="color: red;">Meeting pattern is required.</p>
 			<p style="font-size: 0.75rem; color: gray;">(ex: MW 10:30am-11:45am; F 8:30am-9:25am)</p>
 
 			<label>Cross-listings:</label>
 			<input type="text" [(ngModel)]="userInput.crossListings" />
 
 			<label>Maximum Enrollment:</label>
-			<input type="text" [(ngModel)]="userInput.maxEnrollment" />
+			<input type="text" [(ngModel)]="userInput.maxEnrollment" (ngModelChange)="validate()" />
+			<p *ngIf="errors.maxEnrollment" style="color: red;">Cannot be empty.</p>
 
 			<label>Enrollment:</label>
-			<input type="text" [(ngModel)]="userInput.enrollment" />
+			<input type="text" [(ngModel)]="userInput.enrollment" (ngModelChange)="validate()" />
+			<p *ngIf="errors.enrollment" style="color: red;">Cannot be empty.</p>
 
 			<label>Comments:</label>
 			<input type="text" [(ngModel)]="userInput.comments" />
 
 			<div style="margin-top: 1rem;">
-				<button class="action-button" (click)="save()">Save Changes</button>
+				<button class="action-button" (click)="save()" [disabled]="hasErrors()">Save Changes</button>
 			</div>
 			<img class="wave-pic" src="/assets/wave1.png">
 		</div>

@@ -1,32 +1,41 @@
 <div class="spacer layer1">
+
+	<div style="position: absolute; top: 10px; right: 15px; text-align: right; color: white; font-size: 0.8rem;">
+		<div>Capsoft Solutions</div>
+		<div style="font-size: 0.7rem;">capsoft&#64;proton.me</div>
+	</div>
+
 	<img src="/assets/uno_logo.png" alt="UNO logo" class="uno-logo-bg">
 	<img src="/assets/pki_logo.png" alt="PKI logo" class="logo-bg">
+
 	<div class="login-container">
 		<mat-card class="login-mat_container">
-
 			<form [formGroup]="loginForm" (ngSubmit)="loginUser()">
 				<div class="title_login">
 					<mat-card-title>Login</mat-card-title>
 				</div>
 
 				<mat-card-content>
-
-					<!-- username -->
 					<p class="username_title">Your Username</p>
 					<mat-form-field appearance="outline" class="username_box">
 						<input matInput placeholder="Username" formControlName="username">
-						<mat-error *ngIf="loginForm.get('username')?.invalid">
-							Please provide a valid username
+						<mat-error *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
+							Username is required.
 						</mat-error>
 					</mat-form-field>
 
-					<!-- password -->
 					<p class="password_title">Your Password</p>
 					<mat-form-field appearance="outline" class="password_box">
 						<input type="password" matInput placeholder="Password" formControlName="password">
+						<mat-error *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+							Password is required.
+						</mat-error>
 					</mat-form-field>
 
-					<!-- submit -->
+					<div *ngIf="loginFailed" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;">
+						Invalid username or password.
+					</div>
+
 					<div class="login-button">
 						<button mat-flat-button
 								color="primary"
@@ -36,14 +45,12 @@
 							Login
 						</button>
 					</div>
-
 				</mat-card-content>
 			</form>
 
 			<a class="registration_link" (click)="navigateToRegistration()">
 				Don't have an account?
 			</a>
-
 		</mat-card>
 	</div>
 </div>
