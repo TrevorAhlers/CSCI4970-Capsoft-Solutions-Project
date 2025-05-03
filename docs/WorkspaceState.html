@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workspace State Module &mdash; Scheduler App 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Controller" href="Controller.html" />
+    <link rel="prev" title="User Module" href="User.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Scheduler App
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Application.html">Application</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Model.html">Model</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Classroom.html">Classroom Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Conflict.html">Conflict Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CourseSection.html">CourseSection Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html">User Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Workspace State Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState"><code class="docutils literal notranslate"><span class="pre">WorkspaceState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.building_view_sort_by"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.building_view_sort_by</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.building_view_sort_direction"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.building_view_sort_direction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.classroom_view_sort_by"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.classroom_view_sort_by</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.classroom_view_sort_direction"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.classroom_view_sort_direction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.classrooms"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.classrooms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.conflicts"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.conflicts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.course_view_sort_by"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.course_view_sort_by</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.course_view_sort_direction"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.course_view_sort_direction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.ignores"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.ignores</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.left_pane"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.left_pane</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.right_pane"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.right_pane</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.sections"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.sort_by"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.sort_by</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.sort_direction"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.sort_direction</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceState.view"><code class="docutils literal notranslate"><span class="pre">WorkspaceState.view</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.BUILDING_VIEW_SORT_BY"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.BUILDING_VIEW_SORT_BY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.BUILDING_VIEW_SORT_DIRECTION"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.BUILDING_VIEW_SORT_DIRECTION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.CLASSROOM_VIEW_SORT_BY"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.CLASSROOM_VIEW_SORT_BY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.CLASSROOM_VIEW_SORT_DIRECTION"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.CLASSROOM_VIEW_SORT_DIRECTION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.CONFLICTS"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.CONFLICTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_SORT_BY"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.COURSE_VIEW_SORT_BY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_SORT_DIRECTION"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.COURSE_VIEW_SORT_DIRECTION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_STYLE"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.COURSE_VIEW_STYLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.IGNORES"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.IGNORES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.LEFT_PANE"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.LEFT_PANE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.RIGHT_PANE"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.RIGHT_PANE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.WorkspaceState.WorkspaceStateEnum.VIEW"><code class="docutils literal notranslate"><span class="pre">WorkspaceStateEnum.VIEW</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Scheduler App</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Model.html">Model</a></li>
+      <li class="breadcrumb-item active">Workspace State Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/WorkspaceState.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="workspace-state-module">
+<h1>Workspace State Module<a class="headerlink" href="#workspace-state-module" title="Link to this heading"></a></h1>
+<p>This module handles workspace states.</p>
+<dl class="py class" id="module-Model.WorkspaceState">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Model.WorkspaceState.</span></span><span class="sig-name descname"><span class="pre">WorkspaceState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that represents the state of a user’s workspace, including various view and sorting preferences
+for course, classroom, and building views.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>_workspace_name (str): The name of the workspace (default is ‘default’).
+_view (str): The current view of the workspace.
+_course_view_style (str): The style of the course view.
+_course_view_sort_by (str): The attribute by which courses are sorted.
+_course_view_sort_direction (str): The direction of sorting for the course view.
+_classroom_view_sort_by (str): The attribute by which classrooms are sorted.
+_classroom_view_sort_direction (str): The direction of sorting for the classroom view.
+_building_view_sort_by (str): The attribute by which buildings are sorted.
+_building_view_sort_direction (str): The direction of sorting for the building view.
+_left_pane (str): The state of the left pane.
+_right_pane (str): The state of the right pane.
+_conflicts (str): The list of conflicts in the workspace.
+_ignores (str): The list of items to ignore in the workspace.</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.building_view_sort_by">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">building_view_sort_by</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.building_view_sort_by" title="Link to this definition"></a></dt>
+<dd><p>Gets the attribute by which buildings are sorted.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The building view sort by attribute.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.building_view_sort_direction">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">building_view_sort_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.building_view_sort_direction" title="Link to this definition"></a></dt>
+<dd><p>Gets the direction by which buildings are sorted.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The building view sort direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.classroom_view_sort_by">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">classroom_view_sort_by</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.classroom_view_sort_by" title="Link to this definition"></a></dt>
+<dd><p>Gets the attribute by which classrooms are sorted.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The classroom view sort by attribute.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.classroom_view_sort_direction">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">classroom_view_sort_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.classroom_view_sort_direction" title="Link to this definition"></a></dt>
+<dd><p>Gets the direction by which classrooms are sorted.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The classroom view sort direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.classrooms">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">classrooms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.classrooms" title="Link to this definition"></a></dt>
+<dd><p>Gets the classrooms attribute of the workspace state.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The classrooms of the workspace.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.conflicts">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">conflicts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.conflicts" title="Link to this definition"></a></dt>
+<dd><p>Gets the conflicts list of the workspace state.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The list of conflicts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.course_view_sort_by">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">course_view_sort_by</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.course_view_sort_by" title="Link to this definition"></a></dt>
+<dd><p>Gets the attribute by which courses are sorted.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The course view sort by attribute.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.course_view_sort_direction">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">course_view_sort_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.course_view_sort_direction" title="Link to this definition"></a></dt>
+<dd><p>Gets the direction by which courses are sorted.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The course view sort direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.ignores">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ignores</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.ignores" title="Link to this definition"></a></dt>
+<dd><p>Gets the ignores list of the workspace state.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The list of ignored items.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.left_pane">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">left_pane</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.left_pane" title="Link to this definition"></a></dt>
+<dd><p>Gets the state of the left pane.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The state of the left pane.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.right_pane">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">right_pane</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.right_pane" title="Link to this definition"></a></dt>
+<dd><p>Gets the state of the right pane.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The state of the right pane.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.sections">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sections</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.sections" title="Link to this definition"></a></dt>
+<dd><p>Gets the sections attribute of the workspace state.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The sections of the workspace.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.sort_by">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sort_by</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.sort_by" title="Link to this definition"></a></dt>
+<dd><p>Gets the current sort by attribute of the workspace state.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The sort by attribute.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.sort_direction">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sort_direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.sort_direction" title="Link to this definition"></a></dt>
+<dd><p>Gets the current sort direction of the workspace state.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The sort direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceState.view">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">view</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceState.view" title="Link to this definition"></a></dt>
+<dd><p>Gets the current view of the workspace.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The current view.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Model.WorkspaceState.</span></span><span class="sig-name descname"><span class="pre">WorkspaceStateEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.BUILDING_VIEW_SORT_BY">
+<span class="sig-name descname"><span class="pre">BUILDING_VIEW_SORT_BY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Building</span> <span class="pre">View</span> <span class="pre">Sort</span> <span class="pre">By'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.BUILDING_VIEW_SORT_BY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.BUILDING_VIEW_SORT_DIRECTION">
+<span class="sig-name descname"><span class="pre">BUILDING_VIEW_SORT_DIRECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Building</span> <span class="pre">View</span> <span class="pre">Sort</span> <span class="pre">Direction'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.BUILDING_VIEW_SORT_DIRECTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.CLASSROOM_VIEW_SORT_BY">
+<span class="sig-name descname"><span class="pre">CLASSROOM_VIEW_SORT_BY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Room</span> <span class="pre">View</span> <span class="pre">Sort</span> <span class="pre">By'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.CLASSROOM_VIEW_SORT_BY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.CLASSROOM_VIEW_SORT_DIRECTION">
+<span class="sig-name descname"><span class="pre">CLASSROOM_VIEW_SORT_DIRECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Room</span> <span class="pre">View</span> <span class="pre">Sort</span> <span class="pre">Direction'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.CLASSROOM_VIEW_SORT_DIRECTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.CONFLICTS">
+<span class="sig-name descname"><span class="pre">CONFLICTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Conflicts</span> <span class="pre">List'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.CONFLICTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_SORT_BY">
+<span class="sig-name descname"><span class="pre">COURSE_VIEW_SORT_BY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Course</span> <span class="pre">View</span> <span class="pre">Sort</span> <span class="pre">By'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_SORT_BY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_SORT_DIRECTION">
+<span class="sig-name descname"><span class="pre">COURSE_VIEW_SORT_DIRECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Course</span> <span class="pre">View</span> <span class="pre">Sort</span> <span class="pre">Direction'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_SORT_DIRECTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_STYLE">
+<span class="sig-name descname"><span class="pre">COURSE_VIEW_STYLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Course</span> <span class="pre">View</span> <span class="pre">Style'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.COURSE_VIEW_STYLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.IGNORES">
+<span class="sig-name descname"><span class="pre">IGNORES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Ignore</span> <span class="pre">List'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.IGNORES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.LEFT_PANE">
+<span class="sig-name descname"><span class="pre">LEFT_PANE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Left</span> <span class="pre">Pane'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.LEFT_PANE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.RIGHT_PANE">
+<span class="sig-name descname"><span class="pre">RIGHT_PANE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Right</span> <span class="pre">Pane'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.RIGHT_PANE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.WorkspaceState.WorkspaceStateEnum.VIEW">
+<span class="sig-name descname"><span class="pre">VIEW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'View'</span></em><a class="headerlink" href="#Model.WorkspaceState.WorkspaceStateEnum.VIEW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="User.html" class="btn btn-neutral float-left" title="User Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Controller.html" class="btn btn-neutral float-right" title="Controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Group 3.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
