@@ -56,6 +56,7 @@ six==1.17.0
 tzdata==2025.2
 Werkzeug==3.1.3
 
+All experimental code is contained in our Prototyping directory. This directory essentially contains a copy of the back-end project files. Any accepted prototypes are then transitioned into the larger project structure for implementation.
 
 ## RELEASE NOTES MILESTONE 4 (v0.4.19)
 
@@ -141,12 +142,30 @@ Our web server (deployed on AWS Elastic Beanstalk) scales according to user dema
 
 We decided to have everyone create their own branch as an offshoot from the dev branch. We often calibrate our work by merging to the dev branch, and pulling from it to get the latest project information. Specific branches have not been created for the sole purpose of testing a specific feature.
 
-main        -> Release candidates\
-dev         -> All development activity that is not a candidate for release\
-dev-tyler   -> Focus on documentation, data models, data model factories, and flask routing\
-dev-Haresh  -> Focus on data extraction, data formatting, and assignment logic\
-dev-trevor  -> Front-end development and design\
-dev-honora  -> Data analysis\
-dev-fara    -> Data analysis
+main        -> Release candidates
+dev         -> All development activity that is not a candidate for release
+dev-tyler   -> Backend data models, data model factories, flask routing, utility modules, controller modules, input spreadsheet analysis, classroom attribute analysis, commands for initialization and management of Github, the Python virtual environment, Angular, Elastic Beanstalk, and an account of the python libraries considered and implemented for the project. Frontend work was also done on components including typescript, HTML, and SCSS.
 
-All experimental code is contained in our Prototyping directory. This directory essentially contains a copy of the back-end project files. Any accepted prototypes are then transitioned into the larger project structure for implementation. Currently, our most experimental prototyping is our logic to make use of our data models. Currently this means displaying information. In the future this will mean assigning rooms to course-sections and the logic to reason the appropriate assignments.
+dev-Haresh  -> Responsible for creating the home page, and creating the outline for the overall lateout of the website,  conflicts tabs, profile button, files tab, data extraction, data formatting, and assignment logic
+
+dev-Haresh1 -> Branch that was created to be up-to date with main to be eventually merge to main.
+
+dev-Haresh2 -> Created the Login, and the registration page (using mat-cards instead of manually css ), Added a cool background for the login page.
+
+dev-Haresh3 -> Made the logic behind validating account creation under registration.
+
+dev-trevor  -> Mainly used for initial implementation of the front end design and shifted more towards front end logic and development as we got further into the project. Main features like our API connection, upload, list view, details (which was overhauled by tylers branch), and calendar view were all initialized in this branch and further expanded on by other branches after being moved to the development branch. This branch was also used to tweak design SCSS and logic between front end components.
+
+dev-honora  -> Data analysis, focusing largely on parsing an extremely extensive JSON of scheduling data provided by the project sponsor. From this we were able to create a frequency map to show which departments were most often assigned to which rooms. This was used in the auto-assignment logic as the most accurate method of assignment, though it usually assigns the least amount of classes.
+
+dev-fara    -> This branch was primarily used for backend  testing. It included the implementation of backend test cases using Pytest, specifically for validating the logic around the Classroom and Section objects and ensuring correct API functionality.
+
+dev-fara2	-> This branch was created to stay up to date with both the main and dev branches. It acted as an integration point to test and resolve any merge conflicts before pushing updates to the mainline.
+
+Sphinx_doc  -> This branch was used to develop and maintain backend documentation using Sphinx. It includes auto-generated API documentation and descriptions of backend modules to improve code maintainability and onboarding for new developers.
+
+rc-1        -> release candidate 1 was created to keep the production implementation separate from the dev branch, to avoid breaking local implementation for other developers while migrating to AWS. This branch became redundant when we switched all hard-coded urls to ${environment.apiBaseUrl}... for example ${environment.apiBaseUrl}/edit/save/${courseId}
+
+e2e-test    -> This branch was dedicated to implementing end-to-end testing using Cypress. It covered user flows such as authentication, CSV uploads, conflict detection, and interaction with the scheduling interface to ensure the full application workflow functioned as intended.
+
+docs-cleanup->  Initially created to resolve formatting and structural issues in the backend documentation, this branch became redundant after those issues were incorporated into the Sphinx_doc branch. As a result, Sphinx_doc now fully replaces the need for docs_cleanup.
