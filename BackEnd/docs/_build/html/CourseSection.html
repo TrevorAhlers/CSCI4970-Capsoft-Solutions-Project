@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CourseSection Module &mdash; Scheduler App 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User Module" href="User.html" />
+    <link rel="prev" title="Conflict Module" href="Conflict.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Scheduler App
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Application.html">Application</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Model.html">Model</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Classroom.html">Classroom Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Conflict.html">Conflict Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CourseSection Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.CourseSection"><code class="docutils literal notranslate"><span class="pre">CourseSection</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.add_room"><code class="docutils literal notranslate"><span class="pre">CourseSection.add_room()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.attributes"><code class="docutils literal notranslate"><span class="pre">CourseSection.attributes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.campus"><code class="docutils literal notranslate"><span class="pre">CourseSection.campus</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.catalog_number"><code class="docutils literal notranslate"><span class="pre">CourseSection.catalog_number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.comments"><code class="docutils literal notranslate"><span class="pre">CourseSection.comments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.consent"><code class="docutils literal notranslate"><span class="pre">CourseSection.consent</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.course"><code class="docutils literal notranslate"><span class="pre">CourseSection.course</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.course_attributes"><code class="docutils literal notranslate"><span class="pre">CourseSection.course_attributes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.course_title"><code class="docutils literal notranslate"><span class="pre">CourseSection.course_title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.credit_hours"><code class="docutils literal notranslate"><span class="pre">CourseSection.credit_hours</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.credit_hours_min"><code class="docutils literal notranslate"><span class="pre">CourseSection.credit_hours_min</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.cross_list_max"><code class="docutils literal notranslate"><span class="pre">CourseSection.cross_list_max</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.cross_list_wait_cap"><code class="docutils literal notranslate"><span class="pre">CourseSection.cross_list_wait_cap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.cross_listings"><code class="docutils literal notranslate"><span class="pre">CourseSection.cross_listings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.crosslistings_cleaned"><code class="docutils literal notranslate"><span class="pre">CourseSection.crosslistings_cleaned</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.department_code"><code class="docutils literal notranslate"><span class="pre">CourseSection.department_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.end_time"><code class="docutils literal notranslate"><span class="pre">CourseSection.end_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.enrollment"><code class="docutils literal notranslate"><span class="pre">CourseSection.enrollment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.grade_mode"><code class="docutils literal notranslate"><span class="pre">CourseSection.grade_mode</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.id"><code class="docutils literal notranslate"><span class="pre">CourseSection.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.inst_method"><code class="docutils literal notranslate"><span class="pre">CourseSection.inst_method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.instructor"><code class="docutils literal notranslate"><span class="pre">CourseSection.instructor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.link_to"><code class="docutils literal notranslate"><span class="pre">CourseSection.link_to</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.max_enrollment"><code class="docutils literal notranslate"><span class="pre">CourseSection.max_enrollment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.meeting_pattern"><code class="docutils literal notranslate"><span class="pre">CourseSection.meeting_pattern</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.meetings"><code class="docutils literal notranslate"><span class="pre">CourseSection.meetings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.notes1"><code class="docutils literal notranslate"><span class="pre">CourseSection.notes1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.notes2"><code class="docutils literal notranslate"><span class="pre">CourseSection.notes2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.parsed_meetings"><code class="docutils literal notranslate"><span class="pre">CourseSection.parsed_meetings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.rm_cap_request"><code class="docutils literal notranslate"><span class="pre">CourseSection.rm_cap_request</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.room"><code class="docutils literal notranslate"><span class="pre">CourseSection.room</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.room_freq"><code class="docutils literal notranslate"><span class="pre">CourseSection.room_freq</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.room_numbers"><code class="docutils literal notranslate"><span class="pre">CourseSection.room_numbers</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.rooms"><code class="docutils literal notranslate"><span class="pre">CourseSection.rooms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.schedule"><code class="docutils literal notranslate"><span class="pre">CourseSection.schedule</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.section"><code class="docutils literal notranslate"><span class="pre">CourseSection.section</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.section_type"><code class="docutils literal notranslate"><span class="pre">CourseSection.section_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.session"><code class="docutils literal notranslate"><span class="pre">CourseSection.session</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.start_time"><code class="docutils literal notranslate"><span class="pre">CourseSection.start_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.subject_code"><code class="docutils literal notranslate"><span class="pre">CourseSection.subject_code</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.title_topic"><code class="docutils literal notranslate"><span class="pre">CourseSection.title_topic</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.wait_cap"><code class="docutils literal notranslate"><span class="pre">CourseSection.wait_cap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSection.warning"><code class="docutils literal notranslate"><span class="pre">CourseSection.warning</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.ATTRIBUTES"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.ATTRIBUTES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CAMPUS"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CAMPUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CATALOG_NUMBER"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CATALOG_NUMBER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.COMMENTS"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.COMMENTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CONSENT"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CONSENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.COURSE_ATTRIBUTES"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.COURSE_ATTRIBUTES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.COURSE_TITLE"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.COURSE_TITLE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CREDIT_HOURS"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CREDIT_HOURS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CREDIT_HOURS_MIN"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CREDIT_HOURS_MIN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CROSS_LISTINGS"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CROSS_LISTINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CROSS_LIST_MAX"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CROSS_LIST_MAX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.CROSS_LIST_WAIT_CAP"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.CROSS_LIST_WAIT_CAP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.DEPARTMENT_CODE"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.DEPARTMENT_CODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.ENROLLMENT"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.ENROLLMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.GRADE_MODE"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.GRADE_MODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.INSTRUCTOR"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.INSTRUCTOR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.INST_METHOD"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.INST_METHOD</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.LINK_TO"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.LINK_TO</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.MAX_ENROLLMENT"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.MAX_ENROLLMENT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.MEETINGS"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.MEETINGS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.MEETING_PATTERN"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.MEETING_PATTERN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.NOTES1"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.NOTES1</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.NOTES2"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.NOTES2</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.RM_CAP_REQUEST"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.RM_CAP_REQUEST</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.ROOM"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.ROOM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.SECTION"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.SECTION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.SECTION_TYPE"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.SECTION_TYPE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.SESSION"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.SESSION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.SUBJECT_CODE"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.SUBJECT_CODE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.TITLE_TOPIC"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.TITLE_TOPIC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.CourseSection.CourseSectionEnum.WAIT_CAP"><code class="docutils literal notranslate"><span class="pre">CourseSectionEnum.WAIT_CAP</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.combine_section_info"><code class="docutils literal notranslate"><span class="pre">combine_section_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.extract_room_numbers"><code class="docutils literal notranslate"><span class="pre">extract_room_numbers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.lower"><code class="docutils literal notranslate"><span class="pre">lower()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.parse_crosslistings"><code class="docutils literal notranslate"><span class="pre">parse_crosslistings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.parse_meetings"><code class="docutils literal notranslate"><span class="pre">parse_meetings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.parse_rooms"><code class="docutils literal notranslate"><span class="pre">parse_rooms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.parse_time"><code class="docutils literal notranslate"><span class="pre">parse_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.time_to_str"><code class="docutils literal notranslate"><span class="pre">time_to_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.CourseSection.update_meetings"><code class="docutils literal notranslate"><span class="pre">update_meetings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="User.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WorkspaceState.html">Workspace State Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Scheduler App</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Model.html">Model</a></li>
+      <li class="breadcrumb-item active">CourseSection Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/CourseSection.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="coursesection-module">
+<h1>CourseSection Module<a class="headerlink" href="#coursesection-module" title="Link to this heading"></a></h1>
+<p>This module handles course sections.</p>
+<dl class="py class" id="module-Model.CourseSection">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">CourseSection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.CourseSection.CourseSection" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing a course section with detailed attributes and methods for processing.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.add_room">
+<span class="sig-name descname"><span class="pre">add_room</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Model.CourseSection.CourseSection.add_room" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.attributes">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.campus">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">campus</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.campus" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.catalog_number">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">catalog_number</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.catalog_number" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.comments">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">comments</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.comments" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.consent">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">consent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.consent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.course">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">course</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.course" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.course_attributes">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">course_attributes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.course_attributes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.course_title">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">course_title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.course_title" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.credit_hours">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">credit_hours</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.credit_hours" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.credit_hours_min">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">credit_hours_min</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.credit_hours_min" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.cross_list_max">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cross_list_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.cross_list_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.cross_list_wait_cap">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cross_list_wait_cap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.cross_list_wait_cap" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.cross_listings">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cross_listings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.cross_listings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.crosslistings_cleaned">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">crosslistings_cleaned</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.crosslistings_cleaned" title="Link to this definition"></a></dt>
+<dd><p>Return cleaned cross-listings for this course section.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.department_code">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">department_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.department_code" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.end_time">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.end_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.enrollment">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enrollment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.enrollment" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.grade_mode">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">grade_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.grade_mode" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.id">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.inst_method">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inst_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.inst_method" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.instructor">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">instructor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.instructor" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.link_to">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">link_to</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.link_to" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.max_enrollment">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_enrollment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.max_enrollment" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.meeting_pattern">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">meeting_pattern</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.meeting_pattern" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.meetings">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">meetings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.meetings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.notes1">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.notes1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.notes2">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">notes2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.notes2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.parsed_meetings">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parsed_meetings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.parsed_meetings" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.rm_cap_request">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rm_cap_request</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.rm_cap_request" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.room">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">room</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.room" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.room_freq">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">room_freq</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.room_freq" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.room_numbers">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">room_numbers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.room_numbers" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.rooms">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rooms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.rooms" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.schedule">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">schedule</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.schedule" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.section">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">section</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.section" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.section_type">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">section_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.section_type" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.session">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">session</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.session" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.start_time">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.start_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.subject_code">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subject_code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.subject_code" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.title_topic">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">title_topic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.title_topic" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.wait_cap">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_cap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.wait_cap" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSection.warning">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">warning</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.CourseSection.CourseSection.warning" title="Link to this definition"></a></dt>
+<dd><p>Return the warning associated with this course section.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">CourseSectionEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.ATTRIBUTES">
+<span class="sig-name descname"><span class="pre">ATTRIBUTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Attributes'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.ATTRIBUTES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CAMPUS">
+<span class="sig-name descname"><span class="pre">CAMPUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Campus'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CAMPUS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CATALOG_NUMBER">
+<span class="sig-name descname"><span class="pre">CATALOG_NUMBER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Catalog</span> <span class="pre">Number'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CATALOG_NUMBER" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.COMMENTS">
+<span class="sig-name descname"><span class="pre">COMMENTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Comments'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.COMMENTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CONSENT">
+<span class="sig-name descname"><span class="pre">CONSENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Consent'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CONSENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.COURSE_ATTRIBUTES">
+<span class="sig-name descname"><span class="pre">COURSE_ATTRIBUTES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Course</span> <span class="pre">Attributes'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.COURSE_ATTRIBUTES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.COURSE_TITLE">
+<span class="sig-name descname"><span class="pre">COURSE_TITLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Course</span> <span class="pre">Title'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.COURSE_TITLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CREDIT_HOURS">
+<span class="sig-name descname"><span class="pre">CREDIT_HOURS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Credit</span> <span class="pre">Hrs'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CREDIT_HOURS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CREDIT_HOURS_MIN">
+<span class="sig-name descname"><span class="pre">CREDIT_HOURS_MIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Credit</span> <span class="pre">Hrs</span> <span class="pre">Min'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CREDIT_HOURS_MIN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CROSS_LISTINGS">
+<span class="sig-name descname"><span class="pre">CROSS_LISTINGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Cross-listings'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CROSS_LISTINGS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CROSS_LIST_MAX">
+<span class="sig-name descname"><span class="pre">CROSS_LIST_MAX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Cross-list</span> <span class="pre">Maximum'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CROSS_LIST_MAX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.CROSS_LIST_WAIT_CAP">
+<span class="sig-name descname"><span class="pre">CROSS_LIST_WAIT_CAP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Cross-list</span> <span class="pre">Wait</span> <span class="pre">Cap'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.CROSS_LIST_WAIT_CAP" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.DEPARTMENT_CODE">
+<span class="sig-name descname"><span class="pre">DEPARTMENT_CODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Department</span> <span class="pre">Code'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.DEPARTMENT_CODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.ENROLLMENT">
+<span class="sig-name descname"><span class="pre">ENROLLMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Enrollment'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.ENROLLMENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.GRADE_MODE">
+<span class="sig-name descname"><span class="pre">GRADE_MODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Grade</span> <span class="pre">Mode'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.GRADE_MODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.INSTRUCTOR">
+<span class="sig-name descname"><span class="pre">INSTRUCTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Instructor'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.INSTRUCTOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.INST_METHOD">
+<span class="sig-name descname"><span class="pre">INST_METHOD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Inst.</span> <span class="pre">Method'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.INST_METHOD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.LINK_TO">
+<span class="sig-name descname"><span class="pre">LINK_TO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Link</span> <span class="pre">To'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.LINK_TO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.MAX_ENROLLMENT">
+<span class="sig-name descname"><span class="pre">MAX_ENROLLMENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Maximum</span> <span class="pre">Enrollment'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.MAX_ENROLLMENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.MEETINGS">
+<span class="sig-name descname"><span class="pre">MEETINGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Meetings'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.MEETINGS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.MEETING_PATTERN">
+<span class="sig-name descname"><span class="pre">MEETING_PATTERN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Meeting</span> <span class="pre">Pattern'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.MEETING_PATTERN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.NOTES1">
+<span class="sig-name descname"><span class="pre">NOTES1</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Notes#1'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.NOTES1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.NOTES2">
+<span class="sig-name descname"><span class="pre">NOTES2</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Notes#2'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.NOTES2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.RM_CAP_REQUEST">
+<span class="sig-name descname"><span class="pre">RM_CAP_REQUEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Rm</span> <span class="pre">Cap</span> <span class="pre">Request'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.RM_CAP_REQUEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.ROOM">
+<span class="sig-name descname"><span class="pre">ROOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Room'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.ROOM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.SECTION">
+<span class="sig-name descname"><span class="pre">SECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Section</span> <span class="pre">#'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.SECTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.SECTION_TYPE">
+<span class="sig-name descname"><span class="pre">SECTION_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Section</span> <span class="pre">Type'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.SECTION_TYPE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.SESSION">
+<span class="sig-name descname"><span class="pre">SESSION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Session'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.SESSION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.SUBJECT_CODE">
+<span class="sig-name descname"><span class="pre">SUBJECT_CODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Subject</span> <span class="pre">Code'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.SUBJECT_CODE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.TITLE_TOPIC">
+<span class="sig-name descname"><span class="pre">TITLE_TOPIC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Title/Topic'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.TITLE_TOPIC" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.CourseSection.CourseSectionEnum.WAIT_CAP">
+<span class="sig-name descname"><span class="pre">WAIT_CAP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Wait</span> <span class="pre">Cap'</span></em><a class="headerlink" href="#Model.CourseSection.CourseSectionEnum.WAIT_CAP" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.combine_section_info">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">combine_section_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">section_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meeting_times</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rooms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Model.CourseSection.combine_section_info" title="Link to this definition"></a></dt>
+<dd><p>Combine meeting times and rooms into a structured schedule.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.extract_room_numbers">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">extract_room_numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rooms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Model.CourseSection.extract_room_numbers" title="Link to this definition"></a></dt>
+<dd><p>Extract room numbers from a list of rooms.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.lower">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">lower</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.CourseSection.lower" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.parse_crosslistings">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">parse_crosslistings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.CourseSection.parse_crosslistings" title="Link to this definition"></a></dt>
+<dd><p>Extract and clean cross-listings from a given text string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.parse_meetings">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">parse_meetings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Model.CourseSection.parse_meetings" title="Link to this definition"></a></dt>
+<dd><p>Parse meeting patterns and return a list of tuples with day, start time, and end time.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.parse_rooms">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">parse_rooms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">room</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.CourseSection.parse_rooms" title="Link to this definition"></a></dt>
+<dd><p>Parse a string representing room(s) and return a list of room(s) as strings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.parse_time">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">parse_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#Model.CourseSection.parse_time" title="Link to this definition"></a></dt>
+<dd><p>Convert time string (e.g., ‘3pm’) to minutes since midnight.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.time_to_str">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">time_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minutes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#Model.CourseSection.time_to_str" title="Link to this definition"></a></dt>
+<dd><p>Convert minutes since midnight into a 12-hour time format (e.g., ‘3:00pm’).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.CourseSection.update_meetings">
+<span class="sig-prename descclassname"><span class="pre">Model.CourseSection.</span></span><span class="sig-name descname"><span class="pre">update_meetings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Model.CourseSection.update_meetings" title="Link to this definition"></a></dt>
+<dd><p>Update the meeting schedule and room information for a course section.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Conflict.html" class="btn btn-neutral float-left" title="Conflict Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="User.html" class="btn btn-neutral float-right" title="User Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Group 3.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

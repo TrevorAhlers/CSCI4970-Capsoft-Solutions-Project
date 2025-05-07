@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classroom Module &mdash; Scheduler App 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Conflict Module" href="Conflict.html" />
+    <link rel="prev" title="Model" href="Model.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Scheduler App
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Application.html">Application</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Model.html">Model</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Classroom Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Classroom.Classroom"><code class="docutils literal notranslate"><span class="pre">Classroom</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.add_course_section"><code class="docutils literal notranslate"><span class="pre">Classroom.add_course_section()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.add_course_section_object"><code class="docutils literal notranslate"><span class="pre">Classroom.add_course_section_object()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.add_section"><code class="docutils literal notranslate"><span class="pre">Classroom.add_section()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.computer_count"><code class="docutils literal notranslate"><span class="pre">Classroom.computer_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.displays"><code class="docutils literal notranslate"><span class="pre">Classroom.displays</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.find_conflicts"><code class="docutils literal notranslate"><span class="pre">Classroom.find_conflicts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.gather_intervals"><code class="docutils literal notranslate"><span class="pre">Classroom.gather_intervals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.info_and_connectivity"><code class="docutils literal notranslate"><span class="pre">Classroom.info_and_connectivity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.remove_course_section"><code class="docutils literal notranslate"><span class="pre">Classroom.remove_course_section()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.room"><code class="docutils literal notranslate"><span class="pre">Classroom.room</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.seats"><code class="docutils literal notranslate"><span class="pre">Classroom.seats</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.Classroom.sections"><code class="docutils literal notranslate"><span class="pre">Classroom.sections</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Classroom.ClassroomEnum"><code class="docutils literal notranslate"><span class="pre">ClassroomEnum</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.ClassroomEnum.COMPUTER_COUNT"><code class="docutils literal notranslate"><span class="pre">ClassroomEnum.COMPUTER_COUNT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.ClassroomEnum.DISPLAYS"><code class="docutils literal notranslate"><span class="pre">ClassroomEnum.DISPLAYS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.ClassroomEnum.INFO_AND_CONNECTIVITY"><code class="docutils literal notranslate"><span class="pre">ClassroomEnum.INFO_AND_CONNECTIVITY</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.ClassroomEnum.ROOM"><code class="docutils literal notranslate"><span class="pre">ClassroomEnum.ROOM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Classroom.ClassroomEnum.SEATS"><code class="docutils literal notranslate"><span class="pre">ClassroomEnum.SEATS</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Classroom.make_int_str"><code class="docutils literal notranslate"><span class="pre">make_int_str()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Classroom.parse_meeting_line"><code class="docutils literal notranslate"><span class="pre">parse_meeting_line()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Classroom.parse_time"><code class="docutils literal notranslate"><span class="pre">parse_time()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Conflict.html">Conflict Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CourseSection.html">CourseSection Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WorkspaceState.html">Workspace State Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Scheduler App</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Model.html">Model</a></li>
+      <li class="breadcrumb-item active">Classroom Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Classroom.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="classroom-module">
+<h1>Classroom Module<a class="headerlink" href="#classroom-module" title="Link to this heading"></a></h1>
+<p>This module manages classroom assignments.</p>
+<dl class="py class" id="module-Model.Classroom">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Model.Classroom.</span></span><span class="sig-name descname"><span class="pre">Classroom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attributes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.Classroom.Classroom" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a classroom with its attributes and schedule. It supports adding courses
+and finding scheduling conflicts based on its weekly availability.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.add_course_section">
+<span class="sig-name descname"><span class="pre">add_course_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">room</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_slot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_slot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Model.Classroom.Classroom.add_course_section" title="Link to this definition"></a></dt>
+<dd><p>Adds a course section to the classroom’s minute schedule.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>course_id (str): The unique identifier for the course.
+room (str): The room where the course will be held.
+start_slot (int): The starting minute of the course.
+end_slot (int): The ending minute of the course.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.add_course_section_object">
+<span class="sig-name descname"><span class="pre">add_course_section_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_section_object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="CourseSection.html#Model.CourseSection.CourseSection" title="Model.CourseSection.CourseSection"><span class="pre">CourseSection</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Model.Classroom.Classroom.add_course_section_object" title="Link to this definition"></a></dt>
+<dd><p>Parses the course section object and adds it to the classroom’s schedule.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>course_section_object (CourseSection): The course section object to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.add_section">
+<span class="sig-name descname"><span class="pre">add_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="CourseSection.html#Model.CourseSection.CourseSection" title="Model.CourseSection.CourseSection"><span class="pre">CourseSection</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Model.Classroom.Classroom.add_section" title="Link to this definition"></a></dt>
+<dd><p>Adds a course section to the classroom.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>value (CourseSection): The course section to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.computer_count">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">computer_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.Classroom.Classroom.computer_count" title="Link to this definition"></a></dt>
+<dd><p>Gets the number of computers in the classroom.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The number of computers in the classroom.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.displays">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">displays</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.Classroom.Classroom.displays" title="Link to this definition"></a></dt>
+<dd><p>Gets the number of displays in the classroom.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The number of displays in the classroom.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.find_conflicts">
+<span class="sig-name descname"><span class="pre">find_conflicts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Model.Classroom.Classroom.find_conflicts" title="Link to this definition"></a></dt>
+<dd><p>Finds conflicts between courses by checking overlapping time intervals.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>List[Tuple[str, int, int, str, int, int]]: A list of conflicts, where each conflict
+contains two overlapping course intervals.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.gather_intervals">
+<span class="sig-name descname"><span class="pre">gather_intervals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Model.Classroom.Classroom.gather_intervals" title="Link to this definition"></a></dt>
+<dd><p>Gathers all course schedule intervals from the classroom’s minute schedule.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>List[Tuple[str, int, int]]: A list of tuples containing course ID and the time intervals.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.info_and_connectivity">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">info_and_connectivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.Classroom.Classroom.info_and_connectivity" title="Link to this definition"></a></dt>
+<dd><p>Gets the information and connectivity details for the classroom.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The information and connectivity details.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.remove_course_section">
+<span class="sig-name descname"><span class="pre">remove_course_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">course_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#Model.Classroom.Classroom.remove_course_section" title="Link to this definition"></a></dt>
+<dd><p>Removes a course section from the classroom’s schedule.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>course_id (str): The unique identifier for the course to remove.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.room">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">room</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.Classroom.Classroom.room" title="Link to this definition"></a></dt>
+<dd><p>Gets the classroom room number.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The classroom room number.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.seats">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">seats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.Classroom.Classroom.seats" title="Link to this definition"></a></dt>
+<dd><p>Gets the number of seats in the classroom.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The number of seats in the classroom.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Classroom.Classroom.sections">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sections</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#Model.Classroom.Classroom.sections" title="Link to this definition"></a></dt>
+<dd><p>Gets the list of course sections assigned to this classroom.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>List: The list of course sections assigned to the classroom.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Model.Classroom.ClassroomEnum">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Model.Classroom.</span></span><span class="sig-name descname"><span class="pre">ClassroomEnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.Classroom.ClassroomEnum" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum class for classroom attributes used for data mapping.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.Classroom.ClassroomEnum.COMPUTER_COUNT">
+<span class="sig-name descname"><span class="pre">COMPUTER_COUNT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Computer</span> <span class="pre">Count'</span></em><a class="headerlink" href="#Model.Classroom.ClassroomEnum.COMPUTER_COUNT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.Classroom.ClassroomEnum.DISPLAYS">
+<span class="sig-name descname"><span class="pre">DISPLAYS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Displays'</span></em><a class="headerlink" href="#Model.Classroom.ClassroomEnum.DISPLAYS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.Classroom.ClassroomEnum.INFO_AND_CONNECTIVITY">
+<span class="sig-name descname"><span class="pre">INFO_AND_CONNECTIVITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Information</span> <span class="pre">and</span> <span class="pre">Connectivity'</span></em><a class="headerlink" href="#Model.Classroom.ClassroomEnum.INFO_AND_CONNECTIVITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.Classroom.ClassroomEnum.ROOM">
+<span class="sig-name descname"><span class="pre">ROOM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Room</span> <span class="pre">Number'</span></em><a class="headerlink" href="#Model.Classroom.ClassroomEnum.ROOM" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Model.Classroom.ClassroomEnum.SEATS">
+<span class="sig-name descname"><span class="pre">SEATS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Seats'</span></em><a class="headerlink" href="#Model.Classroom.ClassroomEnum.SEATS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.Classroom.make_int_str">
+<span class="sig-prename descclassname"><span class="pre">Model.Classroom.</span></span><span class="sig-name descname"><span class="pre">make_int_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attribute</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#Model.Classroom.make_int_str" title="Link to this definition"></a></dt>
+<dd><p>Converts a string attribute to an integer string if it ends with ‘.0’.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>attribute (str): The attribute to check and convert.</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: The integer string if the attribute ends with ‘.0’, otherwise returns the original string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.Classroom.parse_meeting_line">
+<span class="sig-prename descclassname"><span class="pre">Model.Classroom.</span></span><span class="sig-name descname"><span class="pre">parse_meeting_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#Model.Classroom.parse_meeting_line" title="Link to this definition"></a></dt>
+<dd><p>Parses a string of course meeting times and returns a list of (day, start, end) 
+tuples with the corresponding start and end times in minutes.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>line (str): A string representing meeting days and times (e.g. ‘MW 3pm-4:15pm; F 8:30am-10:20am’).</p>
+</dd>
+<dt>Returns:</dt><dd><p>List[Tuple[str, int, int]]: A list of tuples representing each meeting’s day and time in minutes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.Classroom.parse_time">
+<span class="sig-prename descclassname"><span class="pre">Model.Classroom.</span></span><span class="sig-name descname"><span class="pre">parse_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#Model.Classroom.parse_time" title="Link to this definition"></a></dt>
+<dd><p>Converts a time string like ‘9am’ or ‘10:30pm’ into the number of minutes 
+from midnight (0..1439).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>timestr (str): Time string in the format ‘H:MMam/pm’ or ‘Ham/pm’.</p>
+</dd>
+<dt>Returns:</dt><dd><p>int: The equivalent time in minutes since midnight.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Model.html" class="btn btn-neutral float-left" title="Model" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Conflict.html" class="btn btn-neutral float-right" title="Conflict Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Group 3.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conflict Module &mdash; Scheduler App 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="CourseSection Module" href="CourseSection.html" />
+    <link rel="prev" title="Classroom Module" href="Classroom.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Scheduler App
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Application.html">Application</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="Model.html">Model</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Classroom.html">Classroom Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Conflict Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Conflict.Conflict"><code class="docutils literal notranslate"><span class="pre">Conflict</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.classrooms"><code class="docutils literal notranslate"><span class="pre">Conflict.classrooms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.conflict_area_end"><code class="docutils literal notranslate"><span class="pre">Conflict.conflict_area_end</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.conflict_area_start"><code class="docutils literal notranslate"><span class="pre">Conflict.conflict_area_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.conflict_message"><code class="docutils literal notranslate"><span class="pre">Conflict.conflict_message</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.id"><code class="docutils literal notranslate"><span class="pre">Conflict.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.section_count"><code class="docutils literal notranslate"><span class="pre">Conflict.section_count</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.sections"><code class="docutils literal notranslate"><span class="pre">Conflict.sections</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.times"><code class="docutils literal notranslate"><span class="pre">Conflict.times</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Model.Conflict.Conflict.to_str"><code class="docutils literal notranslate"><span class="pre">Conflict.to_str()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Conflict.generate_conflict_id"><code class="docutils literal notranslate"><span class="pre">generate_conflict_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Model.Conflict.make_time_single"><code class="docutils literal notranslate"><span class="pre">make_time_single()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="CourseSection.html">CourseSection Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="User.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="WorkspaceState.html">Workspace State Module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Controller.html">Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Utils.html">Utils</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Scheduler App</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="Model.html">Model</a></li>
+      <li class="breadcrumb-item active">Conflict Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Conflict.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="conflict-module">
+<h1>Conflict Module<a class="headerlink" href="#conflict-module" title="Link to this heading"></a></h1>
+<p>This module handles scheduling conflicts.</p>
+<dl class="py class" id="module-Model.Conflict">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Model.Conflict.</span></span><span class="sig-name descname"><span class="pre">Conflict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="CourseSection.html#Model.CourseSection.CourseSection" title="Model.CourseSection.CourseSection"><span class="pre">CourseSection</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rooms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.Conflict.Conflict" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a scheduling conflict between multiple course sections in classrooms.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.classrooms">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">classrooms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span></em><a class="headerlink" href="#Model.Conflict.Conflict.classrooms" title="Link to this definition"></a></dt>
+<dd><p>Gets the list of conflicting classrooms.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.conflict_area_end">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">conflict_area_end</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.Conflict.Conflict.conflict_area_end" title="Link to this definition"></a></dt>
+<dd><p>Gets the end time of the conflict.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.conflict_area_start">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">conflict_area_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.Conflict.Conflict.conflict_area_start" title="Link to this definition"></a></dt>
+<dd><p>Gets the start time of the conflict.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.conflict_message">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">conflict_message</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.Conflict.Conflict.conflict_message" title="Link to this definition"></a></dt>
+<dd><p>Gets the conflict message.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.id">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#Model.Conflict.Conflict.id" title="Link to this definition"></a></dt>
+<dd><p>Gets the unique conflict identifier.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.section_count">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">section_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Model.Conflict.Conflict.section_count" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.sections">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sections</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="CourseSection.html#Model.CourseSection.CourseSection" title="Model.CourseSection.CourseSection"><span class="pre">CourseSection</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#Model.Conflict.Conflict.sections" title="Link to this definition"></a></dt>
+<dd><p>Gets the list of conflicting course sections.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.times">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">times</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#Model.Conflict.Conflict.times" title="Link to this definition"></a></dt>
+<dd><p>Gets the list of conflicting time intervals.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Model.Conflict.Conflict.to_str">
+<span class="sig-name descname"><span class="pre">to_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#Model.Conflict.Conflict.to_str" title="Link to this definition"></a></dt>
+<dd><p>Returns a formatted string representation of the conflict.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: A formatted string describing the conflict details.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.Conflict.generate_conflict_id">
+<span class="sig-prename descclassname"><span class="pre">Model.Conflict.</span></span><span class="sig-name descname"><span class="pre">generate_conflict_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="CourseSection.html#Model.CourseSection.CourseSection" title="Model.CourseSection.CourseSection"><span class="pre">CourseSection</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rooms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#Model.Conflict.generate_conflict_id" title="Link to this definition"></a></dt>
+<dd><p>Generates a unique identifier for a conflict based on section IDs, times, rooms, and an optional message.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>sections (List[CourseSection]): List of conflicting course sections.
+times (List[List[int]]): List of time intervals causing the conflict.
+rooms (List[str]): List of rooms involved in the conflict.
+msg (str): Additional conflict message.</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: A unique string representing the conflict.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Model.Conflict.make_time_single">
+<span class="sig-prename descclassname"><span class="pre">Model.Conflict.</span></span><span class="sig-name descname"><span class="pre">make_time_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">times</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Model.Conflict.make_time_single" title="Link to this definition"></a></dt>
+<dd><p>Flattens a list of time intervals into a single list of time points.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>times (List[List[int]]): A list of start and end time pairs.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List[int]: A flattened list containing individual time points.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Classroom.html" class="btn btn-neutral float-left" title="Classroom Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="CourseSection.html" class="btn btn-neutral float-right" title="CourseSection Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Group 3.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
