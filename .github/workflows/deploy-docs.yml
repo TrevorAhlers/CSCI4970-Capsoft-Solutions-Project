@@ -52,8 +52,14 @@ jobs:
           </body>
           </html>
           EOF
-
+      - name: Setup dummy upload-artifact (workaround for GH bug)
+        uses: actions/upload-artifact@v3
+        if: false  # prevents it from running
+        
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v2
         with:
           path: ./publish
+
+      
+
