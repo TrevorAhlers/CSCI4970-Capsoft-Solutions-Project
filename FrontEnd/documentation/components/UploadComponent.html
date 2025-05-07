@@ -1,0 +1,1035 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>scheduler-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">scheduler-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  UploadComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/home/view/upload/upload.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Component responsible for uploading course assignment files (CSV).
+Supports selecting assignment logic and opening training data dialogs.</p>
+
+    </p>
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-upload</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./upload.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./upload.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <a href="#manualOverride" >manualOverride</a>
+                            </li>
+                            <li>
+                                <a href="#selectedLogic" >selectedLogic</a>
+                            </li>
+                            <li>
+                                <a href="#uploadError" >uploadError</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#onFileSelected" >onFileSelected</a>
+                            </li>
+                            <li>
+                                <a href="#openLogicSelector" >openLogicSelector</a>
+                            </li>
+                            <li>
+                                <a href="#openTrainingDataDialog" >openTrainingDataDialog</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#fileUploaded" >fileUploaded</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(http: HttpClient, dataService: <a href="../injectables/DataService.html" target="_self">DataService</a>, dialog: MatDialog)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/home/view/upload/upload.component.ts:26</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Initializes services used in this component.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>http</td>
+                                                  
+                                                        <td>
+                                                                    <code>HttpClient</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>HttpClient for backend communication.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>dataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>App-wide data management service.</p>
+
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>dialog</td>
+                                                  
+                                                        <td>
+                                                                    <code>MatDialog</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Material dialog service for modal dialogs.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fileUploaded"></a>
+                        <b>fileUploaded</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/home/view/upload/upload.component.ts:21</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onFileSelected"></a>
+                    <span class="name">
+                        <span ><b>onFileSelected</b></span>
+                        <a href="#onFileSelected"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onFileSelected(evt: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/app/home/view/upload/upload.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Called when a file is selected. Validates and uploads the file.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>evt</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>File input change event.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openLogicSelector"></a>
+                    <span class="name">
+                        <span ><b>openLogicSelector</b></span>
+                        <a href="#openLogicSelector"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openLogicSelector()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="81"
+                                    class="link-to-prism">src/app/home/view/upload/upload.component.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the dialog for selecting assignment logic options.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openTrainingDataDialog"></a>
+                    <span class="name">
+                        <span ><b>openTrainingDataDialog</b></span>
+                        <a href="#openTrainingDataDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openTrainingDataDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/home/view/upload/upload.component.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the dialog for managing training data files.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/home/view/upload/upload.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="manualOverride"></a>
+                    <span class="name">
+                        <span ><b>manualOverride</b></span>
+                        <a href="#manualOverride"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/home/view/upload/upload.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectedLogic"></a>
+                    <span class="name">
+                        <span ><b>selectedLogic</b></span>
+                        <a href="#selectedLogic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/home/view/upload/upload.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="uploadError"></a>
+                    <span class="name">
+                        <span ><b>uploadError</b></span>
+                        <a href="#uploadError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/home/view/upload/upload.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Output, EventEmitter } from &#x27;@angular/core&#x27;;
+import { HttpClient } from &#x27;@angular/common/http&#x27;;
+import { MatDialog } from &#x27;@angular/material/dialog&#x27;;
+import { finalize } from &#x27;rxjs/operators&#x27;;
+
+import { environment } from &#x27;src/environments/environment&#x27;;
+import { DataService } from &#x27;@services/data.service&#x27;;
+
+import { AssignmentLogicDialogComponent } from &#x27;./assignment-logic-dialog.component&#x27;;
+import { TrainingDataDialogComponent } from &#x27;./training-data-dialog.component&#x27;;
+/**
+ * Component responsible for uploading course assignment files (CSV).
+ * Supports selecting assignment logic and opening training data dialogs.
+ */
+@Component({
+	selector: &#x27;app-upload&#x27;,
+	templateUrl: &#x27;./upload.component.html&#x27;,
+	styleUrls: [&#x27;./upload.component.scss&#x27;]
+})
+export class UploadComponent {
+	@Output() fileUploaded &#x3D; new EventEmitter&lt;void&gt;();
+
+	loading &#x3D; false;
+	selectedLogic: string[] &#x3D; [];
+	manualOverride &#x3D; false;
+	uploadError: string | null &#x3D; null;
+	/**
+	 * Initializes services used in this component.
+	 * @param http HttpClient for backend communication.
+	 * @param dataService App-wide data management service.
+	 * @param dialog Material dialog service for modal dialogs.
+	 */
+	constructor(
+		private http: HttpClient,
+		private dataService: DataService,
+		private dialog: MatDialog
+	) {}
+	/**
+	 * Called when a file is selected. Validates and uploads the file.
+	 * @param evt File input change event.
+	 */
+	onFileSelected(evt: any): void {
+		const f &#x3D; evt.target.files[0];
+		if (!f) return;
+
+		if (!f.name.toLowerCase().endsWith(&#x27;.csv&#x27;)) {
+			this.uploadError &#x3D; &#x27;Only CSV files are allowed.&#x27;;
+			return;
+		}
+
+		this.uploadError &#x3D; null;
+
+		const form &#x3D; new FormData();
+		form.append(&#x27;file&#x27;, f, f.name);
+
+		if (this.manualOverride) {
+			form.append(&#x27;logic&#x27;, &#x27;__manual_only__&#x27;);
+		} else if (this.selectedLogic.length &gt; 0) {
+			form.append(&#x27;logic&#x27;, JSON.stringify(this.selectedLogic));
+		}
+
+		this.loading &#x3D; true;
+		this.http
+			.post(&#x60;${environment.apiBaseUrl}/upload&#x60;, form)
+			.pipe(finalize(() &#x3D;&gt; (this.loading &#x3D; false)))
+			.subscribe({
+				next: () &#x3D;&gt; {
+					this.dataService.triggerRefresh();
+					this.dataService.triggerConflictRefresh();
+					this.fileUploaded.emit();
+				},
+				error: err &#x3D;&gt; {
+					this.uploadError &#x3D; &#x27;Upload failed. Please try again.&#x27;;
+					console.error(&#x27;Error uploading file:&#x27;, err);
+				}
+			});
+	}
+	/**
+	 * Opens the dialog for selecting assignment logic options.
+	 */
+	openLogicSelector(): void {
+		const ref &#x3D; this.dialog.open(AssignmentLogicDialogComponent, {
+			width: &#x27;30rem&#x27;,
+			data: { selected: this.selectedLogic }
+		});
+
+		ref.afterClosed().subscribe((res: string[]) &#x3D;&gt; {
+			if (res) this.selectedLogic &#x3D; res;
+		});
+	}
+	/**
+	 * Opens the dialog for managing training data files.
+	 */
+	openTrainingDataDialog(): void {
+		this.dialog.open(TrainingDataDialogComponent, { width: &#x27;32rem&#x27; });
+	}
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- Card Container --&gt;
+&lt;mat-card class&#x3D;&quot;upload&quot; appearance&#x3D;&quot;outlined&quot;&gt;
+	
+	&lt;!-- Header --&gt;
+	&lt;mat-card-header&gt;
+		&lt;mat-card-title&gt;Upload File&lt;/mat-card-title&gt;
+	&lt;/mat-card-header&gt;
+
+	&lt;mat-divider&gt;&lt;/mat-divider&gt;
+
+	&lt;!-- Loading Spinner --&gt;
+	&lt;div class&#x3D;&quot;spinner-overlay my-upload-spinner&quot; *ngIf&#x3D;&quot;loading&quot;&gt;
+		&lt;mat-progress-spinner mode&#x3D;&quot;indeterminate&quot; color&#x3D;&quot;warn&quot;&gt;&lt;/mat-progress-spinner&gt;
+	&lt;/div&gt;
+
+	&lt;!-- Art --&gt;
+	&lt;img
+		class&#x3D;&quot;upload-pic&quot;
+		[class.dimmed]&#x3D;&quot;loading&quot;
+		src&#x3D;&quot;/assets/cloud_upload_img_grad.png&quot;
+		alt&#x3D;&quot;Upload Icon&quot;
+	/&gt;
+
+	&lt;mat-card-content class&#x3D;&quot;space&quot;&gt;&lt;/mat-card-content&gt;
+
+	&lt;!-- File Input --&gt;
+	&lt;mat-card-content class&#x3D;&quot;file&quot;&gt;
+		&lt;input
+			type&#x3D;&quot;file&quot;
+			accept&#x3D;&quot;.csv&quot;
+			(change)&#x3D;&quot;onFileSelected($event)&quot;
+			[disabled]&#x3D;&quot;loading&quot;
+		/&gt;
+		&lt;p *ngIf&#x3D;&quot;uploadError&quot; style&#x3D;&quot;color: red; font-size: 0.9rem; margin-top: 0.5rem;&quot;&gt;
+			{{ uploadError }}
+		&lt;/p&gt;
+	&lt;/mat-card-content&gt;
+	
+	&lt;!-- Buttons/Selections --&gt;
+	&lt;div class&#x3D;&quot;column-btn-container&quot;&gt;
+		&lt;mat-card-content class&#x3D;&quot;manual-override-checkbox&quot;&gt;
+			&lt;mat-checkbox [(ngModel)]&#x3D;&quot;manualOverride&quot; [disabled]&#x3D;&quot;loading&quot;&gt;
+				Manual assignment only (disable all auto-assignment)
+			&lt;/mat-checkbox&gt;
+		&lt;/mat-card-content&gt;
+
+		&lt;!-- Strategy --&gt;
+		&lt;button
+			mat-stroked-button
+			class&#x3D;&quot;column-btn&quot;
+			(click)&#x3D;&quot;openLogicSelector()&quot;
+			[disabled]&#x3D;&quot;loading&quot;&gt;
+			Select Auto-Assignment Strategies
+		&lt;/button&gt;
+
+		&lt;!-- Training Data --&gt;
+		&lt;button
+			mat-stroked-button
+			class&#x3D;&quot;column-btn&quot;
+			(click)&#x3D;&quot;openTrainingDataDialog()&quot;
+			[disabled]&#x3D;&quot;loading&quot;&gt;
+			Training Data
+		&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/mat-card&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./upload.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.upload {
+	display: flexbox;
+	align-items: center;
+	padding: 4%;
+	background-color: #dde7f0;
+	//width: 100%;
+	border-radius: 5px;
+	max-height: 92.5vh;
+	min-height: 92.5vh;
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.upload button {
+	align-self: center;
+	margin-top: auto;
+	margin-bottom: 4vh;
+}
+
+.column-btn-container {
+	position: absolute;
+	bottom: 2vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.column-btn {
+	margin: 0.25vh 0;
+	width: 20vw;
+}
+
+.upload-pic {
+	padding: 5%;
+	width: 30%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5vh;
+	opacity: 50%;
+}
+
+.file.input {
+	padding: 5%;
+	width: 30%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
+	opacity: 50%;
+}
+
+.upload_text {
+	padding: 5%;
+	width: 30%;
+	margin-right: 100%;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	opacity: 50%;
+}
+
+.space {
+	flex: 0 0 20%;
+}
+
+.file {
+	margin-left: 5%;
+}
+
+.spinner-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.7);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 10;
+}
+
+.upload-pic.dimmed,
+.file input:disabled {
+	opacity: 0.5;
+}
+
+:host ::ng-deep .mat-progress-spinner .mat-progress-spinner-path {
+	stroke: #ef5f67 !important;
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- Card Container --><mat-card class="upload" appearance="outlined">		<!-- Header -->	<mat-card-header>		<mat-card-title>Upload File</mat-card-title>	</mat-card-header>	<mat-divider></mat-divider>	<!-- Loading Spinner -->	<div class="spinner-overlay my-upload-spinner" *ngIf="loading">		<mat-progress-spinner mode="indeterminate" color="warn"></mat-progress-spinner>	</div>	<!-- Art -->	<img		class="upload-pic"		[class.dimmed]="loading"		src="/assets/cloud_upload_img_grad.png"		alt="Upload Icon"	/>	<mat-card-content class="space"></mat-card-content>	<!-- File Input -->	<mat-card-content class="file">		<input			type="file"			accept=".csv"			(change)="onFileSelected($event)"			[disabled]="loading"		/>		<p *ngIf="uploadError" style="color: red; font-size: 0.9rem; margin-top: 0.5rem;">			{{ uploadError }}		</p>	</mat-card-content>		<!-- Buttons/Selections -->	<div class="column-btn-container">		<mat-card-content class="manual-override-checkbox">			<mat-checkbox [(ngModel)]="manualOverride" [disabled]="loading">				Manual assignment only (disable all auto-assignment)			</mat-checkbox>		</mat-card-content>		<!-- Strategy -->		<button			mat-stroked-button			class="column-btn"			(click)="openLogicSelector()"			[disabled]="loading">			Select Auto-Assignment Strategies		</button>		<!-- Training Data -->		<button			mat-stroked-button			class="column-btn"			(click)="openTrainingDataDialog()"			[disabled]="loading">			Training Data		</button>	</div></mat-card></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssignmentLogicDialogComponent', 'selector': 'app-assignment-logic-dialog'},{'name': 'ClassComponent', 'selector': 'app-class-view'},{'name': 'ColumnSelectorDialogComponent', 'selector': 'app-column-selector-dialog'},{'name': 'ConflictCardComponent', 'selector': 'app-conflict-card'},{'name': 'ConflictManagerComponent', 'selector': 'app-conflict-manager'},{'name': 'DataComponent', 'selector': 'app-data'},{'name': 'DetailsComponent', 'selector': 'app-details'},{'name': 'FileManagerComponent', 'selector': 'app-file-manager'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegistrationComponent', 'selector': 'app-registration'},{'name': 'SectionComponent', 'selector': 'app-section-view'},{'name': 'SectionRowComponent', 'selector': 'app-section-row'},{'name': 'TrainingDataDialogComponent', 'selector': 'app-training-data-dialog'},{'name': 'UploadComponent', 'selector': 'app-upload'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'UploadComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'UploadComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

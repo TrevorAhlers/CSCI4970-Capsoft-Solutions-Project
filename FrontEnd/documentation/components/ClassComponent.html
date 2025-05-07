@@ -1,0 +1,1412 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>scheduler-app documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">scheduler-app documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ClassComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/home/view/classroomview/classroom.component.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Displays a schedule view of class meetings by parsing HTML from selected course data.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-class-view</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./classroom.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./classroom.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#classMeetings" >classMeetings</a>
+                            </li>
+                            <li>
+                                <a href="#daysOfWeek" >daysOfWeek</a>
+                            </li>
+                            <li>
+                                <a href="#timeSlots" >timeSlots</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#convertMinutesToTime" >convertMinutesToTime</a>
+                            </li>
+                            <li>
+                                <a href="#extractField" >extractField</a>
+                            </li>
+                            <li>
+                                <a href="#extractMeetingsFromHtml" >extractMeetingsFromHtml</a>
+                            </li>
+                            <li>
+                                <a href="#getClassAt" >getClassAt</a>
+                            </li>
+                            <li>
+                                <a href="#getSlotSpan" >getSlotSpan</a>
+                            </li>
+                            <li>
+                                <a href="#isClassStart" >isClassStart</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(dataService: <a href="../injectables/DataService.html" target="_self">DataService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:43</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>dataService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/DataService.html" target="_self" >DataService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <p>Injected service for retrieving course data.</p>
+
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="convertMinutesToTime"></a>
+                    <span class="name">
+                        <span ><b>convertMinutesToTime</b></span>
+                        <a href="#convertMinutesToTime"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>convertMinutesToTime(mins: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="136"
+                                    class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Converts a minute offset into HH:MM formatted string.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>mins</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The number of minutes past midnight.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A string in the format &quot;HH:MM&quot;.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractField"></a>
+                    <span class="name">
+                        <span ><b>extractField</b></span>
+                        <a href="#extractField"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractField(html: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, label: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="127"
+                                    class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Extracts a field value from a <code>&lt;p&gt;</code> tag in the HTML content.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>html</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The HTML string to search.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>label</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The label of the field to extract (e.g., &quot;Course&quot;).</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The extracted field value, or an empty string.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="extractMeetingsFromHtml"></a>
+                    <span class="name">
+                        <span ><b>extractMeetingsFromHtml</b></span>
+                        <a href="#extractMeetingsFromHtml"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>extractMeetingsFromHtml(html: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="64"
+                                    class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Extracts class meeting information from raw HTML content.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>html</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The HTML string containing course data.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ClassMeeting.html" target="_self" >ClassMeeting[]</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>An array of <code>ClassMeeting</code> objects.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getClassAt"></a>
+                    <span class="name">
+                        <span ><b>getClassAt</b></span>
+                        <a href="#getClassAt"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getClassAt(dayKey: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="147"
+                                    class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the class scheduled at a specific time and day, if any.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dayKey</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The day of the week key (e.g., &#39;Mon&#39;).</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>time</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The time slot to check.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../interfaces/ClassMeeting.html" target="_self" >ClassMeeting | null</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>A <code>ClassMeeting</code> object if one matches, or <code>null</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSlotSpan"></a>
+                    <span class="name">
+                        <span ><b>getSlotSpan</b></span>
+                        <a href="#getSlotSpan"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSlotSpan(start: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, end: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="169"
+                                    class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:169</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Calculates how many time slots a class spans.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>start</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>Start time in &quot;HH:MM&quot;.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>end</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>End time in &quot;HH:MM&quot;.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>The number of slots the class spans.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isClassStart"></a>
+                    <span class="name">
+                        <span ><b>isClassStart</b></span>
+                        <a href="#isClassStart"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isClassStart(meeting: <a href="../interfaces/ClassMeeting.html" target="_self">ClassMeeting</a>, time: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="160"
+                                    class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:160</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Checks if a given time is the start of a class.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>meeting</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ClassMeeting.html" target="_self" >ClassMeeting</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The class meeting.</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>time</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <p>The time slot to check.</p>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if it&#39;s the start time; otherwise, <code>false</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="52"
+                                    class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:52</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Lifecycle hook that runs on component initialization.
+Loads and parses class meeting data from the selected course.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="classMeetings"></a>
+                    <span class="name">
+                        <span ><b>classMeetings</b></span>
+                        <a href="#classMeetings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/ClassMeeting.html" target="_self" >ClassMeeting[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="daysOfWeek"></a>
+                    <span class="name">
+                        <span ><b>daysOfWeek</b></span>
+                        <a href="#daysOfWeek"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+		{ key: &#x27;Mon&#x27;, label: &#x27;M&#x27; },
+		{ key: &#x27;Tue&#x27;, label: &#x27;T&#x27; },
+		{ key: &#x27;Wed&#x27;, label: &#x27;W&#x27; },
+		{ key: &#x27;Thu&#x27;, label: &#x27;Th&#x27; },
+		{ key: &#x27;Fri&#x27;, label: &#x27;F&#x27; }
+	]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="timeSlots"></a>
+                    <span class="name">
+                        <span ><b>timeSlots</b></span>
+                        <a href="#timeSlots"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+		&#x27;08:00&#x27;, &#x27;08:30&#x27;, &#x27;09:00&#x27;, &#x27;09:30&#x27;,
+		&#x27;10:00&#x27;, &#x27;10:30&#x27;, &#x27;11:00&#x27;, &#x27;11:30&#x27;,
+		&#x27;12:00&#x27;, &#x27;12:30&#x27;, &#x27;13:00&#x27;, &#x27;13:30&#x27;,
+		&#x27;14:00&#x27;, &#x27;14:30&#x27;, &#x27;15:00&#x27;, &#x27;15:30&#x27;,
+		&#x27;16:00&#x27;, &#x27;16:30&#x27;, &#x27;17:00&#x27;, &#x27;17:00&#x27;,
+		&#x27;18:00&#x27;, &#x27;18:30&#x27;
+	]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/home/view/classroomview/classroom.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
+import { DataService } from &#x27;@services/data.service&#x27;;
+/**
+ * Interface representing the structure of a class meeting.
+ */
+interface ClassMeeting {
+	name: string;
+	room: string;
+	days: string[];
+	startTime: string;
+	endTime: string;
+	instructor: string;
+	rawstartTime: string;
+	rawendTime: string;
+	rawMeetingText?: string;
+}
+/**
+ * Displays a schedule view of class meetings by parsing HTML from selected course data.
+ */
+@Component({
+	selector: &#x27;app-class-view&#x27;,
+	templateUrl: &#x27;./classroom.component.html&#x27;,
+	styleUrls: [&#x27;./classroom.component.scss&#x27;],
+})
+export class ClassComponent implements OnInit {
+	classMeetings: ClassMeeting[] &#x3D; [];
+
+	timeSlots &#x3D; [
+		&#x27;08:00&#x27;, &#x27;08:30&#x27;, &#x27;09:00&#x27;, &#x27;09:30&#x27;,
+		&#x27;10:00&#x27;, &#x27;10:30&#x27;, &#x27;11:00&#x27;, &#x27;11:30&#x27;,
+		&#x27;12:00&#x27;, &#x27;12:30&#x27;, &#x27;13:00&#x27;, &#x27;13:30&#x27;,
+		&#x27;14:00&#x27;, &#x27;14:30&#x27;, &#x27;15:00&#x27;, &#x27;15:30&#x27;,
+		&#x27;16:00&#x27;, &#x27;16:30&#x27;, &#x27;17:00&#x27;, &#x27;17:00&#x27;,
+		&#x27;18:00&#x27;, &#x27;18:30&#x27;
+	];
+
+	daysOfWeek &#x3D; [
+		{ key: &#x27;Mon&#x27;, label: &#x27;M&#x27; },
+		{ key: &#x27;Tue&#x27;, label: &#x27;T&#x27; },
+		{ key: &#x27;Wed&#x27;, label: &#x27;W&#x27; },
+		{ key: &#x27;Thu&#x27;, label: &#x27;Th&#x27; },
+		{ key: &#x27;Fri&#x27;, label: &#x27;F&#x27; }
+	];
+	/**
+	 * @param dataService Injected service for retrieving course data.
+	 */
+	constructor(private dataService: DataService) {}
+	/**
+	 * Lifecycle hook that runs on component initialization.
+	 * Loads and parses class meeting data from the selected course.
+	 */
+	ngOnInit(): void {
+		const copiedCourse &#x3D; this.dataService.getCourse();
+		if (copiedCourse?.content) {
+			const extractedMeetings &#x3D; this.extractMeetingsFromHtml(copiedCourse.content);
+			this.classMeetings &#x3D; extractedMeetings;
+		}
+	}
+	/**
+	 * Extracts class meeting information from raw HTML content.
+	 * @param html The HTML string containing course data.
+	 * @returns An array of &#x60;ClassMeeting&#x60; objects.
+	 */
+	extractMeetingsFromHtml(html: string): ClassMeeting[] {
+		const dayMap: { [key: string]: string } &#x3D; {
+			M: &#x27;Mon&#x27;,
+			T: &#x27;Tue&#x27;,
+			W: &#x27;Wed&#x27;,
+			R: &#x27;Thu&#x27;,
+			F: &#x27;Fri&#x27;
+		};
+
+		const meetings: ClassMeeting[] &#x3D; [];
+
+		const scheduleMatch &#x3D; html.match(/Schedule:\s*\[(.*?)\]/);
+		const scheduleStr &#x3D; scheduleMatch ? scheduleMatch[1] : &#x27;&#x27;;
+
+		const rawMeetingMatch &#x3D; html.match(/Meetings:\s*(.*?)(&lt;br&gt;|&lt;\/p&gt;|\n|$)/i);
+		const rawMeetingText &#x3D; rawMeetingMatch ? rawMeetingMatch[1].trim() : &#x27;&#x27;;
+
+		const entries &#x3D; Array.from(scheduleStr.matchAll(/\(&#x27;(.*?)&#x27;,\s*&#x27;(.*?)&#x27;,\s*&#x27;(.*?)&#x27;,\s*(\d+),\s*(\d+)\)/g));
+		const courseName &#x3D; this.extractField(html, &#x27;Course&#x27;);
+		const instructor &#x3D; this.extractField(html, &#x27;Instructor&#x27;);
+		const merged: any[] &#x3D; [];
+
+		for (const match of entries) {
+			const [_, name, room, day, start, end] &#x3D; match;
+			const dayKey &#x3D; dayMap[day] ?? day;
+			const startTime &#x3D; this.convertMinutesToTime(+start);
+			const endTime &#x3D; this.convertMinutesToTime(+end);
+			const rawstartTime &#x3D; start;
+			const rawendTime &#x3D; end;
+
+			const existing &#x3D; merged.find(m &#x3D;&gt;
+				m.name &#x3D;&#x3D;&#x3D; (courseName || name) &amp;&amp;
+				m.room &#x3D;&#x3D;&#x3D; room &amp;&amp;
+				m.startTime &#x3D;&#x3D;&#x3D; startTime &amp;&amp;
+				m.endTime &#x3D;&#x3D;&#x3D; endTime &amp;&amp;
+				m.instructor &#x3D;&#x3D;&#x3D; instructor
+			);
+
+			if (existing) {
+				existing.days.push(dayKey);
+			} else {
+				merged.push({
+					name: courseName || name,
+					room: room.trim(),
+					days: [dayKey],
+					startTime,
+					endTime,
+					instructor,
+					rawstartTime,
+					rawendTime,
+					rawMeetingText
+				});
+			}
+		}
+
+		return merged;
+	}
+	/**
+	 * Extracts a field value from a &#x60;&lt;p&gt;&#x60; tag in the HTML content.
+	 * @param html The HTML string to search.
+	 * @param label The label of the field to extract (e.g., &quot;Course&quot;).
+	 * @returns The extracted field value, or an empty string.
+	 */
+	extractField(html: string, label: string): string {
+		const match &#x3D; html.match(new RegExp(&#x60;&lt;p&gt;${label}:\\s*(.*?)&lt;/p&gt;&#x60;));
+		return match ? match[1].trim() : &#x27;&#x27;;
+	}
+	/**
+	 * Converts a minute offset into HH:MM formatted string.
+	 * @param mins The number of minutes past midnight.
+	 * @returns A string in the format &quot;HH:MM&quot;.
+	 */
+	convertMinutesToTime(mins: number): string {
+		const hours &#x3D; Math.floor(mins / 60);
+		const minutes &#x3D; mins % 60;
+		return &#x60;${hours.toString().padStart(2, &#x27;0&#x27;)}:${minutes.toString().padStart(2, &#x27;0&#x27;)}&#x60;;
+	}
+	/**
+	 * Returns the class scheduled at a specific time and day, if any.
+	 * @param dayKey The day of the week key (e.g., &#x27;Mon&#x27;).
+	 * @param time The time slot to check.
+	 * @returns A &#x60;ClassMeeting&#x60; object if one matches, or &#x60;null&#x60;.
+	 */
+	getClassAt(dayKey: string, time: string): ClassMeeting | null {
+		return this.classMeetings.find(meeting &#x3D;&gt;
+			meeting.days.includes(dayKey) &amp;&amp;
+			time &gt;&#x3D; meeting.startTime &amp;&amp;
+			time &lt; meeting.endTime
+		) || null;
+	}
+	/**
+	 * Checks if a given time is the start of a class.
+	 * @param meeting The class meeting.
+	 * @param time The time slot to check.
+	 * @returns &#x60;true&#x60; if it&#x27;s the start time; otherwise, &#x60;false&#x60;.
+	 */
+	isClassStart(meeting: ClassMeeting, time: string): boolean {
+		return meeting.startTime &#x3D;&#x3D;&#x3D; time;
+	}
+	/**
+	 * Calculates how many time slots a class spans.
+	 * @param start Start time in &quot;HH:MM&quot;.
+	 * @param end End time in &quot;HH:MM&quot;.
+	 * @returns The number of slots the class spans.
+	 */
+	getSlotSpan(start: string, end: string): number {
+		const toMinutes &#x3D; (t: string) &#x3D;&gt; {
+			const [h, m] &#x3D; t.split(&#x27;:&#x27;).map(Number);
+			return h * 60 + m;
+		};
+
+		const startMinutes &#x3D; toMinutes(start);
+		const endMinutes &#x3D; toMinutes(end);
+		let startSlotIndex &#x3D; Math.floor(startMinutes / 60);
+		const startFraction &#x3D; startMinutes % 60;
+
+		if (startFraction !&#x3D;&#x3D; 0) {
+			startSlotIndex +&#x3D; 1;
+		}
+
+		const duration &#x3D; Math.ceil((endMinutes - startMinutes) / 60);
+		return duration;
+	}
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;!-- Container --&gt;
+&lt;div class&#x3D;&quot;trevor-container&quot;&gt;
+
+	&lt;!-- Headers --&gt;
+	&lt;div class&#x3D;&quot;class-grid&quot;&gt;
+		&lt;div class&#x3D;&quot;header-row&quot;&gt;
+			&lt;div class&#x3D;&quot;cell header&quot;&gt;Day / Time&lt;/div&gt;
+			&lt;div class&#x3D;&quot;cell header&quot; *ngFor&#x3D;&quot;let time of timeSlots&quot;&gt;{{ time }}&lt;/div&gt;
+		&lt;/div&gt;
+		
+		&lt;!-- Rows --&gt;
+		&lt;div class&#x3D;&quot;row&quot; *ngFor&#x3D;&quot;let day of daysOfWeek&quot;&gt;
+			&lt;div class&#x3D;&quot;cell header&quot; [title]&#x3D;&quot;day.key&quot;&gt;{{ day.key }}&lt;/div&gt;
+		
+			&lt;!-- Cells --&gt;
+			&lt;ng-container *ngFor&#x3D;&quot;let time of timeSlots&quot;&gt;
+				
+				&lt;ng-container *ngIf&#x3D;&quot;getClassAt(day.key, time) as meeting&quot;&gt;
+					&lt;ng-container *ngIf&#x3D;&quot;isClassStart(meeting, time)&quot;&gt;
+						&lt;div 
+							class&#x3D;&quot;cell&quot; 
+							[style.gridColumn]&#x3D;&quot;&#x27;span &#x27; + getSlotSpan(meeting.startTime, meeting.endTime)&quot;&gt;
+							&lt;div class&#x3D;&quot;class-card&quot;&gt;
+								&lt;strong&gt;{{ meeting.name }}&lt;/strong&gt;&lt;br /&gt;
+								{{ meeting.rawMeetingText }}&lt;br /&gt;
+								{{ meeting.room }}&lt;br /&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/ng-container&gt;
+				&lt;/ng-container&gt;
+
+				&lt;ng-container *ngIf&#x3D;&quot;!getClassAt(day.key, time)&quot;&gt;
+					&lt;div class&#x3D;&quot;cell&quot;&gt;&lt;/div&gt;
+				&lt;/ng-container&gt;
+
+			&lt;/ng-container&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./classroom.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">
+.trevor-container {
+	width: 100%;
+	display: flexbox;
+	
+	// max-height: 74vh;
+}
+
+.class-grid {
+	display: grid;
+	grid-template-rows: auto ;
+	font-family: Arial, sans-serif;
+	border: 1px solid #ccc;
+	align-items: center;
+	white-space: wrap;
+	background-color: #f5bdb9;;
+	border-radius: 5px;
+	
+	
+  }
+  
+  .header-row {
+	display: grid;
+	grid-template-columns: 150px repeat(22, 1fr);
+	position: sticky;
+  }
+  
+  .row {
+	display: grid;
+	grid-template-columns: 150px repeat(22, 1fr);
+	height: calc((89.5vh) / 5);
+  }
+  
+  .cell {
+	border: 1px solid #ccc;
+	padding: 6px;
+	min-height: 2vh;
+	white-space: nowrap;
+  }
+  
+  .cell.header {
+    background-color: #e9ecef;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+
+    justify-content: center;
+	overflow: hidden;
+  }
+  
+  .class-card {
+    background-color: #cce5ff;
+    border-left: 4px solid #004085;
+	overflow-x: auto;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    height: 100%;
+	width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  </code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><!-- Container --><div class="trevor-container">	<!-- Headers -->	<div class="class-grid">		<div class="header-row">			<div class="cell header">Day / Time</div>			<div class="cell header" *ngFor="let time of timeSlots">{{ time }}</div>		</div>				<!-- Rows -->		<div class="row" *ngFor="let day of daysOfWeek">			<div class="cell header" [title]="day.key">{{ day.key }}</div>					<!-- Cells -->			<ng-container *ngFor="let time of timeSlots">								<ng-container *ngIf="getClassAt(day.key, time) as meeting">					<ng-container *ngIf="isClassStart(meeting, time)">						<div 							class="cell" 							[style.gridColumn]="\'span \' + getSlotSpan(meeting.startTime, meeting.endTime)">							<div class="class-card">								<strong>{{ meeting.name }}</strong><br />								{{ meeting.rawMeetingText }}<br />								{{ meeting.room }}<br />							</div>						</div>					</ng-container>				</ng-container>				<ng-container *ngIf="!getClassAt(day.key, time)">					<div class="cell"></div>				</ng-container>			</ng-container>		</div>	</div></div></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AssignmentLogicDialogComponent', 'selector': 'app-assignment-logic-dialog'},{'name': 'ClassComponent', 'selector': 'app-class-view'},{'name': 'ColumnSelectorDialogComponent', 'selector': 'app-column-selector-dialog'},{'name': 'ConflictCardComponent', 'selector': 'app-conflict-card'},{'name': 'ConflictManagerComponent', 'selector': 'app-conflict-manager'},{'name': 'DataComponent', 'selector': 'app-data'},{'name': 'DetailsComponent', 'selector': 'app-details'},{'name': 'FileManagerComponent', 'selector': 'app-file-manager'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'ProfileComponent', 'selector': 'app-profile'},{'name': 'RegistrationComponent', 'selector': 'app-registration'},{'name': 'SectionComponent', 'selector': 'app-section-view'},{'name': 'SectionRowComponent', 'selector': 'app-section-row'},{'name': 'TrainingDataDialogComponent', 'selector': 'app-training-data-dialog'},{'name': 'UploadComponent', 'selector': 'app-upload'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ClassComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ClassComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
