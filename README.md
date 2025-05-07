@@ -169,3 +169,12 @@ rc-1        -> release candidate 1 was created to keep the production implementa
 e2e-test    -> This branch was dedicated to implementing end-to-end testing using Cypress. It covered user flows such as authentication, CSV uploads, conflict detection, and interaction with the scheduling interface to ensure the full application workflow functioned as intended.
 
 docs-cleanup->  Initially created to resolve formatting and structural issues in the backend documentation, this branch became redundant after those issues were incorporated into the Sphinx_doc branch. As a result, Sphinx_doc now fully replaces the need for docs_cleanup.
+
+
+## 📘 Documentation
+
+### Frontend Documentation 
+- [Frontend Docs](https://resonant-concha-a76f32.netlify.app/)
+
+### Backend Documentation
+- [Backend Docs](https://glistening-genie-2e3b4d.netlify.app/)
