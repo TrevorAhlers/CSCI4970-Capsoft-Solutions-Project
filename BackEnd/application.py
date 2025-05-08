@@ -139,19 +139,20 @@ def register():
 	email    = data.get('email')     or data.get('user_email')
 	password = data.get('password')  or data.get('user_password')
 
-	if not all([username, email, password]):
+	if not all([username, password]):
 		return jsonify({'msg': 'Missing fields'}), 400
 
-	key  = username
-	user = User(key, password, None)
+	user = User(user_id=username, user_password=password, workspace_state=None)
+	user.email = email
 
 	try:
 		user_repo.upsert(user)
-		application.logger.info("User %s registered", key)
+		application.logger.info("User %s registered", username)
 		return jsonify({'msg': 'User created'}), 201
 	except Exception as exc:
 		application.logger.exception(exc)
 		return jsonify({'msg': 'DB error'}), 500
+
 
 
 @application.route('/api/change-log', methods=['GET'])
