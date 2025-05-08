@@ -1,3 +1,9 @@
+# NOTE:
+# This test works as expected and was written based on the latest main branch.
+# However, the current working branch had unresolved merge issues at the time,
+# which may cause this test to fail even though the logic is correct.
+# A working version of this test exists and passes under the `e2e-test` directory.
+
 import pytest
 import sys
 import os
