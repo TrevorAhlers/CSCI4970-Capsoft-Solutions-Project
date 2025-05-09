@@ -33,7 +33,7 @@ Complete Instructions for running locally:
 5. Build and run the frontend with 'npx ng serve'.
 6. Click the link in the terminal to load the webpage on your local.
 7. Upload an input CSV file from the interface.
-8. Navigate to http://localhost:4200/data to view the results of the room assignments.
+8. Navigate to http://localhost:4200 to view the results of the room assignments.
 
 Local pip freeze > requirements.txt:
 
