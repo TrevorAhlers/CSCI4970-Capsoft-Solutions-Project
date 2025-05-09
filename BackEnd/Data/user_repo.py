@@ -91,6 +91,6 @@ def get_by_username(username: str) -> dict|None:
 
 	with _con() as con:
 		cur = con.cursor()
-		cur.execute("SELECT obj FROM users WHERE id LIKE %s LIMIT 1", (f"{username}:%",))
+		cur.execute("SELECT obj FROM users WHERE id = %s", (username,))
 		row = cur.fetchone()
 		return json.loads(row[0]) if row else None
