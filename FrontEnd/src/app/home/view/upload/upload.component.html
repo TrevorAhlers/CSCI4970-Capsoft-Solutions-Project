@@ -24,16 +24,39 @@
 	/>
   
 	<mat-card-content class="space"></mat-card-content>
-  
+
+	<!-- Upload form -->
 	<mat-card-content class="file">
-	  <form action="/action_page.php">
-		<input
-		  type="file"
-		  (change)="onFileSelected($event)"
-		  accept=".csv"
-		  [disabled]="loading"
-		/>
-	  </form>
+	  <!-- Hidden native input -->
+	  <input
+		type="file"
+		id="fileInput"
+		accept=".csv"
+		(change)="onFileSelected($event)"
+		[disabled]="loading"
+		hidden
+	  />
+  
+	  <!-- Custom styled button to trigger file input -->
+	  <button mat-raised-button color="primary" (click)="triggerFileInput()" [disabled]="loading">
+		Choose CSV File
+	  </button>
+  
+	  <!-- File name display -->
+	  <span *ngIf="selectedFileName" class="file-name">
+		{{ selectedFileName }}
+	  </span>
+  
+	  <!-- Submit button (only active when a file is selected) -->
+	  <button
+		mat-raised-button
+		color="accent"
+		class="submit-button"
+		(click)="onSubmit()"
+		[disabled]="loading || !selectedFile"
+	  >
+		Submit
+	  </button>
 	</mat-card-content>
   </mat-card>
   

@@ -12,6 +12,9 @@ import { finalize } from 'rxjs/operators';
 export class UploadComponent {
   @Output() fileUploaded = new EventEmitter<void>();
   loading = false;
+  selectedFile: File | null = null;
+  selectedFileName: string = '';
+
 
   constructor(private http: HttpClient, private dataService: DataService) {}
 
@@ -39,5 +42,19 @@ export class UploadComponent {
           console.error('Error uploading file:', err);
         }
       });
+  }
+
+
+  
+  onSubmit() {
+    if (!this.selectedFile) return;
+  
+    this.loading = true;
+  
+
+  }
+  triggerFileInput() {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    fileInput.click();
   }
 }
