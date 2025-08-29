@@ -2,6 +2,9 @@
 
 ## ABOUT:
 
+- [Technical Report (PDF)](docs/Final_Project_Report.pdf)
+- [Live Demo Video](link-to-your-video)
+
 This web application is being developed to reduce the workload of the Classroom Coordinator responsible for assigning courses to rooms in the Peter Kiewit Institute (PKI) building at the University of Nebraska at Omaha.
 
 Each semester, the Classroom Coordinator receives a CSV file containing all course sections that need room assignments in PKI. Difficulties arise when conflicts occur, and managing both scheduled and emergent conflicts has been shown to contribute to the high turnover in this role. We aim to automate as much of this process as possible and reduce the mental load on the user who utilizes our application to produce a finalized output CSV that is either conflict-free or allows conflicts to be ignored.
