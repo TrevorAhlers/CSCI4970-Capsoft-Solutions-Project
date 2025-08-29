@@ -2,8 +2,8 @@
 
 ## ABOUT:
 
-- [Technical Report (PDF)](docs/Final_Project_Report.pdf)
-- [Live Demo Video](link-to-your-video)
+- [Technical Report (PDF)](https://github.com/TrevorAhlers/CSCI4970-Capsoft-Solutions-Project/blob/main/Documentation/Final%20Project%20Report%20-%20Group%203%20Capsoft%20Solutions%20-%20PKI%20Scheduler.pdf)
+- [Live Demo Video](https://github.com/TrevorAhlers/CSCI4970-Capsoft-Solutions-Project/blob/main/Documentation/demo-video.mp4)
 
 This web application is being developed to reduce the workload of the Classroom Coordinator responsible for assigning courses to rooms in the Peter Kiewit Institute (PKI) building at the University of Nebraska at Omaha.
 
